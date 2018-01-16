@@ -6,15 +6,17 @@
 //  Copyright © 2018 Henrik Raitasola. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Movie {
   let title: String
   let genres: [Genre]
+  let image: UIImage
   
-  init(title: String, genres: [Genre]) {
+  init(title: String, genres: [Genre], image: UIImage) {
     self.title = title
     self.genres = genres
+    self.image = image
   }
 }
 
