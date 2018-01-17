@@ -21,8 +21,14 @@ class ViewController: UITableViewController {
     setupMovies()
   }
   
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print(123)
+    navigationController?.present(UICollectionViewController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true, completion: nil)
+//    navigationController?.pushViewController(UIViewController(), animated: true)
+  }
+  
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 150
+    return 200
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
