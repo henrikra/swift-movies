@@ -38,10 +38,10 @@ class ViewController: UITableViewController {
   
   func setupMovies() {
     let action = Genre(name: "Action")
-    let comedy = Genre(name: "Comedy")
+    let scifi = Genre(name: "Scifi")
     let interstellar = Movie(title: "Martian", genres: [action], image: #imageLiteral(resourceName: "martian_backdrop"))
-    let kummeli = Movie(title: "Blade Runner", genres: [comedy], image: #imageLiteral(resourceName: "blade_runner_backdrop"))
+    let bladeRunner = Movie(title: "Blade Runner", genres: [scifi], image: #imageLiteral(resourceName: "blade_runner_backdrop"))
     let ghostInTheShell = Movie(title: "Ghost in the shell", genres: [action], image: #imageLiteral(resourceName: "ghost_in_the_shell_backdrop"))
-    self.movies = [kummeli, interstellar, ghostInTheShell]
+    self.movies = [bladeRunner, interstellar, ghostInTheShell]
   }
 }
