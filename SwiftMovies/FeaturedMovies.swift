@@ -11,7 +11,7 @@ import UIKit
 class FeaturedMovies: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView?.backgroundColor = .red
+    collectionView?.backgroundColor = .clear
     collectionView?.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
     collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: "cellId")
   }
