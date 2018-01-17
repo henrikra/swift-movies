@@ -17,6 +17,7 @@
 		7EA3216B200EA4D50025BC9B /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3216A200EA4D50025BC9B /* MovieCell.swift */; };
 		7EE8A168200FD96600A688F0 /* FeaturedMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A167200FD96600A688F0 /* FeaturedMovies.swift */; };
 		7EE8A16A200FDFDF00A688F0 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A169200FDFDF00A688F0 /* CategoryCell.swift */; };
+		7EE8A16C200FF52F00A688F0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A16B200FF52F00A688F0 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		7EA3216A200EA4D50025BC9B /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		7EE8A167200FD96600A688F0 /* FeaturedMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedMovies.swift; sourceTree = "<group>"; };
 		7EE8A169200FDFDF00A688F0 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		7EE8A16B200FF52F00A688F0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				7EA3216A200EA4D50025BC9B /* MovieCell.swift */,
 				7EE8A167200FD96600A688F0 /* FeaturedMovies.swift */,
 				7EE8A169200FDFDF00A688F0 /* CategoryCell.swift */,
+				7EE8A16B200FF52F00A688F0 /* MainView.swift */,
 			);
 			path = SwiftMovies;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EA32169200E97460025BC9B /* Models.swift in Sources */,
+				7EE8A16C200FF52F00A688F0 /* MainView.swift in Sources */,
 				7EA3213D200E76540025BC9B /* ViewController.swift in Sources */,
 				7EE8A168200FD96600A688F0 /* FeaturedMovies.swift in Sources */,
 				7EA3216B200EA4D50025BC9B /* MovieCell.swift in Sources */,
