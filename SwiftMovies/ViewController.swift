@@ -28,8 +28,7 @@ class ViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MovieCell
     let movie = movies?[indexPath.row]
-    cell.backdropImageView.image = movie?.image
-    cell.titleLabel.text = movie?.title
+    cell.movie = movie
     return cell
   }
   

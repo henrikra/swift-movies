@@ -9,13 +9,20 @@
 import UIKit
 
 class MovieCell: UITableViewCell {
-  let backdropImageView: UIImageView = {
+  var movie: Movie? {
+    didSet {
+      backdropImageView.image = movie?.image
+      titleLabel.text = movie?.title
+    }
+  }
+  
+  private let backdropImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
   
-  let titleLabel: UILabel = {
+  private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "terve"
     label.translatesAutoresizingMaskIntoConstraints = false
