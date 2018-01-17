@@ -11,9 +11,7 @@ import UIKit
 class MovieCell: UITableViewCell {
   let backdropImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.backgroundColor = .red
     imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.image = #imageLiteral(resourceName: "blade_runner_backdrop")
     return imageView
   }()
   
