@@ -21,6 +21,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
+    layout.minimumLineSpacing = 40.0
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
@@ -64,7 +65,7 @@ class SmallMovieCell: UICollectionViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 1
     label.font = UIFont.systemFont(ofSize: 14)
-//    label.textColor = .white
+    label.textColor = .white
     return label
   }()
   
