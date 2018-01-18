@@ -25,7 +25,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     label.text = "Latest"
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textColor = .white
-//    label.backgroundColor = .blue
     label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     return label
   }()
