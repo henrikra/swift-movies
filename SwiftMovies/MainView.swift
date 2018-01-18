@@ -17,6 +17,8 @@ class MainView: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    navigationController?.isNavigationBarHidden = true
+    
     let gradientLayer: CAGradientLayer = CAGradientLayer()
     gradientLayer.frame = view.frame
     let myColor = UIColor(red: 75.0/255.0, green: 35.0/255.0, blue: 42.0/255.0, alpha: 1.0)
