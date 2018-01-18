@@ -9,15 +9,6 @@
 import UIKit
 
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! SmallMovieCell
-    return cell
-  }
-  
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -29,22 +20,52 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     return collectionView
   }()
   
+  let categoryTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Latest"
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .white
+//    label.backgroundColor = .blue
+    label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+    return label
+  }()
+  
+  let dividerView: UIView = {
+    let divider = UIView()
+    divider.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+    divider.translatesAutoresizingMaskIntoConstraints = false
+    return divider
+  }()
+
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! SmallMovieCell
+    return cell
+  }
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
     moviesCollectionView.register(SmallMovieCell.self, forCellWithReuseIdentifier: "cellId")
     moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+//    backgroundColor = .red
     
     addSubview(moviesCollectionView)
-    moviesCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-    moviesCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
-    moviesCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-    moviesCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+    addSubview(categoryTitleLabel)
+    addSubview(dividerView)
+    
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-15-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": categoryTitleLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": moviesCollectionView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-15-[v0]-15-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": dividerView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[title(25)]-15-[movieCollection][divider(1)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["title": categoryTitleLabel, "movieCollection": moviesCollectionView, "divider": dividerView]))
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 100, height: frame.height)
+    return CGSize(width: 100, height: frame.height - 40)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -56,6 +77,7 @@ class SmallMovieCell: UICollectionViewCell {
   let posterImageView: UIImageView = {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "mad_max"))
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
     return imageView
   }()
   
@@ -74,18 +96,9 @@ class SmallMovieCell: UICollectionViewCell {
     addSubview(posterImageView)
     addSubview(titleLabel)
     
-    posterImageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height - 30)
-    titleLabel.frame = CGRect(x: 0, y: frame.height - 30, width: frame.width, height: 30)
-    
-//    titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-//    titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-//    titleLabel.heightAnchor.constraint(equalToConstant: CGFloat(50))
-//
-//
-//    posterImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-//    posterImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
-//    posterImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-//    posterImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40).isActive = true
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": titleLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": posterImageView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[poster][title(60)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["poster": posterImageView, "title": titleLabel]))
   }
   
   required init?(coder aDecoder: NSCoder) {

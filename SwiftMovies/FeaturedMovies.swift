@@ -16,6 +16,10 @@ class FeaturedMovies: UICollectionViewController, UICollectionViewDelegateFlowLa
     collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: "cellId")
   }
   
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 20.0
+  }
+  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 3
   }
@@ -26,6 +30,6 @@ class FeaturedMovies: UICollectionViewController, UICollectionViewDelegateFlowLa
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width, height: 180)
+    return CGSize(width: view.frame.width, height: 250)
   }
 }
