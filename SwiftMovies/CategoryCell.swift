@@ -8,6 +8,12 @@
 
 import UIKit
 
+class Spacing {
+  static let padding500: CGFloat = 20.0
+}
+
+let metrics = ["padding500": Spacing.padding500]
+
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -50,16 +56,16 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
     moviesCollectionView.register(SmallMovieCell.self, forCellWithReuseIdentifier: "cellId")
-    moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+    moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: Spacing.padding500, bottom: 0, right: Spacing.padding500)
     
     addSubview(moviesCollectionView)
     addSubview(categoryTitleLabel)
     addSubview(dividerView)
     
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-15-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": categoryTitleLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": categoryTitleLabel]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": moviesCollectionView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-15-[v0]-15-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": dividerView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[title(25)]-15-[movieCollection][divider(1)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["title": categoryTitleLabel, "movieCollection": moviesCollectionView, "divider": dividerView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": dividerView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[title(25)]-15-[movieCollection][divider(1)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["title": categoryTitleLabel, "movieCollection": moviesCollectionView, "divider": dividerView]))
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

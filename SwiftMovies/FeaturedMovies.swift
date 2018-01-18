@@ -12,7 +12,7 @@ class FeaturedMovies: UICollectionViewController, UICollectionViewDelegateFlowLa
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = .clear
-    collectionView?.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+    collectionView?.contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
     collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: "cellId")
   }
   
