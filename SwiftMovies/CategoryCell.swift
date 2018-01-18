@@ -52,7 +52,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     moviesCollectionView.delegate = self
     moviesCollectionView.register(SmallMovieCell.self, forCellWithReuseIdentifier: "cellId")
     moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-//    backgroundColor = .red
     
     addSubview(moviesCollectionView)
     addSubview(categoryTitleLabel)
@@ -65,7 +64,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 100, height: frame.height - 40)
+    return CGSize(width: 100, height: frame.height - 41)
   }
   
   required init?(coder aDecoder: NSCoder) {
