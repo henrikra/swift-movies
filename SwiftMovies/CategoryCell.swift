@@ -32,7 +32,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   
   let dividerView: UIView = {
     let divider = UIView()
-    divider.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+    divider.backgroundColor = UIColor.white.withAlphaComponent(0.2)
     divider.translatesAutoresizingMaskIntoConstraints = false
     return divider
   }()
