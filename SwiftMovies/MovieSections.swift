@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct UpcomingMoviesResponse: Decodable {
+struct MovieDatabaseResponse: Decodable {
   let results: [MoviePoster]
 }
 
@@ -41,7 +41,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
       
       guard let data = data else { return }
       do {
-        let upcomingMoviesResponse = try JSONDecoder().decode(UpcomingMoviesResponse.self, from: data)
+        let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
         DispatchQueue.main.async {
           self.collectionView?.reloadData()
@@ -60,7 +60,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
       }
       guard let data = data else { return }
       do {
-        let topRatedMoviesResponse = try JSONDecoder().decode(UpcomingMoviesResponse.self, from: data)
+        let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.topRatedMovies = topRatedMoviesResponse.results
         DispatchQueue.main.async {
           self.collectionView?.reloadData()
