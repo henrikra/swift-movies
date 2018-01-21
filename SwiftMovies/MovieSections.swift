@@ -15,6 +15,7 @@ struct MovieDatabaseResponse: Decodable {
 struct Movie: Decodable {
   let title: String
   let poster_path: String?
+  let backdrop_path: String?
 }
 
 class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -26,6 +27,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     collectionView?.backgroundColor = .clear
     collectionView?.contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
     collectionView?.register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
+    collectionView?.register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
     
     fetchUpcomingMovies()
     fetchTopRatedMovies()
@@ -55,6 +57,17 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
         print(jsonError)
       }
     }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return CGSize(width: view.frame.width, height: 200)
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "featuredMoviesId", for: indexPath) as! FeaturedMovies
+    header.movies = self.upcomingMovies
+    header.moviesCollectionView.reloadData()
+    return header
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

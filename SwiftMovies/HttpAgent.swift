@@ -29,7 +29,6 @@ struct Request {
 
 struct HttpAgent {
   static func request(url: String) -> Request {
-    print(url)
     return Request(url: url)
   }
 }
