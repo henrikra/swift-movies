@@ -27,6 +27,8 @@ class MainView: UIViewController {
     gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
     view.layer.addSublayer(gradientLayer)
     
-    view.addSubview(myScrollView.collectionView!)
+    if let sections = myScrollView.collectionView {
+      view.addSubview(sections)
+    }
   }
 }
