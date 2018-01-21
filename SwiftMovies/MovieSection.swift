@@ -15,6 +15,8 @@ class Spacing {
 let metrics = ["padding500": Spacing.padding500]
 
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+  var movies: [MoviePoster]?
+  
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -43,11 +45,12 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }()
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return movies?.count ?? 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! SmallMovieCell
+    cell.movie = movies?[indexPath.item]
     return cell
   }
   
@@ -78,8 +81,27 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
 }
 
 class SmallMovieCell: UICollectionViewCell {
+  var movie: MoviePoster? {
+    didSet {
+      titleLabel.text = movie?.title
+      guard let posterPath = movie?.poster_path else { return }
+      guard let url = URL(string: "https://image.tmdb.org/t/p/w300\(posterPath)") else { return }
+      URLSession.shared.dataTask(with: url) { (data, response, error) in
+        if let error = error {
+          print(error)
+          return
+        }
+        guard let data = data else { return }
+        let image = UIImage(data: data)
+        DispatchQueue.main.async {
+          self.posterImageView.image = image
+        }
+      }.resume()
+    }
+  }
+  
   let posterImageView: UIImageView = {
-    let imageView = UIImageView(image: #imageLiteral(resourceName: "mad_max"))
+    let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFit
     return imageView
@@ -87,7 +109,6 @@ class SmallMovieCell: UICollectionViewCell {
   
   let titleLabel: UILabel = {
     let label = UILabel()
-    label.text = "Mad Max Adventures"
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 1
     label.font = UIFont.systemFont(ofSize: 14)

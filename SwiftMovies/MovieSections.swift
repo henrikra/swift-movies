@@ -60,6 +60,10 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
+    if indexPath.item == 0 {
+      cell.movies = upcomingMovies
+      cell.moviesCollectionView.reloadData()      
+    }
     return cell
   }
   
