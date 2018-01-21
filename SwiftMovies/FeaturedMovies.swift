@@ -14,10 +14,11 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    layout.minimumLineSpacing = Spacing.padding500
+    layout.minimumLineSpacing = 0
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
+    collectionView.isPagingEnabled = true
     return collectionView
   }()
   
@@ -26,7 +27,6 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
     moviesCollectionView.register(FeaturedMovie.self, forCellWithReuseIdentifier: "featureCellId")
-    moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: Spacing.padding500, bottom: 0, right: Spacing.padding500)
     
     addSubview(moviesCollectionView)
     
@@ -45,7 +45,7 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: frame.width - 2 * Spacing.padding500, height: 200)
+    return CGSize(width: frame.width, height: 200)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -80,7 +80,7 @@ class FeaturedMovie: UICollectionViewCell {
     
     addSubview(backdropImageView)
     
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
   }
   
