@@ -14,7 +14,7 @@ class Spacing {
 
 let metrics = ["padding500": Spacing.padding500]
 
-class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
