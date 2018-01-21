@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeaturedMovies: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = .clear

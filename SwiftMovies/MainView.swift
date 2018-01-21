@@ -9,8 +9,8 @@
 import UIKit
 
 class MainView: UIViewController {
-  let myScrollView: FeaturedMovies = {
-    let scrollView = FeaturedMovies(collectionViewLayout: UICollectionViewFlowLayout())
+  let myScrollView: MovieSections = {
+    let scrollView = MovieSections(collectionViewLayout: UICollectionViewFlowLayout())
     return scrollView
   }()
   
