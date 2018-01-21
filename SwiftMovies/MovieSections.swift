@@ -8,12 +8,46 @@
 
 import UIKit
 
+struct UpcomingMoviesResponse: Decodable {
+  let results: [MoviePoster]
+}
+
+struct MoviePoster: Decodable {
+  let title: String
+  let poster_path: String?
+}
+
 class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+  var upcomingMovies: [MoviePoster]?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = .clear
     collectionView?.contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
     collectionView?.register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
+    
+    fetchUpcomingMovies()
+  }
+  
+  func fetchUpcomingMovies() {
+    guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)") else { return }
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+      if let error = error {
+        print("Error from api", error)
+        return
+      }
+      
+      guard let data = data else { return }
+      do {
+        let upcomingMoviesResponse = try JSONDecoder().decode(UpcomingMoviesResponse.self, from: data)
+        self.upcomingMovies = upcomingMoviesResponse.results
+        DispatchQueue.main.async {
+          self.collectionView?.reloadData()
+        }
+      } catch let jsonError {
+        print(jsonError)
+      }
+    }.resume()
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
