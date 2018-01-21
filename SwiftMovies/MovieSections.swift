@@ -40,7 +40,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
       guard let data = data else { return }
       do {
         let upcomingMoviesResponse = try JSONDecoder().decode(UpcomingMoviesResponse.self, from: data)
-        self.upcomingMovies = upcomingMoviesResponse.results
+        self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
         DispatchQueue.main.async {
           self.collectionView?.reloadData()
         }
