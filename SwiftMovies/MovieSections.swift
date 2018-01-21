@@ -32,15 +32,9 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   func fetchUpcomingMovies() {
-    guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)") else { return }
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
-      if let error = error {
-        print("Error from api", error)
-        return
-      }
-      
-      guard let data = data else { return }
+    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)").responseJSON { response in
       do {
+        guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
         DispatchQueue.main.async {
@@ -49,7 +43,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
       } catch let jsonError {
         print(jsonError)
       }
-    }.resume()
+    }
   }
   
   func fetchTopRatedMovies() {
