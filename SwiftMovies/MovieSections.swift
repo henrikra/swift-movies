@@ -19,6 +19,7 @@ struct MoviePoster: Decodable {
 
 class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   var upcomingMovies: [MoviePoster]?
+  var topRatedMovies: [MoviePoster]?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,6 +28,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     collectionView?.register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
     
     fetchUpcomingMovies()
+    fetchTopRatedMovies()
   }
   
   func fetchUpcomingMovies() {
@@ -50,6 +52,25 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     }.resume()
   }
   
+  func fetchTopRatedMovies() {
+    guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)") else { return }
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+      if let error = error {
+        print(error)
+      }
+      guard let data = data else { return }
+      do {
+        let topRatedMoviesResponse = try JSONDecoder().decode(UpcomingMoviesResponse.self, from: data)
+        self.topRatedMovies = topRatedMoviesResponse.results
+        DispatchQueue.main.async {
+          self.collectionView?.reloadData()
+        }
+      } catch let jsonError {
+        print(jsonError)
+      }
+    }.resume()
+  }
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 20.0
   }
@@ -62,7 +83,12 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
     if indexPath.item == 0 {
       cell.movies = upcomingMovies
+      cell.categoryTitleLabel.text = "Upcoming"
       cell.moviesCollectionView.reloadData()      
+    } else if indexPath.item == 1 {
+      cell.categoryTitleLabel.text = "Top rated"
+      cell.movies = topRatedMovies
+      cell.moviesCollectionView.reloadData()
     }
     return cell
   }
