@@ -9,17 +9,17 @@
 import UIKit
 
 struct MovieDatabaseResponse: Decodable {
-  let results: [MoviePoster]
+  let results: [Movie]
 }
 
-struct MoviePoster: Decodable {
+struct Movie: Decodable {
   let title: String
   let poster_path: String?
 }
 
 class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-  var upcomingMovies: [MoviePoster]?
-  var topRatedMovies: [MoviePoster]?
+  var upcomingMovies: [Movie]?
+  var topRatedMovies: [Movie]?
   
   override func viewDidLoad() {
     super.viewDidLoad()

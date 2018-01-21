@@ -15,7 +15,7 @@ class Spacing {
 let metrics = ["padding500": Spacing.padding500]
 
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-  var movies: [MoviePoster]?
+  var movies: [Movie]?
   
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -81,7 +81,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
 }
 
 class SmallMovieCell: UICollectionViewCell {
-  var movie: MoviePoster? {
+  var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
       posterImageView.image = nil
