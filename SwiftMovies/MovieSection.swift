@@ -84,6 +84,8 @@ class SmallMovieCell: UICollectionViewCell {
   var movie: MoviePoster? {
     didSet {
       titleLabel.text = movie?.title
+      posterImageView.image = nil
+      
       guard let posterPath = movie?.poster_path else { return }
       guard let url = URL(string: "https://image.tmdb.org/t/p/w300\(posterPath)") else { return }
       URLSession.shared.dataTask(with: url) { (data, response, error) in
