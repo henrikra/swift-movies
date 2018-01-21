@@ -13,7 +13,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     super.viewDidLoad()
     collectionView?.backgroundColor = .clear
     collectionView?.contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
-    collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: "cellId")
+    collectionView?.register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -25,7 +25,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! CategoryCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
     return cell
   }
   
