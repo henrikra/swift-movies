@@ -23,7 +23,9 @@ struct Request {
         return
       }
       guard let response = response else { return }
-      onReady(Response(data: data, response: response))
+      DispatchQueue.main.async {
+        onReady(Response(data: data, response: response))
+      }
     }.resume()
   }
 }

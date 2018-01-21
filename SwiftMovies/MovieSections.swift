@@ -37,9 +37,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
         guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
-        DispatchQueue.main.async {
-          self.collectionView?.reloadData()
-        }
+        self.collectionView?.reloadData()
       } catch let jsonError {
         print(jsonError)
       }
@@ -47,22 +45,16 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   func fetchTopRatedMovies() {
-    guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)") else { return }
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
-      if let error = error {
-        print(error)
-      }
-      guard let data = data else { return }
+    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)").responseJSON { (response) in
+      guard let data = response.data else { return }
       do {
         let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.topRatedMovies = topRatedMoviesResponse.results
-        DispatchQueue.main.async {
-          self.collectionView?.reloadData()
-        }
+        self.collectionView?.reloadData()
       } catch let jsonError {
         print(jsonError)
       }
-    }.resume()
+    }
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
