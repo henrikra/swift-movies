@@ -70,6 +70,8 @@ class FeaturedMovie: UICollectionViewCell {
   let backdropImageView: UIImageView = {
     let backdrop = UIImageView()
     backdrop.translatesAutoresizingMaskIntoConstraints = false
+    backdrop.layer.cornerRadius = 5
+    backdrop.layer.masksToBounds = true
     return backdrop
   }()
   
