@@ -31,7 +31,7 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
     addSubview(moviesCollectionView)
     
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": moviesCollectionView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": moviesCollectionView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": moviesCollectionView]))
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -60,7 +60,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return CGSize(width: view.frame.width, height: 200)
+    return CGSize(width: view.frame.width, height: 220)
   }
   
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
