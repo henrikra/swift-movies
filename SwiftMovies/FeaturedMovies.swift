@@ -19,6 +19,7 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
     collectionView.isPagingEnabled = true
+    collectionView.showsHorizontalScrollIndicator = false
     return collectionView
   }()
   
