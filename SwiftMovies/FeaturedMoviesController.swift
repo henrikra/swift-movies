@@ -19,21 +19,27 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
       featuredMovieController.movie = movies?[previousIndex ?? 0]
       return featuredMovieController
     }
-    if pIndex == 0 {
-      let newIndex = (movies?.count ?? 0) - 1
-      previousIndex = newIndex
+    if isFirstMovie(pIndex) {
+      previousIndex = (movies?.count ?? 0) - 1
     } else {
       previousIndex = pIndex - 1
     }
-    if nIndex == 0 {
-      let newIndex = (movies?.count ?? 0) - 1
-      nextIndex = newIndex
+    if isFirstMovie(nIndex) {
+      nextIndex = (movies?.count ?? 0) - 1
     } else {
       nextIndex = nIndex - 1
     }
     let featuredMovieController = FeaturedMovieController()
     featuredMovieController.movie = movies?[previousIndex ?? 0]
     return featuredMovieController
+  }
+  
+  private func isFirstMovie(_ index: Int) -> Bool {
+    return index == 0
+  }
+  
+  private func isLastMovie(_ index: Int) -> Bool {
+    return index == (movies?.count ?? 0) - 1
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -43,12 +49,12 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
       featuredMovieController.movie = movies?[nextIndex ?? 0]
       return featuredMovieController
     }
-    if nIndex == (movies?.count ?? 0) - 1 {
+    if isLastMovie(nIndex) {
       nextIndex = 0
     } else {
       nextIndex = nIndex + 1
     }
-    if pIndex == (movies?.count ?? 0) - 1 {
+    if isLastMovie(pIndex) {
       previousIndex = 0
     } else {
       previousIndex = pIndex + 1
