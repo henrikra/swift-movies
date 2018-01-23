@@ -68,9 +68,8 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     header.movies = self.upcomingMovies
     let featuredMovieController = FeaturedMovieController()
     featuredMovieController.movie = self.upcomingMovies?.first
-    let viewControllers = [featuredMovieController]
-    header.pages.movies = self.upcomingMovies
-    header.pages.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
+    header.featuredMoviesController.movies = self.upcomingMovies
+    header.featuredMoviesController.setViewControllers([featuredMovieController], direction: .forward, animated: true, completion: nil)
     return header
   }
   

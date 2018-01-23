@@ -11,7 +11,7 @@ import UIKit
 class FeaturedMovies: UICollectionViewCell {
   var movies: [Movie]?
   
-  let pages: FeaturedMoviesController = {
+  let featuredMoviesController: FeaturedMoviesController = {
     let featuredMoviesController = FeaturedMoviesController()
     featuredMoviesController.view.translatesAutoresizingMaskIntoConstraints = false
     return featuredMoviesController
@@ -19,9 +19,9 @@ class FeaturedMovies: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    addSubview(pages.view)
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
+    addSubview(featuredMoviesController.view)
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": featuredMoviesController.view]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": featuredMoviesController.view]))
   }
   
   required init?(coder aDecoder: NSCoder) {
