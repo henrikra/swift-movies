@@ -24,9 +24,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }()
   
   func getCurrentMovieIndex(currentViewController: FeaturedMovieController) -> Int? {
-    return movies?.index(where: { (movie) -> Bool in
-      movie.id == currentViewController.movie?.id
-    })
+    return movies?.index(where: { $0.id == currentViewController.movie?.id })
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
