@@ -18,7 +18,8 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   let pageControl: UIPageControl = {
-    let pageControl = UIPageControl(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+    let pageControl = UIPageControl()
+    pageControl.translatesAutoresizingMaskIntoConstraints = false
     return pageControl
   }()
   
@@ -89,6 +90,8 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     dataSource = self
     
     view.addSubview(pageControl)
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pageControl]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(30)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pageControl]))
   }
   
   override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
