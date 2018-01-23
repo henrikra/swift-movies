@@ -66,7 +66,11 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "featuredMoviesId", for: indexPath) as! FeaturedMovies
     header.movies = self.upcomingMovies
-    header.moviesCollectionView.reloadData()
+    let featuredMovieController = FeaturedMovie()
+    featuredMovieController.movie = self.upcomingMovies?.first
+    let viewControllers = [featuredMovieController]
+    header.pages.movies = self.upcomingMovies
+    header.pages.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
     return header
   }
   

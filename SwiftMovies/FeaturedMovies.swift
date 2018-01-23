@@ -8,45 +8,25 @@
 
 import UIKit
 
-class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class FeaturedMovies: UICollectionViewCell {
   var movies: [Movie]?
   
-  let moviesCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .horizontal
-    layout.minimumLineSpacing = 0
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    collectionView.backgroundColor = .clear
-    collectionView.isPagingEnabled = true
-    collectionView.showsHorizontalScrollIndicator = false
-    return collectionView
+  let pages: FeaturedMoviesController = {
+    let pageViewController = FeaturedMoviesController()
+    pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
+    return pageViewController
   }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    moviesCollectionView.dataSource = self
-    moviesCollectionView.delegate = self
-    moviesCollectionView.register(FeaturedMovie.self, forCellWithReuseIdentifier: "featureCellId")
+    let featuredMovieController = FeaturedMovie()
+    featuredMovieController.movie = movies?.first
+    let viewControllers = [featuredMovieController]
+    pages.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
     
-    addSubview(moviesCollectionView)
-    
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": moviesCollectionView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": moviesCollectionView]))
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return movies?.count ?? 0
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "featureCellId", for: indexPath) as! FeaturedMovie
-    cell.movie = movies?[indexPath.item]
-    return cell
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: frame.width, height: 200)
+    addSubview(pages.view)
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -54,7 +34,7 @@ class FeaturedMovies: UICollectionViewCell, UICollectionViewDataSource, UICollec
   }
 }
 
-class FeaturedMovie: UICollectionViewCell {
+class FeaturedMovie: UIViewController {
   var movie: Movie? {
     didSet {
       backdropImageView.image = nil
@@ -76,16 +56,10 @@ class FeaturedMovie: UICollectionViewCell {
     return backdrop
   }()
   
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    
-    addSubview(backdropImageView)
-    
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(backdropImageView)
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
   }
 }
