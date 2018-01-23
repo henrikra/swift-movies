@@ -11,8 +11,19 @@ import UIKit
 class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource {
   var previousIndex: Int?
   var nextIndex: Int?
-  var movies: [Movie]?
+  var movies: [Movie]? {
+    didSet {
+      pageControl.numberOfPages = movies?.count ?? 0
+    }
+  }
+  
+  let pageControl: UIPageControl = {
+    let pageControl = UIPageControl(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+    return pageControl
+  }()
+  
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    setPageCurrentPage(viewController: viewController)
     guard let pIndex = previousIndex, let nIndex = nextIndex else {
       previousIndex = (movies?.count ?? 0) - 1
       let featuredMovieController = FeaturedMovieController()
@@ -42,7 +53,16 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     return index == (movies?.count ?? 0) - 1
   }
   
+  private func setPageCurrentPage(viewController: UIViewController) {
+    let currentViewController = viewController as! FeaturedMovieController
+    let currentMovieIndex = movies?.index(where: { (movie) -> Bool in
+      movie.id == currentViewController.movie?.id
+    })
+    pageControl.currentPage = currentMovieIndex ?? 0
+  }
+  
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    setPageCurrentPage(viewController: viewController)
     guard let nIndex = nextIndex, let pIndex = previousIndex else {
       nextIndex = 1
       let featuredMovieController = FeaturedMovieController()
@@ -66,8 +86,9 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     dataSource = self
+    
+    view.addSubview(pageControl)
   }
   
   override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
