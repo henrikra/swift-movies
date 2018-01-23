@@ -15,9 +15,9 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     guard let pIndex = previousIndex, let nIndex = nextIndex else {
       previousIndex = (movies?.count ?? 0) - 1
-      let lol = FeaturedMovie()
-      lol.movie = movies?[previousIndex ?? 0]
-      return lol
+      let featuredMovieController = FeaturedMovieController()
+      featuredMovieController.movie = movies?[previousIndex ?? 0]
+      return featuredMovieController
     }
     if pIndex == 0 {
       let newIndex = (movies?.count ?? 0) - 1
@@ -31,17 +31,17 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     } else {
       nextIndex = nIndex - 1
     }
-    let lol = FeaturedMovie()
-    lol.movie = movies?[previousIndex ?? 0]
-    return lol
+    let featuredMovieController = FeaturedMovieController()
+    featuredMovieController.movie = movies?[previousIndex ?? 0]
+    return featuredMovieController
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
     guard let nIndex = nextIndex, let pIndex = previousIndex else {
       nextIndex = 1
-      let lol = FeaturedMovie()
-      lol.movie = movies?[nextIndex ?? 0]
-      return lol
+      let featuredMovieController = FeaturedMovieController()
+      featuredMovieController.movie = movies?[nextIndex ?? 0]
+      return featuredMovieController
     }
     if nIndex == (movies?.count ?? 0) - 1 {
       nextIndex = 0
@@ -53,16 +53,15 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     } else {
       previousIndex = pIndex + 1
     }
-    let lol = FeaturedMovie()
-    lol.movie = movies?[nextIndex ?? 0]
-    return lol
+    let featuredMovieController = FeaturedMovieController()
+    featuredMovieController.movie = movies?[nextIndex ?? 0]
+    return featuredMovieController
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     dataSource = self
-    
   }
   
   override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {

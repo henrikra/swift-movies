@@ -29,7 +29,7 @@ class FeaturedMovies: UICollectionViewCell {
   }
 }
 
-class FeaturedMovie: UIViewController {
+class FeaturedMovieController: UIViewController {
   var movie: Movie? {
     didSet {
       backdropImageView.image = nil
