@@ -9,8 +9,6 @@
 import UIKit
 
 class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource {
-  var previousIndex: Int?
-  var nextIndex: Int?
   var movies: [Movie]? {
     didSet {
       pageControl.numberOfPages = movies?.count ?? 0
@@ -25,26 +23,20 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     return pageControl
   }()
   
+  func getCurrentMovieIndex(currentViewController: FeaturedMovieController) -> Int? {
+    return movies?.index(where: { (movie) -> Bool in
+      movie.id == currentViewController.movie?.id
+    })
+  }
+  
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-    setPageCurrentPage(viewController: viewController)
-    guard let pIndex = previousIndex, let nIndex = nextIndex else {
-      previousIndex = (movies?.count ?? 0) - 1
-      let featuredMovieController = FeaturedMovieController()
-      featuredMovieController.movie = movies?[previousIndex ?? 0]
-      return featuredMovieController
-    }
-    if isFirstMovie(pIndex) {
-      previousIndex = (movies?.count ?? 0) - 1
-    } else {
-      previousIndex = pIndex - 1
-    }
-    if isFirstMovie(nIndex) {
-      nextIndex = (movies?.count ?? 0) - 1
-    } else {
-      nextIndex = nIndex - 1
-    }
+    let currentViewController = viewController as! FeaturedMovieController
+    let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
+    pageControl.currentPage = currentMovieIndex ?? 0
+    
+    let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
     let featuredMovieController = FeaturedMovieController()
-    featuredMovieController.movie = movies?[previousIndex ?? 0]
+    featuredMovieController.movie = movies?[nextIndex]
     return featuredMovieController
   }
   
@@ -56,34 +48,14 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     return index == (movies?.count ?? 0) - 1
   }
   
-  private func setPageCurrentPage(viewController: UIViewController) {
-    let currentViewController = viewController as! FeaturedMovieController
-    let currentMovieIndex = movies?.index(where: { (movie) -> Bool in
-      movie.id == currentViewController.movie?.id
-    })
-    pageControl.currentPage = currentMovieIndex ?? 0
-  }
-  
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-    setPageCurrentPage(viewController: viewController)
-    guard let nIndex = nextIndex, let pIndex = previousIndex else {
-      nextIndex = 1
-      let featuredMovieController = FeaturedMovieController()
-      featuredMovieController.movie = movies?[nextIndex ?? 0]
-      return featuredMovieController
-    }
-    if isLastMovie(nIndex) {
-      nextIndex = 0
-    } else {
-      nextIndex = nIndex + 1
-    }
-    if isLastMovie(pIndex) {
-      previousIndex = 0
-    } else {
-      previousIndex = pIndex + 1
-    }
+    let currentViewController = viewController as! FeaturedMovieController
+    let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
+    pageControl.currentPage = currentMovieIndex ?? 0
+    
+    let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
     let featuredMovieController = FeaturedMovieController()
-    featuredMovieController.movie = movies?[nextIndex ?? 0]
+    featuredMovieController.movie = movies?[nextIndex]
     return featuredMovieController
   }
   
