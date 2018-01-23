@@ -12,18 +12,13 @@ class FeaturedMovies: UICollectionViewCell {
   var movies: [Movie]?
   
   let pages: FeaturedMoviesController = {
-    let pageViewController = FeaturedMoviesController()
-    pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-    return pageViewController
+    let featuredMoviesController = FeaturedMoviesController()
+    featuredMoviesController.view.translatesAutoresizingMaskIntoConstraints = false
+    return featuredMoviesController
   }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    let featuredMovieController = FeaturedMovie()
-    featuredMovieController.movie = movies?.first
-    let viewControllers = [featuredMovieController]
-    pages.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
-    
     addSubview(pages.view)
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pages.view]))
@@ -42,18 +37,18 @@ class FeaturedMovie: UIViewController {
       guard let backdropPath = movie?.backdrop_path else { return }
       HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
         guard let data = response.data else { return }
-        let image = UIImage(data: data)
-        self.backdropImageView.image = image
+        self.backdropImageView.image = UIImage(data: data)
       }
     }
   }
   
   let backdropImageView: UIImageView = {
-    let backdrop = UIImageView()
-    backdrop.translatesAutoresizingMaskIntoConstraints = false
-    backdrop.layer.cornerRadius = 5
-    backdrop.layer.masksToBounds = true
-    return backdrop
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.layer.cornerRadius = 5
+    imageView.layer.masksToBounds = true
+    imageView.contentMode = .scaleAspectFill
+    return imageView
   }()
   
   override func viewDidLoad() {
