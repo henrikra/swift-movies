@@ -116,9 +116,9 @@ class FeaturedMovieController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]-(padding400)-[v1]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": textContainerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(55)]-(30)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": textContainerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(52)]-(30)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": textContainerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": subtitleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": subtitleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(3)-[v1]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": subtitleLabel]))
   }
 }
