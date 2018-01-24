@@ -62,6 +62,13 @@ class FeaturedMovieController: UIViewController {
     return imageView
   }()
   
+  let backdropOverlayView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = UIColor(white: 0, alpha: 0.2)
+    return view
+  }()
+  
   let posterImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,11 +87,14 @@ class FeaturedMovieController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(backdropImageView)
+    view.addSubview(backdropOverlayView)
     view.addSubview(posterImageView)
     view.addSubview(titleLabel)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]-(padding400)-[v1]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
