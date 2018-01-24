@@ -96,15 +96,15 @@ class FeaturedMovieController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(backdropImageView)
-    view.addSubview(backdropOverlayView)
+    backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(posterImageView)
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(60)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(60)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]-(padding400)-[v1]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(104)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": subtitleLabel]))
