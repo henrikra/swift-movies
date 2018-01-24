@@ -33,6 +33,7 @@ class FeaturedMovieController: UIViewController {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
+      subtitleLabel.text = movie?.release_date
       
       backdropImageView.image = nil
       posterImageView.image = nil
@@ -79,8 +80,16 @@ class FeaturedMovieController: UIViewController {
   let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont.boldSystemFont(ofSize: 32)
+    label.font = UIFont.boldSystemFont(ofSize: 30)
     label.textColor = .white
+    return label
+  }()
+  
+  let subtitleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.font = UIFont.systemFont(ofSize: 14)
     return label
   }()
   
@@ -90,13 +99,15 @@ class FeaturedMovieController: UIViewController {
     view.addSubview(backdropOverlayView)
     view.addSubview(posterImageView)
     view.addSubview(titleLabel)
+    view.addSubview(subtitleLabel)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(60)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(60)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]-(padding400)-[v1]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(104)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": subtitleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0][v1]-(30)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": subtitleLabel]))
   }
 }
