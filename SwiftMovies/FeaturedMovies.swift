@@ -33,12 +33,21 @@ class FeaturedMovieController: UIViewController {
   var movie: Movie? {
     didSet {
       backdropImageView.image = nil
+      posterImageView.image = nil
       
-      guard let backdropPath = movie?.backdrop_path else { return }
-      HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
-        guard let data = response.data else { return }
-        self.backdropImageView.image = UIImage(data: data)
+      if let backdropPath = movie?.backdrop_path {
+        HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
+          guard let data = response.data else { return }
+          self.backdropImageView.image = UIImage(data: data)
+        }
       }
+      if let posterPath = movie?.poster_path {
+        HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
+          guard let data = response.data else { return }
+          self.posterImageView.image = UIImage(data: data)
+        }
+      }
+      
     }
   }
   
@@ -51,10 +60,20 @@ class FeaturedMovieController: UIViewController {
     return imageView
   }()
   
+  let posterImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
+    return imageView
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(backdropImageView)
+    view.addSubview(posterImageView)
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
   }
 }

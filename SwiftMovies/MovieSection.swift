@@ -8,12 +8,6 @@
 
 import UIKit
 
-class Spacing {
-  static let padding500: CGFloat = 20.0
-}
-
-let metrics = ["padding500": Spacing.padding500]
-
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   var movies: [Movie]?
   
