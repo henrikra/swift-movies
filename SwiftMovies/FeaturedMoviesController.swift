@@ -20,6 +20,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     pageControl.translatesAutoresizingMaskIntoConstraints = false
     pageControl.currentPageIndicatorTintColor = UIColor(red: 255/255, green: 82/255, blue: 108/255, alpha: 1)
     pageControl.pageIndicatorTintColor = UIColor(white: 1, alpha: 0.5)
+    pageControl.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     return pageControl
   }()
   
