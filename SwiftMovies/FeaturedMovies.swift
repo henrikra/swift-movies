@@ -32,6 +32,8 @@ class FeaturedMovies: UICollectionViewCell {
 class FeaturedMovieController: UIViewController {
   var movie: Movie? {
     didSet {
+      titleLabel.text = movie?.title
+      
       backdropImageView.image = nil
       posterImageView.image = nil
       
@@ -67,13 +69,24 @@ class FeaturedMovieController: UIViewController {
     return imageView
   }()
   
+  let titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.boldSystemFont(ofSize: 32)
+    label.textColor = .white
+    return label
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(backdropImageView)
     view.addSubview(posterImageView)
+    view.addSubview(titleLabel)
+    
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(40)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(30)-[v0(60)]-(padding400)-[v1]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(90)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-(25)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
   }
 }
