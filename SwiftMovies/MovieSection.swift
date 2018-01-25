@@ -69,6 +69,13 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     return CGSize(width: 100, height: frame.height - 41)
   }
   
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let cellWidth: CGFloat = 140
+    let nextItem = round(targetContentOffset.pointee.x / cellWidth)
+    targetContentOffset.pointee = CGPoint(x: nextItem * cellWidth - Spacing.padding500, y: 0)
+    
+  }
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
