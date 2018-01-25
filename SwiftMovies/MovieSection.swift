@@ -71,8 +71,11 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let cellWidth: CGFloat = 140
-    let nextItem = round(targetContentOffset.pointee.x / cellWidth)
-    targetContentOffset.pointee = CGPoint(x: nextItem * cellWidth - Spacing.padding500, y: 0)
+    var nextItem = round(targetContentOffset.pointee.x / cellWidth)
+    if moviesCollectionView.contentOffset.x > targetContentOffset.pointee.x {
+      nextItem += 1
+    }
+    targetContentOffset.pointee = CGPoint(x: nextItem * cellWidth - Spacing.padding500, y: targetContentOffset.pointee.y)
     
   }
   
