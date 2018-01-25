@@ -18,6 +18,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     layout.minimumLineSpacing = minimumLineSpacing
+    layout.sectionInset = UIEdgeInsets(top: 0, left: Spacing.padding500, bottom: 0, right: Spacing.padding500)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
@@ -56,7 +57,6 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
     moviesCollectionView.register(SmallMovieCell.self, forCellWithReuseIdentifier: "cellId")
-    moviesCollectionView.contentInset = UIEdgeInsets(top: 0, left: Spacing.padding500, bottom: 0, right: Spacing.padding500)
     
     addSubview(moviesCollectionView)
     addSubview(categoryTitleLabel)
@@ -78,8 +78,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     if scrollView.contentOffset.x > targetContentOffset.pointee.x {
       nextItem += 1
     }
-    targetContentOffset.pointee = CGPoint(x: nextItem * totalCellWidth - Spacing.padding500, y: targetContentOffset.pointee.y)
-    
+    targetContentOffset.pointee = CGPoint(x: nextItem * totalCellWidth, y: targetContentOffset.pointee.y)
   }
   
   required init?(coder aDecoder: NSCoder) {
