@@ -8,13 +8,16 @@
 
 import UIKit
 
+let cellWidth: CGFloat = 100.0
+let minimumLineSpacing: CGFloat = 40.0
+
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   var movies: [Movie]?
   
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    layout.minimumLineSpacing = 40.0
+    layout.minimumLineSpacing = minimumLineSpacing
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
@@ -66,16 +69,16 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 100, height: frame.height - 41)
+    return CGSize(width: cellWidth, height: frame.height - 41)
   }
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    let cellWidth: CGFloat = 140
-    var nextItem = round(targetContentOffset.pointee.x / cellWidth)
-    if moviesCollectionView.contentOffset.x > targetContentOffset.pointee.x {
+    let totalCellWidth: CGFloat = cellWidth + minimumLineSpacing
+    var nextItem = round(targetContentOffset.pointee.x / totalCellWidth)
+    if scrollView.contentOffset.x > targetContentOffset.pointee.x {
       nextItem += 1
     }
-    targetContentOffset.pointee = CGPoint(x: nextItem * cellWidth - Spacing.padding500, y: targetContentOffset.pointee.y)
+    targetContentOffset.pointee = CGPoint(x: nextItem * totalCellWidth - Spacing.padding500, y: targetContentOffset.pointee.y)
     
   }
   
