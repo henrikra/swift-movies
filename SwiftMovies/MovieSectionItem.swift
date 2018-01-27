@@ -15,18 +15,11 @@ class SmallMovieCell: UICollectionViewCell {
       posterImageView.image = nil
       
       guard let posterPath = movie?.poster_path else { return }
-      guard let url = URL(string: "https://image.tmdb.org/t/p/w300\(posterPath)") else { return }
-      URLSession.shared.dataTask(with: url) { (data, response, error) in
-        if let error = error {
-          print(error)
-          return
-        }
-        guard let data = data else { return }
+      HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
+        guard let data = response.data else { return }
         let image = UIImage(data: data)
-        DispatchQueue.main.async {
-          self.posterImageView.image = image
-        }
-        }.resume()
+        self.posterImageView.image = image
+      }
     }
   }
   
