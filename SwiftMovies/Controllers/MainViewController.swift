@@ -18,6 +18,10 @@ class MainViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.tintColor = .white
+    
     let gradientLayer: CAGradientLayer = CAGradientLayer()
     gradientLayer.frame = view.frame
     let myColor = UIColor(red: 75.0/255.0, green: 35.0/255.0, blue: 42.0/255.0, alpha: 1.0)
@@ -37,15 +41,5 @@ class MainViewController: UIViewController {
     let detailViewController = DetailViewController()
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    navigationController?.isNavigationBarHidden = true
-  }
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(animated)
-    navigationController?.isNavigationBarHidden = false
   }
 }
