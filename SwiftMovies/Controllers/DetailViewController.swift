@@ -19,18 +19,29 @@ class DetailViewController: UIViewController {
       }
     }
   }
+  
   let backdropImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
   
+  let backdropOverlayView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     
+    backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(backdropImageView)
     
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
   }
