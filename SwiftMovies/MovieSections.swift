@@ -8,18 +8,6 @@
 
 import UIKit
 
-struct MovieDatabaseResponse: Decodable {
-  let results: [Movie]
-}
-
-struct Movie: Decodable {
-  let id: Int
-  let title: String
-  let poster_path: String?
-  let backdrop_path: String?
-  let release_date: String
-}
-
 class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
   var upcomingMovies: [Movie]?
   var topRatedMovies: [Movie]?
@@ -109,12 +97,5 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: frame.width, height: 250)
-  }
-}
-
-class DetailViewController: UIViewController {
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = .white
   }
 }
