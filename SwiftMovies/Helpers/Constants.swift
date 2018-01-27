@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Spacing {
+enum Spacing {
   static let padding400: CGFloat = 14.0
   static let padding500: CGFloat = 20.0
 }
