@@ -20,20 +20,26 @@ struct Movie: Decodable {
   let release_date: String
 }
 
-class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
   var upcomingMovies: [Movie]?
   var topRatedMovies: [Movie]?
   var onMoviePress: (() -> Void)?
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    collectionView?.backgroundColor = .clear
-    collectionView?.contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
-    collectionView?.register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
-    collectionView?.register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
+  override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+    super.init(frame: frame, collectionViewLayout: layout)
+    delegate = self
+    dataSource = self
+    backgroundColor = .clear
+    contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
+    register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
+    register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
     
     fetchUpcomingMovies()
     fetchTopRatedMovies()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   func fetchUpcomingMovies() {
@@ -42,7 +48,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
         guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
-        self.collectionView?.reloadData()
+        self.reloadData()
       } catch let jsonError {
         print(jsonError)
       }
@@ -55,7 +61,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
       do {
         let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.topRatedMovies = topRatedMoviesResponse.results
-        self.collectionView?.reloadData()
+        self.reloadData()
       } catch let jsonError {
         print(jsonError)
       }
@@ -63,10 +69,10 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return CGSize(width: view.frame.width, height: 260)
+    return CGSize(width: frame.width, height: 260)
   }
   
-  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "featuredMoviesId", for: indexPath) as! FeaturedMovies
     header.movies = self.upcomingMovies
     let featuredMovieController = FeaturedMovieController()
@@ -82,12 +88,12 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
     return 20.0
   }
   
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 3
   }
   
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
     cell.onPress = onMoviePress
     if indexPath.item == 0 {
       cell.movies = upcomingMovies
@@ -102,7 +108,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width, height: 250)
+    return CGSize(width: frame.width, height: 250)
   }
 }
 
