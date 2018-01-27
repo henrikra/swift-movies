@@ -124,7 +124,6 @@
 				7EA32146200E76540025BC9B /* Info.plist */,
 				7EE8A167200FD96600A688F0 /* MovieSections.swift */,
 				7EE8A169200FDFDF00A688F0 /* MovieSection.swift */,
-				7EE8A16B200FF52F00A688F0 /* MainViewController.swift */,
 				7EC7DBA7201502B1000F5D13 /* config.swift */,
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
 				7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */,
@@ -171,6 +170,7 @@
 		7ED86E29201CB6F0002E2913 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7EE8A16B200FF52F00A688F0 /* MainViewController.swift */,
 				7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */,
 			);
 			path = Controllers;
