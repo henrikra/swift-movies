@@ -13,6 +13,7 @@ let minimumLineSpacing: CGFloat = 40.0
 
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   var movies: [Movie]?
+  var onPress: (() -> Void)?
   
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -79,6 +80,10 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
       nextItem += 1
     }
     targetContentOffset.pointee = CGPoint(x: nextItem * totalCellWidth, y: targetContentOffset.pointee.y)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    onPress?()
   }
   
   required init?(coder aDecoder: NSCoder) {

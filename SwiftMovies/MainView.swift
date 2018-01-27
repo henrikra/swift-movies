@@ -17,8 +17,6 @@ class MainView: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    navigationController?.isNavigationBarHidden = true
-    
     let gradientLayer: CAGradientLayer = CAGradientLayer()
     gradientLayer.frame = view.frame
     let myColor = UIColor(red: 75.0/255.0, green: 35.0/255.0, blue: 42.0/255.0, alpha: 1.0)
@@ -28,7 +26,22 @@ class MainView: UIViewController {
     view.layer.addSublayer(gradientLayer)
     
     if let sections = myScrollView.collectionView {
+      myScrollView.onMoviePress = goToDetailView
       view.addSubview(sections)
     }
+  }
+  
+  func goToDetailView() {
+    navigationController?.pushViewController(DetailViewController(), animated: true)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    navigationController?.isNavigationBarHidden = true
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    navigationController?.isNavigationBarHidden = false
   }
 }

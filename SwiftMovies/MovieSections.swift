@@ -23,6 +23,7 @@ struct Movie: Decodable {
 class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   var upcomingMovies: [Movie]?
   var topRatedMovies: [Movie]?
+  var onMoviePress: (() -> Void)?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -87,6 +88,7 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
+    cell.onPress = onMoviePress
     if indexPath.item == 0 {
       cell.movies = upcomingMovies
       cell.categoryTitleLabel.text = "Upcoming"
@@ -101,5 +103,12 @@ class MovieSections: UICollectionViewController, UICollectionViewDelegateFlowLay
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: view.frame.width, height: 250)
+  }
+}
+
+class DetailViewController: UIViewController {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .white
   }
 }
