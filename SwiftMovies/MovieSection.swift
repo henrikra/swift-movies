@@ -48,7 +48,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! SmallMovieCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSectionCell
     cell.movie = movies?[indexPath.item]
     return cell
   }
@@ -57,7 +57,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     super.init(frame: frame)
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
-    moviesCollectionView.register(SmallMovieCell.self, forCellWithReuseIdentifier: "cellId")
+    moviesCollectionView.register(MovieSectionCell.self, forCellWithReuseIdentifier: "cellId")
     
     addSubview(moviesCollectionView)
     addSubview(categoryTitleLabel)

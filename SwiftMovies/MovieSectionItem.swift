@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmallMovieCell: UICollectionViewCell {
+class MovieSectionCell: UICollectionViewCell {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
