@@ -33,8 +33,10 @@ class MainViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": myScrollView]))
   }
   
-  func goToDetailView() {
-    navigationController?.pushViewController(DetailViewController(), animated: true)
+  func goToDetailView(movie: Movie) {
+    let detailViewController = DetailViewController()
+    detailViewController.movie = movie
+    navigationController?.pushViewController(detailViewController, animated: true)
   }
   
   override func viewDidAppear(_ animated: Bool) {
