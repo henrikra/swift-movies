@@ -36,6 +36,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
     let featuredMovieController = FeaturedMovieController()
     featuredMovieController.movie = movies?[nextIndex]
+    featuredMovieController.onPress = currentViewController.onPress
     return featuredMovieController
   }
   
@@ -55,6 +56,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
     let featuredMovieController = FeaturedMovieController()
     featuredMovieController.movie = movies?[nextIndex]
+    featuredMovieController.onPress = currentViewController.onPress
     return featuredMovieController
   }
   

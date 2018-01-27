@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
-  let myScrollView: MovieSections = {
+  let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     return scrollView
@@ -26,11 +26,11 @@ class MainViewController: UIViewController {
     gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
     view.layer.addSublayer(gradientLayer)
     
-    myScrollView.onMoviePress = goToDetailView
-    view.addSubview(myScrollView)
+    movieSections.onMoviePress = goToDetailView
+    view.addSubview(movieSections)
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": myScrollView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": myScrollView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
   }
   
   func goToDetailView(movie: Movie) {

@@ -9,8 +9,6 @@
 import UIKit
 
 class FeaturedMovies: UICollectionViewCell {
-  var movies: [Movie]?
-  
   let featuredMoviesController: FeaturedMoviesController = {
     let featuredMoviesController = FeaturedMoviesController()
     featuredMoviesController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +28,7 @@ class FeaturedMovies: UICollectionViewCell {
 }
 
 class FeaturedMovieController: UIViewController {
+  var onPress: ((Movie) -> Void)?
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
@@ -99,6 +98,12 @@ class FeaturedMovieController: UIViewController {
     return view
   }()
   
+  @objc func handleTap() {
+    if let movie = movie {
+      onPress?(movie)
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(backdropImageView)
@@ -107,6 +112,8 @@ class FeaturedMovieController: UIViewController {
     view.addSubview(textContainerView)
     textContainerView.addSubview(titleLabel)
     textContainerView.addSubview(subtitleLabel)
+    
+    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(60)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
