@@ -17,8 +17,7 @@ class SmallMovieCell: UICollectionViewCell {
       guard let posterPath = movie?.poster_path else { return }
       HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
         guard let data = response.data else { return }
-        let image = UIImage(data: data)
-        self.posterImageView.image = image
+        self.posterImageView.image = UIImage(data: data)
       }
     }
   }
