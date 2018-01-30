@@ -27,6 +27,18 @@ class DetailViewController: UIViewController {
           self.posterImageView.image = UIImage(data: data)
         }
       }
+      
+      if let id = movie?.id {
+        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+          guard let data = response.data else { return }
+          do {
+            let movie = try JSONDecoder().decode(Movie.self, from: data)
+            print(movie)
+          } catch let jsonError {
+            print(jsonError)
+          }
+        })
+      }
     }
   }
   
