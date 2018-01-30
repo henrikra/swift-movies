@@ -11,6 +11,9 @@ import UIKit
 class DetailViewController: UIViewController {
   var movie: Movie? {
     didSet {
+      titleLabel.text = movie?.title
+      overviewLabel.text = movie?.overview
+      
       if let backdropPath = movie?.backdrop_path {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
           guard let data = response.data else { return }
@@ -42,7 +45,16 @@ class DetailViewController: UIViewController {
   let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.text = "Title here"
+    label.font = UIFont.boldSystemFont(ofSize: 22)
+    label.textColor = .white
+    return label
+  }()
+  
+  let overviewLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .white
+    label.font = UIFont.systemFont(ofSize: 16)
     return label
   }()
   
@@ -53,6 +65,7 @@ class DetailViewController: UIViewController {
     backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(backdropImageView)
     gradientBackground.addSubview(titleLabel)
+    gradientBackground.addSubview(overviewLabel)
     view.addSubview(gradientBackground)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -62,7 +75,8 @@ class DetailViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": gradientBackground]))
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(30)]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(30)][v1]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {

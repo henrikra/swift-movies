@@ -18,4 +18,5 @@ struct Movie: Decodable {
   let poster_path: String?
   let backdrop_path: String?
   let release_date: String
+  let overview: String
 }
