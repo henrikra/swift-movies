@@ -22,6 +22,7 @@
 		7EE8A16C200FF52F00A688F0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A16B200FF52F00A688F0 /* MainViewController.swift */; };
 		7EEBA82C201A3C9F0086BC90 /* MovieSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEBA82B201A3C9F0086BC90 /* MovieSectionItem.swift */; };
 		7EEDE7112017932700CD3418 /* FeaturedMoviesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */; };
+		7EF4A7792020D9650004C590 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF4A7782020D9650004C590 /* Extensions.swift */; };
 		7EFC98B420154D5900BF599F /* FeaturedMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFC98B320154D5900BF599F /* FeaturedMovies.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		7EE8A16B200FF52F00A688F0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7EEBA82B201A3C9F0086BC90 /* MovieSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSectionItem.swift; sourceTree = "<group>"; };
 		7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedMoviesController.swift; sourceTree = "<group>"; };
+		7EF4A7782020D9650004C590 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7EFC98B320154D5900BF599F /* FeaturedMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedMovies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
 				7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */,
 				7EEBA82B201A3C9F0086BC90 /* MovieSectionItem.swift */,
+				7EF4A7782020D9650004C590 /* Extensions.swift */,
 			);
 			path = SwiftMovies;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				7EE8A168200FD96600A688F0 /* MovieSections.swift in Sources */,
 				7EC7DBA8201502B1000F5D13 /* config.swift in Sources */,
 				7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */,
+				7EF4A7792020D9650004C590 /* Extensions.swift in Sources */,
 				7EA3213B200E76540025BC9B /* AppDelegate.swift in Sources */,
 				7EE8A16A200FDFDF00A688F0 /* MovieSection.swift in Sources */,
 				7E3089F42019208B006D65FD /* Constants.swift in Sources */,
