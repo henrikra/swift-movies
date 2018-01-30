@@ -20,6 +20,13 @@ class DetailViewController: UIViewController {
           self.backdropImageView.image = UIImage(data: data)
         }
       }
+      
+      if let posterPath = movie?.poster_path {
+        HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
+          guard let data = response.data else { return }
+          self.posterImageView.image = UIImage(data: data)
+        }
+      }
     }
   }
   
@@ -40,6 +47,13 @@ class DetailViewController: UIViewController {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
+  }()
+  
+  let posterImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
+    return imageView
   }()
   
   let titleLabel: UILabel = {
@@ -66,6 +80,7 @@ class DetailViewController: UIViewController {
     view.addSubview(backdropImageView)
     gradientBackground.addSubview(titleLabel)
     gradientBackground.addSubview(overviewLabel)
+    gradientBackground.addSubview(posterImageView)
     view.addSubview(gradientBackground)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -74,9 +89,10 @@ class DetailViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": gradientBackground]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": gradientBackground]))
     
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(30)][v1]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(150)][v1(30)][v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel, "v2": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {
