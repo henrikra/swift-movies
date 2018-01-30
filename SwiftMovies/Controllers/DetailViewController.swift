@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
     return view
   }()
   
-  let gradientBackground: UIView = {
+  let contentView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -80,25 +80,25 @@ class DetailViewController: UIViewController {
     
     backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(backdropImageView)
-    gradientBackground.addSubview(titleLabel)
-    gradientBackground.addSubview(overviewLabel)
-    gradientBackground.addSubview(posterImageView)
-    view.addSubview(gradientBackground)
+    contentView.addSubview(titleLabel)
+    contentView.addSubview(overviewLabel)
+    contentView.addSubview(posterImageView)
+    view.addSubview(contentView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": gradientBackground]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": gradientBackground]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": contentView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": contentView]))
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(150)]-(padding500)-[v1]-(padding500)-[v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel, "v2": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    gradientBackground.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    contentView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
   }
 }
