@@ -61,6 +61,7 @@ class DetailViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.boldSystemFont(ofSize: 22)
     label.textColor = .white
+    label.textAlignment = .center
     return label
   }()
   
@@ -69,6 +70,7 @@ class DetailViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textColor = .white
     label.font = UIFont.systemFont(ofSize: 16)
+    label.numberOfLines = 0
     return label
   }()
   
@@ -91,8 +93,8 @@ class DetailViewController: UIViewController {
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(150)][v1(30)][v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel, "v2": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(150)]-(padding500)-[v1]-(padding500)-[v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel, "v2": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {
