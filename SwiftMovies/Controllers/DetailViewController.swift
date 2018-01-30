@@ -80,9 +80,9 @@ class DetailViewController: UIViewController {
     
     backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(backdropImageView)
+    contentView.addSubview(posterImageView)
     contentView.addSubview(titleLabel)
     contentView.addSubview(overviewLabel)
-    contentView.addSubview(posterImageView)
     view.addSubview(contentView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -91,10 +91,13 @@ class DetailViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": contentView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": contentView]))
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView]))
+    posterImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+    posterImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0).isActive = true
+    posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -100).isActive = true
+    
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(150)]-(padding500)-[v1]-(padding500)-[v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": posterImageView, "v1": titleLabel, "v2": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v1]-(padding500)-[v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v1": titleLabel, "v2": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {
