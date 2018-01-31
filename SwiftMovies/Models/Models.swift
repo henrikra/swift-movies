@@ -19,4 +19,9 @@ struct Movie: Decodable {
   let backdrop_path: String?
   let release_date: String
   let overview: String
+  let genres: [Genre]?
+}
+
+struct Genre: Decodable {
+  let name: String
 }
