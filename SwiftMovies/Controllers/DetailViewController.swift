@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
           guard let data = response.data else { return }
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
-            print(movie)
+            print(movie.genres)
           } catch let jsonError {
             print(jsonError)
           }
@@ -55,8 +55,8 @@ class DetailViewController: UIViewController {
     return view
   }()
   
-  let contentView: UIView = {
-    let view = UIView()
+  let contentView: TouchesOutsideView = {
+    let view = TouchesOutsideView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -64,6 +64,7 @@ class DetailViewController: UIViewController {
   let posterImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.isUserInteractionEnabled = true
     imageView.contentMode = .scaleAspectFit
     return imageView
   }()
@@ -86,15 +87,43 @@ class DetailViewController: UIViewController {
     return label
   }()
   
+  @objc func togglePosterZoom() {
+    if isPosterActive {
+      activePosterImageViewHeightAnchor?.isActive = false
+      activePosterImageViewCenterYAnchor?.isActive = false
+      idlePosterImageViewTopAnchor?.isActive = true
+      idlePosterImageViewHeightAnchor?.isActive = true
+    } else {
+      idlePosterImageViewTopAnchor?.isActive = false
+      idlePosterImageViewHeightAnchor?.isActive = false
+      activePosterImageViewCenterYAnchor?.isActive = true
+      activePosterImageViewHeightAnchor?.isActive = true
+    }
+    
+    isPosterActive = !isPosterActive
+    
+    UIView.animate(withDuration: 0.5) {
+      self.view.layoutIfNeeded()
+    }
+  }
+  
+  var idlePosterImageViewTopAnchor: NSLayoutConstraint?
+  var idlePosterImageViewHeightAnchor: NSLayoutConstraint?
+  var activePosterImageViewHeightAnchor: NSLayoutConstraint?
+  var activePosterImageViewCenterYAnchor: NSLayoutConstraint?
+  var isPosterActive = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     
+    contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(togglePosterZoom)))
+    
     backdropImageView.addSubview(backdropOverlayView)
     view.addSubview(backdropImageView)
-    contentView.addSubview(posterImageView)
     contentView.addSubview(titleLabel)
     contentView.addSubview(overviewLabel)
+    contentView.addSubview(posterImageView)
     view.addSubview(contentView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -103,9 +132,14 @@ class DetailViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": contentView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": contentView]))
     
-    posterImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     posterImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0).isActive = true
-    posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -100).isActive = true
+    activePosterImageViewCenterYAnchor = posterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
+    idlePosterImageViewTopAnchor = posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -100)
+    idlePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 150)
+    activePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 300)
+    
+    idlePosterImageViewTopAnchor?.isActive = true
+    idlePosterImageViewHeightAnchor?.isActive = true
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
@@ -115,5 +149,17 @@ class DetailViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     contentView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+  }
+}
+
+class TouchesOutsideView: UIView {
+  override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    for subview in subviews.reversed() {
+      let subPoint = subview.convert(point, from: self)
+      if let result = subview.hitTest(subPoint, with: event) {
+        return result
+      }
+    }
+    return nil
   }
 }
