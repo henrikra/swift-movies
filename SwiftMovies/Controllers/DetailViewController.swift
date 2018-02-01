@@ -66,6 +66,10 @@ class DetailViewController: UIViewController {
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.isUserInteractionEnabled = true
     imageView.contentMode = .scaleAspectFit
+    imageView.layer.shadowColor = UIColor.black.cgColor
+    imageView.layer.shadowOpacity = 0.2
+    imageView.layer.shadowOffset = CGSize(width: 10, height: 10)
+    imageView.layer.shadowRadius = 0
     return imageView
   }()
   
