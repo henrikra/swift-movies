@@ -119,6 +119,7 @@
 		7EA32139200E76540025BC9B /* SwiftMovies */ = {
 			isa = PBXGroup;
 			children = (
+				7E72A8422027BF03004B4EA8 /* ActorCell.swift */,
 				7ED86E29201CB6F0002E2913 /* Controllers */,
 				7ED86E26201CB6B9002E2913 /* Models */,
 				7ED86E25201CB677002E2913 /* Helpers */,
@@ -159,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				7E3089F32019208B006D65FD /* Constants.swift */,
-				7E72A8422027BF03004B4EA8 /* ActorCell.swift */,
 				7EC7DBA920153638000F5D13 /* HttpAgent.swift */,
 			);
 			path = Helpers;
