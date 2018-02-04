@@ -115,7 +115,6 @@ class DetailViewController: UIViewController {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
-    scrollView.backgroundColor = Colors.secondary500
     return scrollView
   }()
   
@@ -127,7 +126,7 @@ class DetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
+    view.backgroundColor = Colors.secondary500
     
     view.addSubview(scrollView)
 
