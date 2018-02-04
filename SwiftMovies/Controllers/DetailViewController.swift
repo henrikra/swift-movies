@@ -276,7 +276,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     genreLabel.trailingAnchor.constraint(equalTo: creditContainerView.trailingAnchor).isActive = true
     
     directorNameLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
-    directorNameLabel.trailingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
+    directorNameLabel.trailingAnchor.constraint(equalTo: genreLabel.leadingAnchor, constant: -Spacing.padding300).isActive = true
     genreNameLabel.leadingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
     genreNameLabel.trailingAnchor.constraint(equalTo: genreLabel.trailingAnchor).isActive = true
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": directorLabel, "v1": directorNameLabel]))
