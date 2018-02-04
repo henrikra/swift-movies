@@ -135,19 +135,13 @@ class DetailViewController: UIViewController {
     let content = UIStackView(arrangedSubviews: [backdropImageView, movieInfoView])
     content.axis = .vertical
     content.translatesAutoresizingMaskIntoConstraints = false
-    content.backgroundColor = .blue
     scrollView.addSubview(content)
     
     scrollView.alwaysBounceVertical = true
-    scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": scrollView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": scrollView]))
     
-    content.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-    content.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-    content.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-    content.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": content]))
     
     content.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     let heightConstraint = content.heightAnchor.constraint(equalTo: view.heightAnchor)
