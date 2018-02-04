@@ -155,6 +155,30 @@ class DetailViewController: UIViewController {
     return label
   }()
   
+  let genreLabel: UILabel = {
+    let label = UILabel()
+    label.text = "GENRES"
+    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.systemFont(ofSize: 12)
+    return label
+  }()
+  
+  let genreNameLabel: UILabel = {
+    let label = UILabel()
+    label.text = "..."
+    label.textColor = .white
+    label.font = UIFont.systemFont(ofSize: 14)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
+  let creditContainerView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
@@ -182,9 +206,12 @@ class DetailViewController: UIViewController {
     backdropImageView.addSubview(backdropOverlayView)
     movieInfoView.addSubview(titleLabel)
     movieInfoView.addSubview(overviewLabel)
+    movieInfoView.addSubview(creditContainerView)
+    creditContainerView.addSubview(directorLabel)
+    creditContainerView.addSubview(directorNameLabel)
+    creditContainerView.addSubview(genreLabel)
+    creditContainerView.addSubview(genreNameLabel)
     movieInfoView.addSubview(posterImageView)
-    movieInfoView.addSubview(directorLabel)
-    movieInfoView.addSubview(directorNameLabel)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -201,9 +228,18 @@ class DetailViewController: UIViewController {
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-(padding300)-[v3]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": directorLabel, "v3": directorNameLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": directorLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": directorNameLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
+    directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
+    directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.5).isActive = true
+    genreLabel.leadingAnchor.constraint(equalTo: directorLabel.trailingAnchor).isActive = true
+    genreLabel.topAnchor.constraint(equalTo: creditContainerView.topAnchor).isActive = true
+    genreLabel.widthAnchor.constraint(equalTo: directorLabel.widthAnchor).isActive = true
+    
+    directorNameLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
+    genreNameLabel.leadingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": directorLabel, "v1": directorNameLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": genreLabel, "v1": genreNameLabel]))
   }
   
   override func viewDidLayoutSubviews() {
