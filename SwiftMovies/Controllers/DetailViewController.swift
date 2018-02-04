@@ -8,7 +8,23 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+  private let cellId = "cellId"
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 8
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+    cell.backgroundColor = .blue
+    return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: 60, height: 60)
+  }
+  
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
@@ -179,11 +195,24 @@ class DetailViewController: UIViewController {
     return view
   }()
   
+  let castCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.backgroundColor = .red
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    return collectionView
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
     
     view.addSubview(scrollView)
+    
+    castCollectionView.delegate = self
+    castCollectionView.dataSource = self
+    castCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
 
     let content = UIStackView(arrangedSubviews: [backdropImageView, movieInfoView])
     content.axis = .vertical
@@ -211,6 +240,7 @@ class DetailViewController: UIViewController {
     creditContainerView.addSubview(directorNameLabel)
     creditContainerView.addSubview(genreLabel)
     creditContainerView.addSubview(genreNameLabel)
+    movieInfoView.addSubview(castCollectionView)
     movieInfoView.addSubview(posterImageView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -228,7 +258,8 @@ class DetailViewController: UIViewController {
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-padding500-[v3(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView, "v3": castCollectionView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
     directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.4).isActive = true

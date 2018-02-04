@@ -27,7 +27,12 @@ struct Genre: Decodable {
 }
 
 struct Credits: Decodable {
+  let cast: [Actor]
   let crew: [CrewMember]
+}
+
+struct Actor: Decodable {
+  let profile_path: String?
 }
 
 struct CrewMember: Decodable {
