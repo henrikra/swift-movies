@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
           guard let data = response.data else { return }
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
-//            print(movie.genres)
+            self.genreNameLabel.text = movie.genres?.map({ $0.name }).joined(separator: ", ")
           } catch let jsonError {
             print(jsonError)
           }
@@ -231,13 +231,15 @@ class DetailViewController: UIViewController {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
-    directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.5).isActive = true
+    directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.4).isActive = true
     genreLabel.leadingAnchor.constraint(equalTo: directorLabel.trailingAnchor).isActive = true
     genreLabel.topAnchor.constraint(equalTo: creditContainerView.topAnchor).isActive = true
-    genreLabel.widthAnchor.constraint(equalTo: directorLabel.widthAnchor).isActive = true
+    genreLabel.trailingAnchor.constraint(equalTo: creditContainerView.trailingAnchor).isActive = true
     
     directorNameLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
+    directorNameLabel.trailingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
     genreNameLabel.leadingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
+    genreNameLabel.trailingAnchor.constraint(equalTo: genreLabel.trailingAnchor).isActive = true
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": directorLabel, "v1": directorNameLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": genreLabel, "v1": genreNameLabel]))
   }
