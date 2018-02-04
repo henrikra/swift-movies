@@ -55,7 +55,7 @@ class DetailViewController: UIViewController {
     return view
   }()
   
-  let contentView: TouchesOutsideView = {
+  let movieInfoView: TouchesOutsideView = {
     let view = TouchesOutsideView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -111,6 +111,12 @@ class DetailViewController: UIViewController {
     }
   }
   
+  let scrollView: UIScrollView = {
+    let scrollView = UIScrollView()
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    return scrollView
+  }()
+  
   var idlePosterImageViewTopAnchor: NSLayoutConstraint?
   var idlePosterImageViewHeightAnchor: NSLayoutConstraint?
   var activePosterImageViewHeightAnchor: NSLayoutConstraint?
@@ -121,38 +127,59 @@ class DetailViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     
-    contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(togglePosterZoom)))
+    view.addSubview(scrollView)
+
+    let content = UIStackView(arrangedSubviews: [backdropImageView, movieInfoView])
+    content.axis = .vertical
+    content.translatesAutoresizingMaskIntoConstraints = false
+    content.backgroundColor = .blue
+    scrollView.addSubview(content)
+    
+    scrollView.alwaysBounceVertical = true
+    scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    
+    content.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+    content.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+    content.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+    content.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+    
+    content.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+    let heightConstraint = content.heightAnchor.constraint(equalTo: view.heightAnchor)
+    heightConstraint.priority = UILayoutPriority(250)
+    heightConstraint.isActive = true
+    
+    movieInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(togglePosterZoom)))
     
     backdropImageView.addSubview(backdropOverlayView)
-    view.addSubview(backdropImageView)
-    contentView.addSubview(titleLabel)
-    contentView.addSubview(overviewLabel)
-    contentView.addSubview(posterImageView)
-    view.addSubview(contentView)
+    movieInfoView.addSubview(titleLabel)
+    movieInfoView.addSubview(overviewLabel)
+    movieInfoView.addSubview(posterImageView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)][v1]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView, "v1": contentView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": contentView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(200)]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropImageView]))
     
-    posterImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0).isActive = true
+    posterImageView.centerXAnchor.constraint(equalTo: movieInfoView.centerXAnchor, constant: 0).isActive = true
     activePosterImageViewCenterYAnchor = posterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
-    idlePosterImageViewTopAnchor = posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -100)
+    idlePosterImageViewTopAnchor = posterImageView.topAnchor.constraint(equalTo: movieInfoView.topAnchor, constant: -100)
     idlePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 150)
     activePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 300)
-    
+
     idlePosterImageViewTopAnchor?.isActive = true
     idlePosterImageViewHeightAnchor?.isActive = true
-    
+
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v1]-(padding500)-[v2]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v1": titleLabel, "v2": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v1]-(padding500)-[v2]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v1": titleLabel, "v2": overviewLabel]))
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    contentView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    movieInfoView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
   }
 }
 
