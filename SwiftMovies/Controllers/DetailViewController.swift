@@ -33,7 +33,18 @@ class DetailViewController: UIViewController {
           guard let data = response.data else { return }
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
-            print(movie.genres)
+//            print(movie.genres)
+          } catch let jsonError {
+            print(jsonError)
+          }
+        })
+        
+        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)/credits?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+          guard let data = response.data else { return }
+          
+          do {
+            let credits = try JSONDecoder().decode(Credits.self, from: data)
+            self.directorNameLabel.text = credits.crew.first(where: { $0.job == "Director" })?.name
           } catch let jsonError {
             print(jsonError)
           }
@@ -137,7 +148,7 @@ class DetailViewController: UIViewController {
   
   let directorNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "Rian Johnson"
+    label.text = "..."
     label.textColor = .white
     label.font = UIFont.systemFont(ofSize: 14)
     label.translatesAutoresizingMaskIntoConstraints = false

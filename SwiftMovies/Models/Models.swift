@@ -25,3 +25,12 @@ struct Movie: Decodable {
 struct Genre: Decodable {
   let name: String
 }
+
+struct Credits: Decodable {
+  let crew: [CrewMember]
+}
+
+struct CrewMember: Decodable {
+  let job: String
+  let name: String
+}
