@@ -12,18 +12,24 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
   private let cellId = "cellId"
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 8
+    return cast?.count ?? 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-    cell.backgroundColor = .blue
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ActorCell
+    cell.imagePath = cast?[indexPath.item].profile_path
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 25
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 60, height: 60)
   }
+  
+  var cast: [Actor]?
   
   var movie: Movie? {
     didSet {
@@ -61,6 +67,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
           do {
             let credits = try JSONDecoder().decode(Credits.self, from: data)
             self.directorNameLabel.text = credits.crew.first(where: { $0.job == "Director" })?.name
+            self.cast = credits.cast.filter({ $0.profile_path != nil })
+            self.castCollectionView.reloadData()
           } catch let jsonError {
             print(jsonError)
           }
@@ -199,7 +207,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.backgroundColor = .red
+    collectionView.backgroundColor = .clear
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
@@ -212,7 +220,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     castCollectionView.delegate = self
     castCollectionView.dataSource = self
-    castCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+    castCollectionView.register(ActorCell.self, forCellWithReuseIdentifier: cellId)
 
     let content = UIStackView(arrangedSubviews: [backdropImageView, movieInfoView])
     content.axis = .vertical

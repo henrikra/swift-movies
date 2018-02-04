@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E3089F42019208B006D65FD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3089F32019208B006D65FD /* Constants.swift */; };
+		7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A8422027BF03004B4EA8 /* ActorCell.swift */; };
 		7EA3213B200E76540025BC9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3213A200E76540025BC9B /* AppDelegate.swift */; };
 		7EA32142200E76540025BC9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA32141200E76540025BC9B /* Assets.xcassets */; };
 		7EA32145200E76540025BC9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA32143200E76540025BC9B /* LaunchScreen.storyboard */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		7E3089F32019208B006D65FD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7E72A8422027BF03004B4EA8 /* ActorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCell.swift; sourceTree = "<group>"; };
 		7EA32137200E76540025BC9B /* SwiftMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA3213A200E76540025BC9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EA32141200E76540025BC9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				7E3089F32019208B006D65FD /* Constants.swift */,
+				7E72A8422027BF03004B4EA8 /* ActorCell.swift */,
 				7EC7DBA920153638000F5D13 /* HttpAgent.swift */,
 			);
 			path = Helpers;
@@ -317,6 +320,7 @@
 				7EE8A16C200FF52F00A688F0 /* MainViewController.swift in Sources */,
 				7ED86E2B201CB6FC002E2913 /* DetailViewController.swift in Sources */,
 				7EFC98B420154D5900BF599F /* FeaturedMovies.swift in Sources */,
+				7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */,
 				7EE8A168200FD96600A688F0 /* MovieSections.swift in Sources */,
 				7EC7DBA8201502B1000F5D13 /* config.swift in Sources */,
 				7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */,
