@@ -126,6 +126,24 @@ class DetailViewController: UIViewController {
   var activePosterImageViewCenterYAnchor: NSLayoutConstraint?
   var isPosterActive = false
   
+  let directorLabel: UILabel = {
+    let label = UILabel()
+    label.text = "DIRECTOR"
+    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.systemFont(ofSize: 12)
+    return label
+  }()
+  
+  let directorNameLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Rian Johnson"
+    label.textColor = .white
+    label.font = UIFont.systemFont(ofSize: 14)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
@@ -154,6 +172,8 @@ class DetailViewController: UIViewController {
     movieInfoView.addSubview(titleLabel)
     movieInfoView.addSubview(overviewLabel)
     movieInfoView.addSubview(posterImageView)
+    movieInfoView.addSubview(directorLabel)
+    movieInfoView.addSubview(directorNameLabel)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
@@ -170,7 +190,9 @@ class DetailViewController: UIViewController {
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v1]-(padding500)-[v2]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v1": titleLabel, "v2": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-(padding300)-[v3]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": directorLabel, "v3": directorNameLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": directorLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": directorNameLabel]))
   }
   
   override func viewDidLayoutSubviews() {
