@@ -11,6 +11,7 @@ import UIKit
 class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
   var upcomingMovies: [Movie]?
   var topRatedMovies: [Movie]?
+  var popularMovies: [Movie]?
   var onMoviePress: ((Movie) -> Void)?
   
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -24,6 +25,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     
     fetchUpcomingMovies()
     fetchTopRatedMovies()
+    fetchPopularMovies()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -56,6 +58,19 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     }
   }
   
+  func fetchPopularMovies() {
+    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)").responseJSON { (response) in
+      guard let data = response.data else { return }
+      do {
+        let popularMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
+        self.popularMovies = popularMoviesResponse.results
+        self.reloadData()
+      } catch let jsonError {
+        print(jsonError)
+      }
+    }
+  }
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return CGSize(width: frame.width, height: 260)
   }
@@ -77,21 +92,20 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 3
+    return 2
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
-    cell.onPress = onMoviePress
     if indexPath.item == 0 {
-      cell.movies = upcomingMovies
-      cell.categoryTitleLabel.text = "Upcoming"
-      cell.moviesCollectionView.reloadData()      
+      cell.categoryTitleLabel.text = "Popular"
+      cell.movies = popularMovies
     } else if indexPath.item == 1 {
       cell.categoryTitleLabel.text = "Top rated"
       cell.movies = topRatedMovies
-      cell.moviesCollectionView.reloadData()
     }
+    cell.onPress = onMoviePress
+    cell.moviesCollectionView.reloadData()
     return cell
   }
   
