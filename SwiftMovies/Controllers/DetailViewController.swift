@@ -203,6 +203,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     return view
   }()
   
+  let castLabel: UILabel = {
+    let label = UILabel()
+    label.text = "CAST"
+    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.systemFont(ofSize: 12)
+    return label
+  }()
+  
   let castCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -249,6 +258,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     creditContainerView.addSubview(directorNameLabel)
     creditContainerView.addSubview(genreLabel)
     creditContainerView.addSubview(genreNameLabel)
+    movieInfoView.addSubview(castLabel)
     movieInfoView.addSubview(castCollectionView)
     movieInfoView.addSubview(posterImageView)
     
@@ -267,8 +277,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castCollectionView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-padding500-[v3(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView, "v3": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-padding500-[v3][v4(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView, "v3": castLabel, "v4": castCollectionView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
     directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.4).isActive = true
