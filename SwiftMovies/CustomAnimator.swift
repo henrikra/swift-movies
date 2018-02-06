@@ -52,14 +52,18 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     targetView.frame = isPushing ? CGRect(x: fromView.frame.width, y: 0, width: targetView.frame.width, height: targetView.frame.height) : targetView.frame
     
-    UIView.animate(withDuration: duration, animations: {
+    UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.5, options: [], animations: {
       transitionImageView.frame = self.isPushing ? posterImageView.frame : self.originFrame
-      targetView.frame = self.isPushing ? fromView.frame : CGRect(x: toView.frame.width, y: 0, width: toView.frame.width, height: toView.frame.height)
     }) { (finished) in
-      transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
       posterImageView.alpha = 1
       self.moviePosterView.alpha = 1
       transitionImageView.removeFromSuperview()
+    }
+    
+    UIView.animate(withDuration: duration, animations: {
+      targetView.frame = self.isPushing ? fromView.frame : CGRect(x: toView.frame.width, y: 0, width: toView.frame.width, height: toView.frame.height)
+    }) { (finished) in
+      transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
     }
   }
 }
