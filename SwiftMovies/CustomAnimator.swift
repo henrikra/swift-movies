@@ -13,14 +13,16 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
   let isPushing: Bool
   let originFrame: CGRect
   let image: UIImage
+  let moviePosterView: UIImageView
   
   let CustomAnimatorTag = 99 // TODO figure out better way than tags
   
-  init(duration: TimeInterval, isPushing: Bool, originFrame: CGRect, image: UIImage) {
+  init(duration: TimeInterval, isPushing: Bool, originFrame: CGRect, image: UIImage, moviePosterView: UIImageView) {
     self.duration = duration
     self.isPushing = isPushing
     self.originFrame = originFrame
     self.image = image
+    self.moviePosterView = moviePosterView
   }
   
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -40,6 +42,7 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     guard let posterImageView = targetView.viewWithTag(CustomAnimatorTag) as? UIImageView else { return }
     posterImageView.image = image
     posterImageView.alpha = 0
+    moviePosterView.alpha = 0
     
     let transitionImageView = UIImageView(frame: isPushing ? originFrame : posterImageView.frame)
     transitionImageView.image = posterImageView.image
@@ -54,6 +57,7 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }) { (finished) in
       transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
       posterImageView.alpha = 1
+      self.moviePosterView.alpha = 1
       transitionImageView.removeFromSuperview()
     }
   }

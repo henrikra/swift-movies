@@ -28,7 +28,7 @@ class FeaturedMovies: UICollectionViewCell {
 }
 
 class FeaturedMovieController: UIViewController {
-  var onPress: ((Movie, CGRect, UIImage) -> Void)?
+  var onPress: ((Movie, CGRect, UIImage, UIImageView) -> Void)?
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
@@ -100,7 +100,7 @@ class FeaturedMovieController: UIViewController {
   
   @objc func handleTap() {
     if let movie = movie {
-      onPress?(movie, .zero, UIImage())
+      onPress?(movie, .zero, UIImage(), UIImageView())
     }
   }
   
