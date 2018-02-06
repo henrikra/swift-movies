@@ -83,8 +83,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let theAttributes = collectionView.layoutAttributesForItem(at: indexPath)
-    guard let attributes = theAttributes else { return }
+    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
     let selectedCell = collectionView.cellForItem(at: indexPath) as! MovieSectionCell
     guard let image = selectedCell.posterImageView.image else { return }
     let selectedFrame = collectionView.convert(CGRect(x: attributes.frame.minX, y: attributes.frame.minY, width: selectedCell.posterImageView.frame.width, height: selectedCell.posterImageView.frame.height), to: window)
