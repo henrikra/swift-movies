@@ -92,15 +92,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     return view
   }()
   
-  let movieInfoView: TouchesOutsideView = {
-    let view = TouchesOutsideView()
+  let movieInfoView: UIView = {
+    let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
   
   let posterImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.isUserInteractionEnabled = true
     imageView.contentMode = .scaleAspectFit
     imageView.layer.shadowColor = UIColor.black.cgColor
@@ -129,38 +128,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     return label
   }()
   
-  @objc func togglePosterZoom() {
-    if isPosterActive {
-      activePosterImageViewHeightAnchor?.isActive = false
-      activePosterImageViewCenterYAnchor?.isActive = false
-      idlePosterImageViewTopAnchor?.isActive = true
-      idlePosterImageViewHeightAnchor?.isActive = true
-    } else {
-      idlePosterImageViewTopAnchor?.isActive = false
-      idlePosterImageViewHeightAnchor?.isActive = false
-      activePosterImageViewCenterYAnchor?.isActive = true
-      activePosterImageViewHeightAnchor?.isActive = true
-    }
-    
-    isPosterActive = !isPosterActive
-    
-    UIView.animate(withDuration: 0.5) {
-      self.view.layoutIfNeeded()
-    }
-  }
-  
   let scrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
     return scrollView
   }()
-  
-  var idlePosterImageViewTopAnchor: NSLayoutConstraint?
-  var idlePosterImageViewHeightAnchor: NSLayoutConstraint?
-  var activePosterImageViewHeightAnchor: NSLayoutConstraint?
-  var activePosterImageViewCenterYAnchor: NSLayoutConstraint?
-  var isPosterActive = false
   
   let directorLabel: UILabel = {
     let label = UILabel()
@@ -249,8 +222,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     heightConstraint.priority = UILayoutPriority(250)
     heightConstraint.isActive = true
     
-    movieInfoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(togglePosterZoom)))
-    
     backdropImageView.addSubview(backdropOverlayView)
     movieInfoView.addSubview(titleLabel)
     movieInfoView.addSubview(overviewLabel)
@@ -261,20 +232,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     creditContainerView.addSubview(genreNameLabel)
     movieInfoView.addSubview(castLabel)
     movieInfoView.addSubview(castCollectionView)
-    movieInfoView.addSubview(posterImageView)
+    view.addSubview(posterImageView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
     backdropImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-    
-    posterImageView.centerXAnchor.constraint(equalTo: movieInfoView.centerXAnchor, constant: 0).isActive = true
-    activePosterImageViewCenterYAnchor = posterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
-    idlePosterImageViewTopAnchor = posterImageView.topAnchor.constraint(equalTo: movieInfoView.topAnchor, constant: -100)
-    idlePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 150)
-    activePosterImageViewHeightAnchor = posterImageView.heightAnchor.constraint(equalToConstant: 300)
 
-    idlePosterImageViewTopAnchor?.isActive = true
-    idlePosterImageViewHeightAnchor?.isActive = true
+    posterImageView.frame = CGRect(x: view.frame.width / 2 - 50, y: 100, width: 100, height: 150)
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
@@ -302,14 +266,3 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
   }
 }
 
-class TouchesOutsideView: UIView {
-  override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    for subview in subviews.reversed() {
-      let subPoint = subview.convert(point, from: self)
-      if let result = subview.hitTest(subPoint, with: event) {
-        return result
-      }
-    }
-    return nil
-  }
-}
