@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UINavigationControllerDelegate {
   let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -17,6 +17,8 @@ class MainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    navigationController?.delegate = self
     
     UIApplication.shared.statusBarStyle = .lightContent
     
@@ -37,5 +39,14 @@ class MainViewController: UIViewController {
     let detailViewController = DetailViewController()
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
+  }
+  
+  func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    switch operation {
+      case .push:
+        return CustomAnimator(duration: 1.0, isPushing: true, originFrame: .zero, image: UIImage())
+      default:
+        return CustomAnimator(duration: 1.0, isPushing: false, originFrame: .zero, image: UIImage())
+    }
   }
 }
