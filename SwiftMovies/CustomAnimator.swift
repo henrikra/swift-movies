@@ -47,23 +47,33 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let currentPosterFrame = posterImageView.convert(posterImageView.frame, to: nil)
     let transitionImageView = UIImageView(frame: isPushing ? originFrame : CGRect(x: posterImageView.frame.minX, y: currentPosterFrame.minY - 100, width: 100, height: 150))
     transitionImageView.image = posterImageView.image
+    transitionImageView.layer.shadowColor = UIColor.black.cgColor
+    transitionImageView.layer.shadowOpacity = isPushing ? 0 : 0.2
+    transitionImageView.layer.shadowOffset = CGSize(width: 10, height: 10)
+    transitionImageView.layer.shadowRadius = 0
     containerView.addSubview(transitionImageView)
     targetView.layoutIfNeeded()
     
     targetView.frame = isPushing ? CGRect(x: fromView.frame.width, y: 0, width: targetView.frame.width, height: targetView.frame.height) : targetView.frame
     
-    UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.5, options: [], animations: {
+    
+    let shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
+    shadowAnimation.fromValue = transitionImageView.layer.shadowOpacity
+    shadowAnimation.toValue = isPushing ? 0.2 : 0
+    shadowAnimation.duration = duration
+    transitionImageView.layer.add(shadowAnimation, forKey: shadowAnimation.keyPath)
+    transitionImageView.layer.shadowOpacity = isPushing ? 0.2 : 0
+    UIView.animate(withDuration: duration, delay: 0.1, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.5, options: [], animations: {
       transitionImageView.frame = self.isPushing ? posterImageView.frame : self.originFrame
     }) { (finished) in
+      transitionImageView.removeFromSuperview()
       posterImageView.alpha = 1
       self.moviePosterView.alpha = 1
-      transitionImageView.removeFromSuperview()
-    }
-    
-    UIView.animate(withDuration: duration, animations: {
-      targetView.frame = self.isPushing ? fromView.frame : CGRect(x: toView.frame.width, y: 0, width: toView.frame.width, height: toView.frame.height)
-    }) { (finished) in
       transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
     }
+    
+    UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+      targetView.frame = self.isPushing ? fromView.frame : CGRect(x: toView.frame.width, y: 0, width: toView.frame.width, height: toView.frame.height)
+    })
   }
 }

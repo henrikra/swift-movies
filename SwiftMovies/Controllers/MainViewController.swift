@@ -54,9 +54,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     switch operation {
       case .push:
-        return CustomAnimator(duration: 0.4, isPushing: true, originFrame: originFrame, image: image, moviePosterView: imageView)
+        return CustomAnimator(duration: 0.5, isPushing: true, originFrame: originFrame, image: image, moviePosterView: imageView)
       default:
-        return CustomAnimator(duration: 0.4, isPushing: false, originFrame: originFrame, image: image, moviePosterView: imageView)
+        return CustomAnimator(duration: 0.5, isPushing: false, originFrame: originFrame, image: image, moviePosterView: imageView)
     }
   }
 }
