@@ -9,6 +9,9 @@
 import UIKit
 
 class MainViewController: UIViewController, UINavigationControllerDelegate {
+  var originFrame: CGRect?
+  var selectedMovie: Movie?
+  var selectedImage: UIImage?
   let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,18 +38,23 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
   }
   
-  func goToDetailView(movie: Movie) {
+  func goToDetailView(movie: Movie, originFrame: CGRect, image: UIImage) {
+    self.originFrame = originFrame
+    self.selectedMovie = movie
+    self.selectedImage = image
     let detailViewController = DetailViewController()
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    guard let originFrame = originFrame, let image = selectedImage else { return nil }
+    
     switch operation {
       case .push:
-        return CustomAnimator(duration: 1.0, isPushing: true, originFrame: .zero, image: UIImage())
+        return CustomAnimator(duration: 1.0, isPushing: true, originFrame: originFrame, image: image)
       default:
-        return CustomAnimator(duration: 1.0, isPushing: false, originFrame: .zero, image: UIImage())
+        return CustomAnimator(duration: 1.0, isPushing: false, originFrame: originFrame, image: image)
     }
   }
 }

@@ -107,6 +107,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     imageView.layer.shadowOpacity = 0.2
     imageView.layer.shadowOffset = CGSize(width: 10, height: 10)
     imageView.layer.shadowRadius = 0
+    imageView.tag = 99
     return imageView
   }()
   
