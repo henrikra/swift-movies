@@ -44,7 +44,8 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     posterImageView.alpha = 0
     moviePosterView.alpha = 0
     
-    let transitionImageView = UIImageView(frame: isPushing ? originFrame : posterImageView.frame)
+    let currentPosterFrame = posterImageView.convert(posterImageView.frame, to: nil)
+    let transitionImageView = UIImageView(frame: isPushing ? originFrame : CGRect(x: posterImageView.frame.minX, y: currentPosterFrame.minY - 100, width: 100, height: 150))
     transitionImageView.image = posterImageView.image
     containerView.addSubview(transitionImageView)
     targetView.layoutIfNeeded()
