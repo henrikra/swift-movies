@@ -99,8 +99,8 @@ class FeaturedMovieController: UIViewController {
   }()
   
   @objc func handleTap() {
-    if let movie = movie {
-      onPress?(movie, .zero, UIImage(), UIImageView())
+    if let movie = movie, let image = posterImageView.image {
+      onPress?(movie, posterImageView.convert(posterImageView.bounds, to: nil), image, posterImageView)
     }
   }
   
