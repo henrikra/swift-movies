@@ -85,7 +85,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let selectedCell = collectionView.cellForItem(at: indexPath) as! MovieSectionCell
     guard let image = selectedCell.posterImageView.image else { return }
-    let selectedFrame = selectedCell.posterImageView.convert(selectedCell.posterImageView.bounds, to: window)
+    let selectedFrame = selectedCell.posterImageView.convert(selectedCell.posterImageView.bounds, to: nil)
     if let movie = movies?[indexPath.item] {
       onPress?(movie, selectedFrame, image, selectedCell.posterImageView)
     }
