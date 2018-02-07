@@ -11,7 +11,6 @@ import UIKit
 class MainViewController: UIViewController, UINavigationControllerDelegate {
   var originFrame: CGRect?
   var selectedMovie: Movie?
-  var selectedImage: UIImage?
   var selectedMovieImageView: UIImageView?
   let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -39,10 +38,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
   }
   
-  func goToDetailView(movie: Movie, originFrame: CGRect, image: UIImage, imageView: UIImageView) {
+  func goToDetailView(movie: Movie, originFrame: CGRect, imageView: UIImageView) {
     self.originFrame = originFrame
     self.selectedMovie = movie
-    self.selectedImage = image
     self.selectedMovieImageView = imageView
     let detailViewController = DetailViewController()
     detailViewController.movie = movie
@@ -50,13 +48,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    guard let originFrame = originFrame, let image = selectedImage, let imageView = selectedMovieImageView else { return nil }
+    guard let originFrame = originFrame, let imageView = selectedMovieImageView else { return nil }
     
     switch operation {
       case .push:
-        return CustomAnimator(duration: 0.5, isPushing: true, originFrame: originFrame, image: image, moviePosterView: imageView)
+        return CustomAnimator(duration: 0.5, isPushing: true, originFrame: originFrame, moviePosterView: imageView)
       default:
-        return CustomAnimator(duration: 0.5, isPushing: false, originFrame: originFrame, image: image, moviePosterView: imageView)
+        return CustomAnimator(duration: 0.5, isPushing: false, originFrame: originFrame, moviePosterView: imageView)
     }
   }
 }

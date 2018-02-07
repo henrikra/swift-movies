@@ -12,7 +12,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   var upcomingMovies: [Movie]?
   var topRatedMovies: [Movie]?
   var popularMovies: [Movie]?
-  var onMoviePress: ((Movie, CGRect, UIImage, UIImageView) -> Void)?
+  var onMoviePress: ((Movie, CGRect, UIImageView) -> Void)?
   
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)

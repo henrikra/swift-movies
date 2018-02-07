@@ -13,7 +13,7 @@ let minimumLineSpacing: CGFloat = 40.0
 
 class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   var movies: [Movie]?
-  var onPress: ((Movie, CGRect, UIImage, UIImageView) -> Void)?
+  var onPress: ((Movie, CGRect, UIImageView) -> Void)?
   
   let moviesCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -84,10 +84,9 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let selectedCell = collectionView.cellForItem(at: indexPath) as! MovieSectionCell
-    guard let image = selectedCell.posterImageView.image else { return }
     let selectedFrame = selectedCell.posterImageView.convert(selectedCell.posterImageView.bounds, to: nil)
     if let movie = movies?[indexPath.item] {
-      onPress?(movie, selectedFrame, image, selectedCell.posterImageView)
+      onPress?(movie, selectedFrame, selectedCell.posterImageView)
     }
   }
   
