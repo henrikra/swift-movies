@@ -60,6 +60,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     return view
   }()
   
+  let titleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Search"
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .white
+    label.textAlignment = .center
+    return label
+  }()
+  
   @objc func closeSearch() {
     searchTextField.endEditing(true)
     dismiss(animated: true, completion: nil)
@@ -98,19 +107,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
     view.addSubview(searchResultTableView)
+    searchInputContainerView.addSubview(titleLabel)
     searchInputContainerView.addSubview(searchTextField)
     searchInputContainerView.addSubview(closeButton)
     searchInputContainerView.addSubview(separatorView)
     
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(100)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(120)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(0.5)]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0][v1]|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[v1]-padding300-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-55-[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
   }
   
   override func viewDidAppear(_ animated: Bool) {
