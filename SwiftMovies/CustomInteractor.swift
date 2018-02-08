@@ -40,7 +40,7 @@ class CustomInteractor: UIPercentDrivenInteractiveTransition {
         break
       case .changed:
         shouldCompleteTransition = progress > 0.3
-        update(progress)
+        update(progress / 2.5)
         break
       case .cancelled:
         transitionInProgress = false
