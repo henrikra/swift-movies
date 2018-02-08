@@ -20,6 +20,15 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     return scrollView
   }()
   
+  let searchButton: UIButton = {
+    let button = UIButton(type: UIButtonType.system)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.backgroundColor = .white
+    button.layer.cornerRadius = 30
+    button.addTarget(self, action: #selector(openSearch), for: .touchUpInside)
+    return button
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -35,9 +44,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     movieSections.onMoviePress = goToDetailView
     view.addSubview(movieSections)
+    view.addSubview(searchButton)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[v0(60)]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": searchButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(60)]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": searchButton]))
   }
   
   func goToDetailView(movie: Movie, originFrame: CGRect, imageView: UIImageView) {
@@ -47,6 +59,10 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     let detailViewController = DetailViewController()
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
+  }
+  
+  @objc func openSearch() {
+    navigationController?.present(SearchViewController(), animated: true, completion: nil)
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
