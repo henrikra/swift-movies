@@ -50,6 +50,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.backgroundColor = .clear
+    tableView.keyboardDismissMode = .onDrag
     return tableView
   }()
   
