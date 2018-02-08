@@ -18,6 +18,7 @@
 		7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7DBA920153638000F5D13 /* HttpAgent.swift */; };
 		7ED86E28201CB6C8002E2913 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E27201CB6C8002E2913 /* Models.swift */; };
 		7ED86E2B201CB6FC002E2913 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */; };
+		7EDC4A3D202CAD0400B550B5 /* CustomInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDC4A3C202CAD0400B550B5 /* CustomInteractor.swift */; };
 		7EE3BCCB202A05CF006CBBCF /* CustomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE3BCCA202A05CF006CBBCF /* CustomAnimator.swift */; };
 		7EE8A168200FD96600A688F0 /* MovieSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A167200FD96600A688F0 /* MovieSections.swift */; };
 		7EE8A16A200FDFDF00A688F0 /* MovieSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8A169200FDFDF00A688F0 /* MovieSection.swift */; };
@@ -63,6 +64,7 @@
 		7EC7DBA920153638000F5D13 /* HttpAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpAgent.swift; sourceTree = "<group>"; };
 		7ED86E27201CB6C8002E2913 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		7EDC4A3C202CAD0400B550B5 /* CustomInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractor.swift; sourceTree = "<group>"; };
 		7EE3BCCA202A05CF006CBBCF /* CustomAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimator.swift; sourceTree = "<group>"; };
 		7EE8A167200FD96600A688F0 /* MovieSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSections.swift; sourceTree = "<group>"; };
 		7EE8A169200FDFDF00A688F0 /* MovieSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSection.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				7EA32143200E76540025BC9B /* LaunchScreen.storyboard */,
 				7EA32146200E76540025BC9B /* Info.plist */,
 				7EE8A167200FD96600A688F0 /* MovieSections.swift */,
+				7EDC4A3C202CAD0400B550B5 /* CustomInteractor.swift */,
 				7EE8A169200FDFDF00A688F0 /* MovieSection.swift */,
 				7EC7DBA7201502B1000F5D13 /* config.swift */,
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
@@ -325,6 +328,7 @@
 				7EFC98B420154D5900BF599F /* FeaturedMovies.swift in Sources */,
 				7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */,
 				7EE8A168200FD96600A688F0 /* MovieSections.swift in Sources */,
+				7EDC4A3D202CAD0400B550B5 /* CustomInteractor.swift in Sources */,
 				7EC7DBA8201502B1000F5D13 /* config.swift in Sources */,
 				7EE3BCCB202A05CF006CBBCF /* CustomAnimator.swift in Sources */,
 				7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */,

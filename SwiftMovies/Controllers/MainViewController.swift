@@ -12,6 +12,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   var originFrame: CGRect?
   var selectedMovie: Movie?
   var selectedMovieImageView: UIImageView?
+  var customInteractor: CustomInteractor?
+  
   let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +54,15 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     switch operation {
       case .push:
+        self.customInteractor = CustomInteractor(attachTo: toVC)
         return CustomAnimator(duration: 0.5, isPushing: true, originFrame: originFrame, moviePosterView: imageView)
       default:
         return CustomAnimator(duration: 0.5, isPushing: false, originFrame: originFrame, moviePosterView: imageView)
     }
+  }
+  
+  func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    guard let customInteractor = customInteractor else { return nil }
+    return customInteractor.transitionInProgress ? customInteractor : nil
   }
 }
