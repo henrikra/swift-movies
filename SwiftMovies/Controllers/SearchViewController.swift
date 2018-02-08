@@ -99,6 +99,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.tintColor = .white
     
+    searchTextField.becomeFirstResponder()
+    
     searchResultTableView.dataSource = self
     searchResultTableView.delegate = self
     searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
@@ -122,11 +124,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0][v1]|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[v1]-padding300-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-55-[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    searchTextField.becomeFirstResponder()
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
