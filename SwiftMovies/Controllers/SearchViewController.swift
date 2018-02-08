@@ -28,6 +28,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     textField.leftViewMode = .always
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Spacing.padding400, height: 0))
     textField.addTarget(self, action: #selector(searchForMovies(_:)), for: .editingChanged)
+    textField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
+    textField.returnKeyType = .search
     return textField
   }()
   
@@ -77,6 +79,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     searchResultTableView.delegate = self
     searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
     searchResultTableView.separatorStyle = .none
+    searchTextField.becomeFirstResponder()
     
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
