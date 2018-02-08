@@ -62,7 +62,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   }
   
   @objc func openSearch() {
-    navigationController?.present(SearchViewController(), animated: true, completion: nil)
+    navigationController?.present(UINavigationController(rootViewController: SearchViewController()), animated: true, completion: nil)
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

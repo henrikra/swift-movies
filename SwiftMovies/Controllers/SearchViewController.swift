@@ -84,11 +84,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.tintColor = .white
+    
     searchResultTableView.dataSource = self
     searchResultTableView.delegate = self
     searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
     searchResultTableView.separatorStyle = .none
-    searchTextField.becomeFirstResponder()
     
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
@@ -108,6 +111,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": closeButton]))
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    searchTextField.becomeFirstResponder()
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return movieSearchResults?.count ?? 0
   }
@@ -122,6 +130,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 85
   }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if let movie = movieSearchResults?[indexPath.row] {
+      let detailViewController = DetailViewController()
+      detailViewController.movie = movie
+      searchTextField.endEditing(true)
+      navigationController?.pushViewController(detailViewController, animated: true)
+    }
+  }
+  
 }
 
 class SearchResultCell: UITableViewCell {
@@ -182,6 +200,7 @@ class SearchResultCell: UITableViewCell {
     textContainerView.addSubview(titleLabel)
     textContainerView.addSubview(releaseDateLabel)
     addSubview(separatorView)
+    selectionStyle = .none
     
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0(30)]-padding500-[v1]|", options: [], metrics: metrics, views:
       ["v0": posterImageView, "v1": textContainerView]))
