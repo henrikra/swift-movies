@@ -9,6 +9,9 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+  var searchTextFieldValue: String?
+  var movieSearchResults: [Movie]?
+  
   let searchInputContainerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -41,8 +44,23 @@ class SearchViewController: UIViewController {
     dismiss(animated: true, completion: nil)
   }
   
+  lazy var searchDebounced = Debouncer(delay: 0.30) {
+    guard let searchTextFieldValue = self.searchTextFieldValue else { return }
+    HttpAgent.request(url: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(searchTextFieldValue)").responseJSON(onReady: { (response) in
+      guard let data = response.data else { return }
+      do {
+        let searchResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
+        self.movieSearchResults = searchResponse.results
+        print(searchResponse)
+      } catch {
+        print(error)
+      }
+    })
+  }
+  
   @objc func searchForMovies(_ textField: UITextField) {
-    print(textField.text)
+    searchTextFieldValue = textField.text
+    searchDebounced.call()
   }
   
   override func viewDidLoad() {
