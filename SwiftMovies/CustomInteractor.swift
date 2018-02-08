@@ -15,7 +15,7 @@ class CustomInteractor: UIPercentDrivenInteractiveTransition {
   
   init?(attachTo viewController: UIViewController) {
     if let nav = viewController.navigationController {
-      self.navigationController = nav
+      navigationController = nav
       super.init()
       setupBackGesture(view: viewController.view)
     } else {
@@ -31,7 +31,7 @@ class CustomInteractor: UIPercentDrivenInteractiveTransition {
   
   @objc private func handleBackGesture(_ gesture : UIScreenEdgePanGestureRecognizer) {
     let viewTranslation = gesture.translation(in: gesture.view?.superview)
-    let progress = viewTranslation.x / self.navigationController.view.frame.width
+    let progress = viewTranslation.x / navigationController.view.frame.width
     
     switch gesture.state {
       case .began:
