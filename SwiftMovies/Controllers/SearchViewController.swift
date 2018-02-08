@@ -16,20 +16,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   let searchInputContainerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = Colors.primary500
     return view
   }()
   
   let searchTextField: UITextField = {
     let textField = UITextField()
-    textField.placeholder = "Search for movies"
     textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.backgroundColor = .white
+    textField.backgroundColor = Colors.secondary500.withAlphaComponent(0.2)
     textField.layer.cornerRadius = 5
     textField.leftViewMode = .always
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Spacing.padding400, height: 0))
     textField.addTarget(self, action: #selector(searchForMovies(_:)), for: .editingChanged)
     textField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
     textField.returnKeyType = .search
+    textField.textColor = .white
+    textField.attributedPlaceholder = NSAttributedString(string: "Search for movies", attributes: [NSAttributedStringKey.foregroundColor: UIColor(white: 1, alpha: 0.7)])
     return textField
   }()
   
@@ -49,12 +51,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     return tableView
   }()
   
+  let separatorView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 1, alpha: 0.2)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
   @objc func closeSearch() {
     searchTextField.endEditing(true)
     dismiss(animated: true, completion: nil)
   }
   
-  lazy var searchDebounced = Debouncer(delay: 0.30) {
+  lazy var searchDebounced = Debouncer(delay: 0.4) {
     guard let searchTextFieldValue = self.searchTextFieldValue else { return }
     HttpAgent.request(url: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(searchTextFieldValue)").responseJSON(onReady: { (response) in
       guard let data = response.data else { return }
@@ -86,13 +95,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addSubview(searchResultTableView)
     searchInputContainerView.addSubview(searchTextField)
     searchInputContainerView.addSubview(closeButton)
+    searchInputContainerView.addSubview(separatorView)
+    
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0(50)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(100)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(0.5)]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-[v1]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": searchTextField]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": closeButton]))
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
