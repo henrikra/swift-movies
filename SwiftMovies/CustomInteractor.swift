@@ -40,7 +40,8 @@ class CustomInteractor: UIPercentDrivenInteractiveTransition {
         break
       case .changed:
         shouldCompleteTransition = progress > 0.3
-        update(progress / 2.5)
+        let value = pow(viewTranslation.x, 1.3) / pow(navigationController.view.frame.width, 1.3)
+        update(value.isNaN ? 0 : value / 2.5)
         break
       case .cancelled:
         transitionInProgress = false
