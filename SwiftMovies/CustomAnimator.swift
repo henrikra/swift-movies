@@ -42,8 +42,7 @@ class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     posterImageView.alpha = 0
     moviePosterView.alpha = 0
     
-    let currentPosterFrame = posterImageView.convert(posterImageView.frame, to: nil)
-    let transitionImageView = UIImageView(frame: isPushing ? originFrame : CGRect(x: posterImageView.frame.minX, y: currentPosterFrame.minY - 100, width: 100, height: 150))
+    let transitionImageView = UIImageView(frame: isPushing ? originFrame : posterImageView.convert(posterImageView.bounds, to: nil))
     transitionImageView.image = posterImageView.image
     transitionImageView.layer.shadowColor = UIColor.black.cgColor
     transitionImageView.layer.shadowOpacity = isPushing ? 0 : 0.2
