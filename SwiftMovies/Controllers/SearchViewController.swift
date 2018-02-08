@@ -8,7 +8,8 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITableViewDataSource {
+  let cellId = "cellId"
   var searchTextFieldValue: String?
   var movieSearchResults: [Movie]?
   
@@ -39,6 +40,13 @@ class SearchViewController: UIViewController {
     return button
   }()
   
+  let searchResultTableView: UITableView = {
+    let tableView = UITableView()
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.backgroundColor = .clear
+    return tableView
+  }()
+  
   @objc func closeSearch() {
     searchTextField.endEditing(true)
     dismiss(animated: true, completion: nil)
@@ -51,7 +59,7 @@ class SearchViewController: UIViewController {
       do {
         let searchResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.movieSearchResults = searchResponse.results
-        print(searchResponse)
+        self.searchResultTableView.reloadData()
       } catch {
         print(error)
       }
@@ -65,15 +73,32 @@ class SearchViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    searchResultTableView.dataSource = self
+    searchResultTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+    
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
+    view.addSubview(searchResultTableView)
     searchInputContainerView.addSubview(searchTextField)
     searchInputContainerView.addSubview(closeButton)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0(50)]", options: [], metrics: metrics, views: ["v0": searchInputContainerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0(50)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-[v1]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": searchTextField]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return movieSearchResults?.count ?? 0
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+    cell.textLabel?.text = movieSearchResults?[indexPath.row].title
+    cell.backgroundColor = .clear
+    cell.textLabel?.textColor = .white
+    return cell
   }
 }
