@@ -193,6 +193,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     collectionView.backgroundColor = .clear
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.contentInset = UIEdgeInsets(top: 0, left: Spacing.padding500, bottom: 0, right: Spacing.padding500)
+    collectionView.showsHorizontalScrollIndicator = false
     return collectionView
   }()
   
