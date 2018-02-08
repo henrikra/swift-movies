@@ -104,7 +104,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 70
+    return 85
   }
 }
 
@@ -115,7 +115,7 @@ class SearchResultCell: UITableViewCell {
       releaseDateLabel.text = movie?.release_date
       
       if let posterPath = movie?.poster_path {
-        HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(posterPath)").responseJSON { (response) in
+        HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
           guard let data = response.data else { return }
           self.posterImageView.image = UIImage(data: data)
         }
@@ -127,6 +127,7 @@ class SearchResultCell: UITableViewCell {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textColor = .white
+    label.font = UIFont.boldSystemFont(ofSize: 20)
     return label
   }()
   
@@ -134,6 +135,7 @@ class SearchResultCell: UITableViewCell {
     let label = UILabel()
     label.textColor = UIColor(white: 1, alpha: 0.2)
     label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.systemFont(ofSize: 14)
     return label
   }()
   
@@ -169,11 +171,11 @@ class SearchResultCell: UITableViewCell {
       ["v0": posterImageView, "v1": textContainerView]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1(1)]|", options: [], metrics: metrics, views:
       ["v0": textContainerView, "v1": separatorView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(50)]", options: [], metrics: metrics, views: ["v0": posterImageView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": titleLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": posterImageView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]-padding400-|", options: [], metrics: metrics, views: ["v0": titleLabel]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": releaseDateLabel]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-60-[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1]|", options: [], metrics: metrics, views: ["v0": titleLabel, "v1": releaseDateLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-70-[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-padding500-[v0]-padding300-[v1]-padding500-|", options: [], metrics: metrics, views: ["v0": titleLabel, "v1": releaseDateLabel]))
     
     backgroundColor = .red
   }
