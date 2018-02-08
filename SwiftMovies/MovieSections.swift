@@ -37,7 +37,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
       do {
         guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
-        self.upcomingMovies = upcomingMoviesResponse.results.filter {$0.poster_path != nil}
+        self.upcomingMovies = upcomingMoviesResponse.results?.filter {$0.poster_path != nil}
         self.reloadData()
       } catch let jsonError {
         print(jsonError)
