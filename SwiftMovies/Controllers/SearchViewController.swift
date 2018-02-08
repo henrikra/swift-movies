@@ -159,6 +159,8 @@ class SearchResultCell: UITableViewCell {
       titleLabel.text = movie?.title
       releaseDateLabel.text = movie?.release_date
       
+      posterImageView.image = nil
+      
       if let posterPath = movie?.poster_path {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
           guard let data = response.data else { return }
