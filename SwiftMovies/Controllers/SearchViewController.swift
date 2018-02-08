@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDataSource {
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   let cellId = "cellId"
   var searchTextFieldValue: String?
   var movieSearchResults: [Movie]?
@@ -74,7 +74,9 @@ class SearchViewController: UIViewController, UITableViewDataSource {
   override func viewDidLoad() {
     super.viewDidLoad()
     searchResultTableView.dataSource = self
-    searchResultTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+    searchResultTableView.delegate = self
+    searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
+    searchResultTableView.separatorStyle = .none
     
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
@@ -95,10 +97,88 @@ class SearchViewController: UIViewController, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-    cell.textLabel?.text = movieSearchResults?[indexPath.row].title
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchResultCell
+    cell.movie = movieSearchResults?[indexPath.row]
     cell.backgroundColor = .clear
-    cell.textLabel?.textColor = .white
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 70
+  }
+}
+
+class SearchResultCell: UITableViewCell {
+  var movie: Movie? {
+    didSet {
+      titleLabel.text = movie?.title
+      releaseDateLabel.text = movie?.release_date
+      
+      if let posterPath = movie?.poster_path {
+        HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(posterPath)").responseJSON { (response) in
+          guard let data = response.data else { return }
+          self.posterImageView.image = UIImage(data: data)
+        }
+      }
+    }
+  }
+  
+  let titleLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .white
+    return label
+  }()
+  
+  let releaseDateLabel: UILabel = {
+    let label = UILabel()
+    label.textColor = UIColor(white: 1, alpha: 0.2)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
+  let posterImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
+    return imageView
+  }()
+  
+  let separatorView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(white: 1, alpha: 0.2)
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
+  let textContainerView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    addSubview(posterImageView)
+    addSubview(textContainerView)
+    textContainerView.addSubview(titleLabel)
+    textContainerView.addSubview(releaseDateLabel)
+    addSubview(separatorView)
+    
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0(30)]-padding500-[v1]|", options: [], metrics: metrics, views:
+      ["v0": posterImageView, "v1": textContainerView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1(1)]|", options: [], metrics: metrics, views:
+      ["v0": textContainerView, "v1": separatorView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(50)]", options: [], metrics: metrics, views: ["v0": posterImageView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": titleLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": releaseDateLabel]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-60-[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1]|", options: [], metrics: metrics, views: ["v0": titleLabel, "v1": releaseDateLabel]))
+    
+    backgroundColor = .red
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }
