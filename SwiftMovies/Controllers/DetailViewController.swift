@@ -268,8 +268,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let deltaY = fabs(scrollView.contentOffset.y)
     if scrollView.contentOffset.y <= 0 {
-      let deltaY = fabs(scrollView.contentOffset.y)
       let newHeight = headerHeight + deltaY
       
       var backdropImageViewNewFrame = backdropImageView.frame
@@ -280,6 +280,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
       var backdropOverlayNewFrame = backdropOverlayView.frame
       backdropOverlayNewFrame.size.height = newHeight
       backdropOverlayView.frame = backdropOverlayNewFrame
+    } else {
+      var backdropImageViewNewFrame = backdropImageView.frame
+      backdropImageViewNewFrame.origin.y = deltaY * 0.2
+      backdropImageView.frame = backdropImageViewNewFrame
     }
   }
 }
