@@ -27,7 +27,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     button.layer.cornerRadius = 30
     button.addTarget(self, action: #selector(openSearch), for: .touchUpInside)
     button.setImage(#imageLiteral(resourceName: "magnifying glass"), for: .normal)
-    button.tintColor = UIColor(red: 255/255, green: 80/255, blue: 109/255, alpha: 1)
+    button.tintColor = Colors.accent500
     return button
   }()
   

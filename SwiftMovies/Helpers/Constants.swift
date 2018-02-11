@@ -19,4 +19,5 @@ let metrics = ["padding500": Spacing.padding500, "padding400": Spacing.padding40
 enum Colors {
   static let primary500 = UIColor(red: 75.0/255.0, green: 35.0/255.0, blue: 42.0/255.0, alpha: 1.0)
   static let secondary500 = UIColor(red: 14.0/255.0, green: 16.0/255.0, blue: 27.0/255.0, alpha: 1.0)
+  static let accent500 = UIColor(red: 255/255, green: 80/255, blue: 109/255, alpha: 1)
 }
