@@ -8,27 +8,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let cellId = "cellId"
   private let headerHeight: CGFloat = 200
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return cast?.count ?? 0
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ActorCell
-    cell.imagePath = cast?[indexPath.item].profile_path
-    return cell
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 25
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 60, height: 60)
-  }
   
   var cast: [Actor]?
   
@@ -69,6 +51,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
             let credits = try JSONDecoder().decode(Credits.self, from: data)
             self.directorNameLabel.text = credits.crew.first(where: { $0.job == "Director" })?.name
             self.cast = credits.cast.filter({ $0.profile_path != nil })
+            self.castCollectionViewDelegate.cast = self.cast
             self.castCollectionView.reloadData()
           } catch let jsonError {
             print(jsonError)
@@ -197,6 +180,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     return collectionView
   }()
   
+  lazy var castCollectionViewDelegate = CastCollectionViewDelegate(cellId: cellId)
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
@@ -205,8 +190,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     view.addSubview(scrollView)
     
-    castCollectionView.delegate = self
-    castCollectionView.dataSource = self
+    castCollectionView.delegate = castCollectionViewDelegate
+    castCollectionView.dataSource = castCollectionViewDelegate
     castCollectionView.register(ActorCell.self, forCellWithReuseIdentifier: cellId)
 
     let content = UIStackView(arrangedSubviews: [backdropImageView, movieInfoView])
@@ -285,6 +270,33 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
       backdropImageViewNewFrame.origin.y = deltaY * 0.2
       backdropImageView.frame = backdropImageViewNewFrame
     }
+  }
+}
+
+class CastCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+  let cellId: String
+  var cast: [Actor]?
+  
+  init(cellId: String) {
+    self.cellId = cellId
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: 60, height: 60)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 25
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return cast?.count ?? 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ActorCell
+    cell.imagePath = cast?[indexPath.item].profile_path
+    return cell
   }
 }
 
