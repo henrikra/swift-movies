@@ -8,8 +8,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
   private let cellId = "cellId"
+  private let headerHeight: CGFloat = 200
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return cast?.count ?? 0
@@ -88,7 +89,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
   let backdropOverlayView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(white: 0, alpha: 0.5)
-    view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
   
@@ -201,6 +201,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
     
+    scrollView.delegate = self
+    
     view.addSubview(scrollView)
     
     castCollectionView.delegate = self
@@ -237,9 +239,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     posterImageView.frame = CGRect(x: view.frame.width / 2 - 50, y: 100, width: 100, height: 150)
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": backdropOverlayView]))
-    backdropImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+    backdropOverlayView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerHeight)
+    backdropImageView.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
@@ -264,6 +265,22 @@ class DetailViewController: UIViewController, UICollectionViewDelegate, UICollec
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     movieInfoView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+  }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y <= 0 {
+      let deltaY = fabs(scrollView.contentOffset.y)
+      let newHeight = headerHeight + deltaY
+      
+      var backdropImageViewNewFrame = backdropImageView.frame
+      backdropImageViewNewFrame.size.height = newHeight
+      backdropImageViewNewFrame.origin.y = -deltaY
+      backdropImageView.frame = backdropImageViewNewFrame
+      
+      var backdropOverlayNewFrame = backdropOverlayView.frame
+      backdropOverlayNewFrame.size.height = newHeight
+      backdropOverlayView.frame = backdropOverlayNewFrame
+    }
   }
 }
 
