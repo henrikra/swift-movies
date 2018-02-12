@@ -41,7 +41,15 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
             let movie = try JSONDecoder().decode(Movie.self, from: data)
             self.genreNameLabel.text = movie.genres?.map({ $0.name }).joined(separator: ", ")
             if let runtime = movie.runtime {
-              self.runtimeLabel.text = String(describing: runtime) + " min"
+              let hours = runtime / 60
+              let minutes = runtime % 60
+              if hours > 0 && minutes > 0 {
+                self.runtimeLabel.text = String(describing: hours) + "h " + String(describing: minutes) + " min"
+              } else if minutes > 0 {
+                self.runtimeLabel.text = String(describing: minutes) + " min"
+              } else {
+                self.runtimeLabel.text = "0 min"
+              }
             }
           } catch let jsonError {
             print(jsonError)
