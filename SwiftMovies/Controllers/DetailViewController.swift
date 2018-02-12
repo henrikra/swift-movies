@@ -113,6 +113,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     label.font = UIFont.boldSystemFont(ofSize: 22)
     label.textColor = .white
     label.textAlignment = .center
+    label.numberOfLines = 2
     return label
   }()
   
