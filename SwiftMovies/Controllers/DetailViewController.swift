@@ -40,6 +40,9 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
             self.genreNameLabel.text = movie.genres?.map({ $0.name }).joined(separator: ", ")
+            if let runtime = movie.runtime {
+              self.runtimeLabel.text = String(describing: runtime) + " min"
+            }
           } catch let jsonError {
             print(jsonError)
           }
@@ -127,6 +130,16 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     scrollView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
     return scrollView
+  }()
+  
+  let runtimeLabel: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = UIColor.white.withAlphaComponent(0.7)
+    label.textAlignment = .center
+    label.font = UIFont.systemFont(ofSize: 14)
+    label.text = "..."
+    return label
   }()
   
   let directorLabel: UILabel = {
@@ -223,6 +236,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     
     backdropImageView.addSubview(backdropOverlayView)
     movieInfoView.addSubview(titleLabel)
+    movieInfoView.addSubview(runtimeLabel)
     movieInfoView.addSubview(overviewLabel)
     movieInfoView.addSubview(creditContainerView)
     creditContainerView.addSubview(directorLabel)
@@ -240,10 +254,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     backdropImageView.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
 
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": runtimeLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castCollectionView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-(padding500)-[v1]-(padding500)-[v2]-padding500-[v3][v4(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": overviewLabel, "v2": creditContainerView, "v3": castLabel, "v4": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-padding400-[v1(25)]-padding400-[v2]-(padding500)-[v3]-padding500-[v4][v5(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": runtimeLabel, "v2": overviewLabel, "v3": creditContainerView, "v4": castLabel, "v5": castCollectionView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
     directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.4).isActive = true

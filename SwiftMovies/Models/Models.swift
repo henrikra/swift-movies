@@ -20,6 +20,7 @@ struct Movie: Decodable {
   let release_date: String
   let overview: String
   let genres: [Genre]?
+  let runtime: Int?
 }
 
 struct Genre: Decodable {
