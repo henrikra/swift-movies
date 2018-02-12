@@ -44,7 +44,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
               let hours = runtime / 60
               let minutes = runtime % 60
               if hours > 0 && minutes > 0 {
-                self.runtimeLabel.text = String(describing: hours) + "h " + String(describing: minutes) + " min"
+                self.runtimeLabel.text = String(describing: hours) + " h " + String(describing: minutes) + " min"
               } else if minutes > 0 {
                 self.runtimeLabel.text = String(describing: minutes) + " min"
               } else {
