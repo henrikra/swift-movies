@@ -312,7 +312,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       backdropOverlayView.frame = backdropOverlayNewFrame
     } else {
       var backdropImageViewNewFrame = backdropImageView.frame
-      backdropImageViewNewFrame.origin.y = deltaY * 0.2
+      backdropImageViewNewFrame.origin.y = deltaY * 0.3
       backdropImageView.frame = backdropImageViewNewFrame
     }
   }
