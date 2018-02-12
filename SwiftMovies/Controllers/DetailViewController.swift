@@ -13,6 +13,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   private let headerHeight: CGFloat = 200
   
   var cast: [Actor]?
+  var trailerYoutubeId: String?
   
   var movie: Movie? {
     didSet {
@@ -55,6 +56,16 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
             self.castCollectionView.reloadData()
           } catch let jsonError {
             print(jsonError)
+          }
+        })
+        
+        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)/videos?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+          guard let data = response.data else { return }
+          do {
+            let videoResponse = try JSONDecoder().decode(VideosResponse.self, from: data)
+            self.trailerYoutubeId = videoResponse.results.first?.key
+          } catch {
+            print(error)
           }
         })
       }
@@ -223,6 +234,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     scrollView.addSubview(posterImageView)
     
     posterImageView.frame = CGRect(x: view.frame.width / 2 - 50, y: 100, width: 100, height: 150)
+    posterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openTrailerFromYoutube)))
     
     backdropOverlayView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerHeight)
     backdropImageView.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
@@ -269,6 +281,20 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       var backdropImageViewNewFrame = backdropImageView.frame
       backdropImageViewNewFrame.origin.y = deltaY * 0.2
       backdropImageView.frame = backdropImageViewNewFrame
+    }
+  }
+  
+  @objc func openTrailerFromYoutube() {
+    if let trailerYoutubeId = trailerYoutubeId {
+      if let youtubeURL = URL(string: "youtube://\(trailerYoutubeId)"), UIApplication.shared.canOpenURL(youtubeURL) {
+        UIApplication.shared.open(youtubeURL, options: [:], completionHandler: nil)
+      } else if let youtubeURL = URL(string: "https://www.youtube.com/watch?v=\(trailerYoutubeId)") {
+        UIApplication.shared.open(youtubeURL, options: [:], completionHandler: nil)
+      }
+    } else {
+      let alertController = UIAlertController(title: "No trailer available", message: "This movie doesn't have trailer at the moment", preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+      present(alertController, animated: true, completion: nil)
     }
   }
 }

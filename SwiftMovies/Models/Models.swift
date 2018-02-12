@@ -39,3 +39,11 @@ struct CrewMember: Decodable {
   let job: String
   let name: String
 }
+
+struct VideosResponse: Decodable {
+  let results: [MovieVideo]
+}
+
+struct MovieVideo: Decodable {
+  let key: String
+}
