@@ -12,10 +12,18 @@ class ActorCell: UICollectionViewCell {
   var imagePath: String? {
     didSet {
       imageView.image = nil
+      imageView.alpha = 0
       if let imagePath = imagePath {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(imagePath)").responseJSON { (response) in
           guard let data = response.data else { return }
           self.imageView.image = UIImage(data: data)
+          if response.isFromCache {
+            self.imageView.alpha = 1
+          } else {
+            UIView.animate(withDuration: 0.5, animations: {
+              self.imageView.alpha = 1
+            })
+          }
         }
       }
     }
