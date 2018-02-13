@@ -12,16 +12,22 @@ struct Response {
   let data: Data?
   let response: URLResponse
   let error: Error?
+  let isFromCache: Bool
 }
 
 struct Request {
   let url: String
   func responseJSON(onReady: @escaping (Response) -> ()) {
     guard let uri = URL(string: url) else { return }
-    URLSession.shared.dataTask(with: uri) { (data, response, error) in
+    let request = URLRequest(url: uri)
+    var isFromCache = false
+    if URLCache.shared.cachedResponse(for: request) != nil {
+      isFromCache = true
+    }
+    URLSession.shared.dataTask(with: request) { (data, response, error) in
       guard let response = response else { return }
       DispatchQueue.main.async {
-        onReady(Response(data: data, response: response, error: error))
+        onReady(Response(data: data, response: response, error: error, isFromCache: isFromCache))
       }
     }.resume()
   }
