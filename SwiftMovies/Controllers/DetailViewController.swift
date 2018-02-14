@@ -133,10 +133,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     return label
   }()
   
-  let scrollView: UIScrollView = {
+  lazy var scrollView: UIScrollView = {
     let scrollView = UIScrollView()
     scrollView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.contentInset = UIEdgeInsets(top: -64, left: 0, bottom: 0, right: 0)
+    let navigationBarHeight = (navigationController?.navigationBar.frame.height ?? 0) + UIApplication.shared.statusBarFrame.size.height
+    scrollView.contentInset = UIEdgeInsets(top: -navigationBarHeight, left: 0, bottom: 0, right: 0)
     return scrollView
   }()
   
