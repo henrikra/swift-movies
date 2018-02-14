@@ -73,9 +73,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     switch operation {
       case .push:
         self.customInteractor = CustomInteractor(attachTo: toVC)
-        return CustomAnimator(duration: 0.5, isPushing: true, originFrame: originFrame, moviePosterView: imageView)
+        return SpringImageTransition(duration: 0.5, isPushing: true, originFrame: originFrame, moviePosterView: imageView)
       default:
-        return CustomAnimator(duration: 0.5, isPushing: false, originFrame: originFrame, moviePosterView: imageView)
+        return SpringImageTransition(duration: 0.5, isPushing: false, originFrame: originFrame, moviePosterView: imageView)
     }
   }
   

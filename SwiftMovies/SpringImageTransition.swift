@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class SpringImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
   let duration: TimeInterval
   let isPushing: Bool
   let originFrame: CGRect
