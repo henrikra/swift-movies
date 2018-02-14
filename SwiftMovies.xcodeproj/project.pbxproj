@@ -127,7 +127,6 @@
 		7EA32139200E76540025BC9B /* SwiftMovies */ = {
 			isa = PBXGroup;
 			children = (
-				7EDC4A40202CE7AB00B550B5 /* Debouncer.swift */,
 				7EE3BCCA202A05CF006CBBCF /* SpringImageTransition.swift */,
 				7E72A8422027BF03004B4EA8 /* ActorCell.swift */,
 				7ED86E29201CB6F0002E2913 /* Controllers */,
@@ -170,6 +169,7 @@
 		7ED86E25201CB677002E2913 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7EDC4A40202CE7AB00B550B5 /* Debouncer.swift */,
 				7E3089F32019208B006D65FD /* Constants.swift */,
 				7EC7DBA920153638000F5D13 /* HttpAgent.swift */,
 			);
