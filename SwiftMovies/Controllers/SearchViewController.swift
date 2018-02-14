@@ -33,6 +33,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     textField.textColor = .white
     textField.attributedPlaceholder = NSAttributedString(string: "Search for movies", attributes: [NSAttributedStringKey.foregroundColor: UIColor(white: 1, alpha: 0.7)])
     textField.keyboardAppearance = .dark
+    textField.autocorrectionType = .no
     return textField
   }()
   
