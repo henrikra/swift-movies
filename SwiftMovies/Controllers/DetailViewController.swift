@@ -93,7 +93,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   
   let backdropOverlayView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+    view.backgroundColor = UIColor(white: 0, alpha: 0.4)
     return view
   }()
   
@@ -224,7 +224,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = Colors.secondary500
+    view.backgroundColor = Colors.primary500
     
     scrollView.delegate = self
     
@@ -294,7 +294,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    movieInfoView.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    movieInfoView.addGradientBackground(fromColor: Colors.secondary500, toColor: Colors.primary500, endPoint: CGPoint(x: 0.5, y: 0.7))
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {

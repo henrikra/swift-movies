@@ -16,14 +16,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   let searchInputContainerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = Colors.primary500
+    view.backgroundColor = Colors.secondary500
     return view
   }()
   
   let searchTextField: UITextField = {
     let textField = UITextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.backgroundColor = Colors.secondary500.withAlphaComponent(0.2)
+    textField.backgroundColor = Colors.primary500.withAlphaComponent(0.4)
     textField.layer.cornerRadius = 5
     textField.leftViewMode = .always
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Spacing.padding400, height: 0))
