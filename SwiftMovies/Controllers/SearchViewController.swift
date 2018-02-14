@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Close", for: .normal)
     button.setTitleColor(.white, for: .normal)
-    button.contentEdgeInsets = UIEdgeInsets(top: 0, left: Spacing.padding400, bottom: Spacing.padding500, right: Spacing.padding400)
+    button.contentEdgeInsets = UIEdgeInsets(top: 0, left: Spacing.padding400, bottom: 0, right: Spacing.padding400)
     return button
   }()
   
@@ -59,15 +59,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.backgroundColor = UIColor(white: 1, alpha: 0.2)
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
-  }()
-  
-  let titleLabel: UILabel = {
-    let label = UILabel()
-    label.text = "Search"
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .white
-    label.textAlignment = .center
-    return label
   }()
   
   @objc func closeSearch() {
@@ -94,6 +85,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     searchDebounced.call()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.setNavigationBarHidden(false, animated: true)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -110,21 +111,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
     view.addSubview(searchResultTableView)
-    searchInputContainerView.addSubview(titleLabel)
     searchInputContainerView.addSubview(searchTextField)
     searchInputContainerView.addSubview(closeButton)
     searchInputContainerView.addSubview(separatorView)
     
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(120)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(100)][v1]|", options: [], metrics: metrics, views: ["v0": searchInputContainerView, "v1": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(0.5)]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchResultTableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0][v1]|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[v1]-padding300-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-55-[v0]|", options: [], metrics: metrics, views: ["v0": closeButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": closeButton]))
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

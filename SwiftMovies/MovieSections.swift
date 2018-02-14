@@ -19,7 +19,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     delegate = self
     dataSource = self
     backgroundColor = .clear
-    contentInset = UIEdgeInsets(top: Spacing.padding500 - 44, left: 0, bottom: Spacing.padding500, right: 0)
+    contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
     register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
     register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
     
