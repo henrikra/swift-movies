@@ -138,6 +138,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     let navigationBarHeight = (navigationController?.navigationBar.frame.height ?? 0) + UIApplication.shared.statusBarFrame.size.height
     scrollView.contentInset = UIEdgeInsets(top: -navigationBarHeight, left: 0, bottom: 0, right: 0)
+    scrollView.scrollIndicatorInsets = UIEdgeInsets(top: -navigationBarHeight, left: 0, bottom: 0, right: 0)
     return scrollView
   }()
   
