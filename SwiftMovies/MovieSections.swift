@@ -20,6 +20,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     dataSource = self
     backgroundColor = .clear
     contentInset = UIEdgeInsets(top: Spacing.padding500, left: 0, bottom: Spacing.padding500, right: 0)
+    scrollIndicatorInsets = UIEdgeInsets(top: -Spacing.padding500, left: 0, bottom: 0, right: 0)
     register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
     register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
     
