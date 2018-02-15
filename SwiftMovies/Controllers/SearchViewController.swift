@@ -35,6 +35,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     let buttonIconSize: CGFloat = 20
     clearButtonIcon.layer.cornerRadius = buttonIconSize / 2
     clearButtonIcon.backgroundColor = Colors.lightTextSecondary
+    clearButtonIcon.isUserInteractionEnabled = false
     clearButtonIcon.frame = CGRect(x: 20 - buttonIconSize / 2, y: 20 - buttonIconSize / 2, width: buttonIconSize, height: buttonIconSize)
     clearButton.addSubview(clearButtonIcon)
     textField.rightView = clearButton
