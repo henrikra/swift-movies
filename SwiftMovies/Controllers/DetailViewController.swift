@@ -100,6 +100,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let movieInfoView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = Colors.primary500
     return view
   }()
   
@@ -223,6 +224,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   
   lazy var castCollectionViewDelegate = CastCollectionViewDelegate(cellId: cellId)
   
+  var movieInfoViewGradientLayer: CAGradientLayer?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.primary500
@@ -294,11 +297,12 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": directorLabel, "v1": directorNameLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": genreLabel, "v1": genreNameLabel]))
+    movieInfoViewGradientLayer = movieInfoView.addGradientBackground(fromColor: Colors.secondary500, toColor: Colors.primary500, endPoint: CGPoint(x: 0.5, y: 0.7))
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    movieInfoView.addGradientBackground(fromColor: Colors.secondary500, toColor: Colors.primary500, endPoint: CGPoint(x: 0.5, y: 0.7))
+    movieInfoViewGradientLayer?.frame = movieInfoView.bounds
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
