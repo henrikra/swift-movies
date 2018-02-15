@@ -241,10 +241,10 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     scrollView.addSubview(content)
     
     scrollView.alwaysBounceVertical = true
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": scrollView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": scrollView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": scrollView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": scrollView]))
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": content]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": content]))
     
     content.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     let heightConstraint = content.heightAnchor.constraint(equalTo: view.heightAnchor)
@@ -271,24 +271,27 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     backdropOverlayView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerHeight)
     backdropImageView.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
 
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": runtimeLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castLabel]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castCollectionView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-padding400-[v1(25)]-padding400-[v2]-(padding500)-[v3]-padding500-[v4(1)]-padding500-[v5][v6(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": runtimeLabel, "v2": overviewLabel, "v3": creditContainerView, "v4": dividerView, "v5": castLabel, "v6": castCollectionView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": dividerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: [], metrics: metrics, views: ["v0": titleLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: [], metrics: metrics, views: ["v0": runtimeLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: [], metrics: metrics, views: ["v0": overviewLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: [], metrics: metrics, views: ["v0": castLabel]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-padding400-[v1(25)]-padding400-[v2]-(padding500)-[v3]-padding500-[v4(1)]-padding500-[v5][v6(88)]|", options: [], metrics: metrics, views: ["v0": titleLabel, "v1": runtimeLabel, "v2": overviewLabel, "v3": creditContainerView, "v4": dividerView, "v5": castLabel, "v6": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": creditContainerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": dividerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
     directorLabel.widthAnchor.constraint(equalTo: creditContainerView.widthAnchor, multiplier: 0.4).isActive = true
-    genreLabel.leadingAnchor.constraint(equalTo: directorLabel.trailingAnchor).isActive = true
-    genreLabel.topAnchor.constraint(equalTo: creditContainerView.topAnchor).isActive = true
-    genreLabel.trailingAnchor.constraint(equalTo: creditContainerView.trailingAnchor).isActive = true
     
-    directorNameLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true
-    directorNameLabel.trailingAnchor.constraint(equalTo: genreLabel.leadingAnchor, constant: -Spacing.padding300).isActive = true
-    genreNameLabel.leadingAnchor.constraint(equalTo: genreLabel.leadingAnchor).isActive = true
-    genreNameLabel.trailingAnchor.constraint(equalTo: genreLabel.trailingAnchor).isActive = true
+    NSLayoutConstraint.activate([
+      genreLabel.leadingAnchor.constraint(equalTo: directorLabel.trailingAnchor),
+      genreLabel.topAnchor.constraint(equalTo: creditContainerView.topAnchor),
+      genreLabel.trailingAnchor.constraint(equalTo: creditContainerView.trailingAnchor),
+      directorNameLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor),
+      directorNameLabel.trailingAnchor.constraint(equalTo: genreLabel.leadingAnchor, constant: -Spacing.padding300),
+      genreNameLabel.leadingAnchor.constraint(equalTo: genreLabel.leadingAnchor),
+      genreNameLabel.trailingAnchor.constraint(equalTo: genreLabel.trailingAnchor)
+    ])
+    
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": directorLabel, "v1": directorNameLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-(padding300)-[v1]|", options: [], metrics: metrics, views: ["v0": genreLabel, "v1": genreNameLabel]))
   }
