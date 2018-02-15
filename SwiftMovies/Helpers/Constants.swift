@@ -17,6 +17,10 @@ enum Spacing {
 let metrics = ["padding500": Spacing.padding500, "padding400": Spacing.padding400, "padding300": Spacing.padding300]
 
 enum Colors {
+  static let lightTextPrimary = UIColor(white: 1, alpha: 1)
+  static let lightTextSecondary = UIColor(white: 1, alpha: 0.7)
+  static let lightTextHint = UIColor(white: 1, alpha: 0.5)
+  static let lightTextDivider = UIColor(white: 1, alpha: 0.12)
   static let primary500 = UIColor(red: 39/255, green: 44/255, blue: 64/255, alpha: 1)
   static let secondary500 = UIColor(red: 80/255, green: 94/255, blue: 121/255, alpha: 1)
   static let accent500 = UIColor(red: 39/255, green: 177/255, blue: 220/255, alpha: 1)

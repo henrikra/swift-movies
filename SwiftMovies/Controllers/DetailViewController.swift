@@ -118,7 +118,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.boldSystemFont(ofSize: 22)
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.textAlignment = .center
     label.numberOfLines = 2
     return label
@@ -127,7 +127,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let overviewLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.font = UIFont.systemFont(ofSize: 16)
     label.numberOfLines = 0
     return label
@@ -145,7 +145,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let runtimeLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = UIColor.white.withAlphaComponent(0.7)
+    label.textColor = Colors.lightTextSecondary
     label.textAlignment = .center
     label.font = UIFont.systemFont(ofSize: 14)
     label.text = "..."
@@ -155,7 +155,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let directorLabel: UILabel = {
     let label = UILabel()
     label.text = "DIRECTOR"
-    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.textColor = Colors.lightTextSecondary
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 12)
     return label
@@ -164,7 +164,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let directorNameLabel: UILabel = {
     let label = UILabel()
     label.text = "..."
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.font = UIFont.systemFont(ofSize: 14)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -173,7 +173,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let genreLabel: UILabel = {
     let label = UILabel()
     label.text = "GENRES"
-    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.textColor = Colors.lightTextSecondary
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 12)
     return label
@@ -182,7 +182,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let genreNameLabel: UILabel = {
     let label = UILabel()
     label.text = "..."
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.font = UIFont.systemFont(ofSize: 14)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -197,14 +197,14 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   let dividerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+    view.backgroundColor = Colors.lightTextDivider
     return view
   }()
   
   let castLabel: UILabel = {
     let label = UILabel()
     label.text = "CAST"
-    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.textColor = Colors.lightTextSecondary
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 12)
     return label
@@ -276,7 +276,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": overviewLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-(padding500)-[v0]-(padding500)-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castLabel]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": castCollectionView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-padding400-[v1(25)]-padding400-[v2]-(padding500)-[v3]-padding500-[v4(0.5)]-padding500-[v5][v6(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": runtimeLabel, "v2": overviewLabel, "v3": creditContainerView, "v4": dividerView, "v5": castLabel, "v6": castCollectionView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-75-[v0]-padding400-[v1(25)]-padding400-[v2]-(padding500)-[v3]-padding500-[v4(1)]-padding500-[v5][v6(88)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": titleLabel, "v1": runtimeLabel, "v2": overviewLabel, "v3": creditContainerView, "v4": dividerView, "v5": castLabel, "v6": castCollectionView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": creditContainerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": dividerView]))
     directorLabel.leadingAnchor.constraint(equalTo: creditContainerView.leadingAnchor).isActive = true

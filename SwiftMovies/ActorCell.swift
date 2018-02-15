@@ -35,7 +35,7 @@ class ActorCell: UICollectionViewCell {
     imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 30
     imageView.layer.masksToBounds = true
-    imageView.layer.borderColor = UIColor(white: 1, alpha: 0.5).cgColor
+    imageView.layer.borderColor = Colors.lightTextHint.cgColor
     imageView.layer.borderWidth = 1
     return imageView
   }()

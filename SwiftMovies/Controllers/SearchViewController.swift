@@ -31,7 +31,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     textField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
     textField.returnKeyType = .search
     textField.textColor = .white
-    textField.attributedPlaceholder = NSAttributedString(string: "Search for movies", attributes: [NSAttributedStringKey.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+    textField.attributedPlaceholder = NSAttributedString(string: "Search for movies", attributes: [NSAttributedStringKey.foregroundColor: Colors.lightTextSecondary])
     textField.keyboardAppearance = .dark
     textField.autocorrectionType = .no
     return textField
@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     button.addTarget(self, action: #selector(closeSearch), for: .touchUpInside)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Close", for: .normal)
-    button.setTitleColor(.white, for: .normal)
+    button.setTitleColor(Colors.lightTextPrimary, for: .normal)
     button.contentEdgeInsets = UIEdgeInsets(top: 0, left: Spacing.padding400, bottom: 0, right: Spacing.padding400)
     return button
   }()
@@ -57,7 +57,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   let separatorView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(white: 1, alpha: 0.2)
+    view.backgroundColor = Colors.lightTextDivider
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -100,7 +100,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     super.viewDidLoad()
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
-    navigationController?.navigationBar.tintColor = .white
+    navigationController?.navigationBar.tintColor = Colors.lightTextPrimary
     
     searchTextField.becomeFirstResponder()
     
@@ -173,14 +173,14 @@ class SearchResultCell: UITableViewCell {
   let titleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.font = UIFont.boldSystemFont(ofSize: 20)
     return label
   }()
   
   let releaseDateLabel: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor(white: 1, alpha: 0.2)
+    label.textColor = Colors.lightTextSecondary
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.systemFont(ofSize: 14)
     return label
@@ -195,7 +195,7 @@ class SearchResultCell: UITableViewCell {
   
   let separatorView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(white: 1, alpha: 0.2)
+    view.backgroundColor = Colors.lightTextDivider
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -224,8 +224,6 @@ class SearchResultCell: UITableViewCell {
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": releaseDateLabel]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-70-[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-padding500-[v0]-padding300-[v1]-padding500-|", options: [], metrics: metrics, views: ["v0": titleLabel, "v1": releaseDateLabel]))
-    
-    backgroundColor = .red
   }
   
   required init?(coder aDecoder: NSCoder) {

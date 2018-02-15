@@ -29,16 +29,15 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   
   let categoryTitleLabel: UILabel = {
     let label = UILabel()
-    label.text = "Latest"
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     return label
   }()
   
   let dividerView: UIView = {
     let divider = UIView()
-    divider.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    divider.backgroundColor = Colors.lightTextDivider
     divider.translatesAutoresizingMaskIntoConstraints = false
     return divider
   }()

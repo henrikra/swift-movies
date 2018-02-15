@@ -80,14 +80,14 @@ class FeaturedMovieController: UIViewController {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = UIFont.boldSystemFont(ofSize: 30)
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     return label
   }()
   
   let subtitleLabel: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = UIColor(white: 1, alpha: 0.7)
+    label.textColor = Colors.lightTextSecondary
     label.font = UIFont.systemFont(ofSize: 12)
     return label
   }()

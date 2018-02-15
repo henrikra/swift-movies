@@ -42,7 +42,7 @@ class MovieSectionCell: UICollectionViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 1
     label.font = UIFont.systemFont(ofSize: 14)
-    label.textColor = .white
+    label.textColor = Colors.lightTextPrimary
     return label
   }()
   
