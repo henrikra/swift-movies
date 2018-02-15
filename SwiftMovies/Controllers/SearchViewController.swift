@@ -27,6 +27,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     textField.layer.cornerRadius = 5
     textField.leftViewMode = .always
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Spacing.padding400, height: 0))
+    
+    let clearButton = UIButton(type: .custom)
+    clearButton.addTarget(self, action: #selector(clearTextField), for: .touchUpInside)
+    clearButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    let clearButtonIcon = UIView()
+    let buttonIconSize: CGFloat = 20
+    clearButtonIcon.layer.cornerRadius = buttonIconSize / 2
+    clearButtonIcon.backgroundColor = Colors.lightTextSecondary
+    clearButtonIcon.frame = CGRect(x: 20 - buttonIconSize / 2, y: 20 - buttonIconSize / 2, width: buttonIconSize, height: buttonIconSize)
+    clearButton.addSubview(clearButtonIcon)
+    textField.rightView = clearButton
+    textField.rightViewMode = .always
+    
     textField.addTarget(self, action: #selector(searchForMovies(_:)), for: .editingChanged)
     textField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
     textField.returnKeyType = .search
@@ -84,6 +97,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   @objc func searchForMovies(_ textField: UITextField) {
     searchTextFieldValue = textField.text
     searchDebounced.call()
+  }
+  
+  @objc func clearTextField() {
+    searchTextField.text = ""
+    searchTextField.becomeFirstResponder()
   }
   
   override func viewWillAppear(_ animated: Bool) {
