@@ -36,17 +36,33 @@ class FeaturedMovieController: UIViewController {
       
       backdropImageView.image = nil
       posterImageView.image = nil
+      backdropImageView.alpha = 0
+      posterImageView.alpha = 0
       
       if let backdropPath = movie?.backdrop_path {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
           guard let data = response.data else { return }
           self.backdropImageView.image = UIImage(data: data)
+          if response.isFromCache {
+            self.backdropImageView.alpha = 1
+          } else {
+            UIView.animate(withDuration: 0.5, animations: {
+              self.backdropImageView.alpha = 1
+            })
+          }
         }
       }
       if let posterPath = movie?.poster_path {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
           guard let data = response.data else { return }
           self.posterImageView.image = UIImage(data: data)
+          if response.isFromCache {
+            self.posterImageView.alpha = 1
+          } else {
+            UIView.animate(withDuration: 0.5, animations: {
+              self.posterImageView.alpha = 1
+            })
+          }
         }
       }
       
