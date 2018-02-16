@@ -104,6 +104,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
       searchTextField.rightView?.isHidden = true
     }
     searchDebounced.call()
+    movieSearchResults = []
+    searchResultTableView.reloadData()
   }
   
   @objc func clearTextField() {
