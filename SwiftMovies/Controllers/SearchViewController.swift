@@ -113,6 +113,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     searchTextField.text = ""
     searchTextField.becomeFirstResponder()
     searchTextField.rightView?.isHidden = true
+    movieSearchResults = []
+    searchResultTableView.reloadData()
   }
   
   override func viewWillAppear(_ animated: Bool) {
