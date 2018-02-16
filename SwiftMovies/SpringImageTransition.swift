@@ -49,6 +49,17 @@ class SpringImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
     transitionImageView.layer.shadowOpacity = isPushing ? 0 : 0.2
     transitionImageView.layer.shadowOffset = CGSize(width: 10, height: 10)
     transitionImageView.layer.shadowRadius = 0
+
+    let playIconSize: CGFloat = isPushing ? moviePosterView.frame.width / 3.5 : posterImageView.frame.width / 3.5
+    let playIcon = PlayIconView()
+    playIcon.layer.shadowColor = UIColor.black.cgColor
+    playIcon.layer.shadowOffset = CGSize(width: 0, height: 0)
+    playIcon.layer.shadowRadius = 5
+    playIcon.layer.shadowOpacity = 0.7
+    playIcon.backgroundColor = .clear
+    transitionImageView.addSubview(playIcon)
+    playIcon.frame = CGRect(x: transitionImageView.frame.width / 2 - playIconSize / 2, y: transitionImageView.frame.height / 2 - playIconSize / 2, width: playIconSize, height: playIconSize)
+    playIcon.alpha = isPushing ? 0 : 1
     containerView.addSubview(transitionImageView)
     targetView.layoutIfNeeded()
     
@@ -63,6 +74,9 @@ class SpringImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
     transitionImageView.layer.shadowOpacity = isPushing ? 0.2 : 0
     UIView.animate(withDuration: duration, delay: 0.1, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.5, options: [], animations: {
       transitionImageView.frame = self.isPushing ? posterImageView.frame : self.originFrame
+      playIcon.alpha = self.isPushing ? 1 : 0
+      let newPlayIconSize = self.isPushing ? posterImageView.frame.width / 3.5 : self.moviePosterView.frame.width / 3.5
+      playIcon.frame = self.isPushing ? CGRect(x: posterImageView.frame.width / 2 - newPlayIconSize / 2, y: posterImageView.frame.height / 2 - newPlayIconSize / 2, width: newPlayIconSize, height: newPlayIconSize) : CGRect(x: self.moviePosterView.frame.width / 2 - newPlayIconSize / 2, y: self.moviePosterView.frame.height / 2 - newPlayIconSize / 2, width: newPlayIconSize, height: newPlayIconSize)
     }) { (finished) in
       transitionImageView.removeFromSuperview()
       posterImageView.alpha = 1

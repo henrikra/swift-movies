@@ -8,6 +8,30 @@
 
 import UIKit
 
+class PlayIconView : UIView {
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
+  
+  override func draw(_ rect: CGRect) {
+    
+    guard let context = UIGraphicsGetCurrentContext() else { return }
+    
+    context.beginPath()
+    context.move(to: CGPoint(x: rect.minX, y: rect.minY))
+    context.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+    context.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY / 2))
+    context.closePath()
+    
+    context.setFillColor(red: 1, green: 1, blue: 1, alpha: 1)
+    context.fillPath()
+  }
+}
+
 class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let cellId = "cellId"
   private let headerHeight: CGFloat = 200
@@ -102,6 +126,16 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = Colors.primary500
     return view
+  }()
+  
+  let playIcon: PlayIconView = {
+    let playIcon = PlayIconView()
+    playIcon.layer.shadowColor = UIColor.black.cgColor
+    playIcon.layer.shadowOffset = CGSize(width: 0, height: 0)
+    playIcon.layer.shadowRadius = 5
+    playIcon.layer.shadowOpacity = 0.7
+    playIcon.backgroundColor = .clear
+    return playIcon
   }()
   
   let posterImageView: UIImageView = {
@@ -267,8 +301,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     movieInfoView.addSubview(castLabel)
     movieInfoView.addSubview(castCollectionView)
     scrollView.addSubview(posterImageView)
+    posterImageView.addSubview(playIcon)
     
     posterImageView.frame = CGRect(x: view.frame.width / 2 - 50, y: 100, width: 100, height: 150)
+    let playIconSize: CGFloat = 29
+    playIcon.frame = CGRect(x: posterImageView.frame.width / 2 - playIconSize / 2, y: posterImageView.frame.height / 2 - playIconSize / 2, width: playIconSize, height: playIconSize)
     posterImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openTrailerFromYoutube)))
     
     backdropOverlayView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerHeight)
