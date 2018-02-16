@@ -40,6 +40,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     clearButton.addSubview(clearButtonIcon)
     textField.rightView = clearButton
     textField.rightViewMode = .always
+    textField.rightView?.isHidden = true
     
     textField.addTarget(self, action: #selector(searchForMovies(_:)), for: .editingChanged)
     textField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
@@ -97,12 +98,18 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   @objc func searchForMovies(_ textField: UITextField) {
     searchTextFieldValue = textField.text
+    if let length = searchTextFieldValue?.count, length > 0 {
+      searchTextField.rightView?.isHidden = false
+    } else {
+      searchTextField.rightView?.isHidden = true
+    }
     searchDebounced.call()
   }
   
   @objc func clearTextField() {
     searchTextField.text = ""
     searchTextField.becomeFirstResponder()
+    searchTextField.rightView?.isHidden = true
   }
   
   override func viewWillAppear(_ animated: Bool) {
