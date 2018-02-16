@@ -28,16 +28,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     textField.leftViewMode = .always
     textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Spacing.padding400, height: 0))
     
-    let clearButton = UIButton(type: .custom)
+    let clearButton = UIButton(type: .system)
     clearButton.addTarget(self, action: #selector(clearTextField), for: .touchUpInside)
     clearButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
     let clearButtonIcon = UIView()
     let buttonIconSize: CGFloat = 20
     clearButtonIcon.layer.cornerRadius = buttonIconSize / 2
-    clearButtonIcon.backgroundColor = Colors.lightTextSecondary
     clearButtonIcon.isUserInteractionEnabled = false
     clearButtonIcon.frame = CGRect(x: 20 - buttonIconSize / 2, y: 20 - buttonIconSize / 2, width: buttonIconSize, height: buttonIconSize)
     clearButton.addSubview(clearButtonIcon)
+    clearButton.setImage(#imageLiteral(resourceName: "close"), for: .normal)
+    clearButton.tintColor = Colors.lightTextHint
     textField.rightView = clearButton
     textField.rightViewMode = .always
     textField.rightView?.isHidden = true

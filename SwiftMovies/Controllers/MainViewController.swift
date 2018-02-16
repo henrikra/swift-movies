@@ -21,7 +21,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   }()
   
   let searchButton: UIButton = {
-    let button = UIButton(type: UIButtonType.system)
+    let button = UIButton(type: .system)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.backgroundColor = .white
     button.layer.cornerRadius = 30
