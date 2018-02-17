@@ -12,7 +12,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   var originFrame: CGRect?
   var selectedMovie: Movie?
   var selectedMovieImageView: UIImageView?
-  var customInteractor: CustomInteractor?
+  var customInteractor: SpringImageInteractor?
   
   let movieSections: MovieSections = {
     let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -82,7 +82,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     switch operation {
       case .push:
-        self.customInteractor = CustomInteractor(attachTo: toVC)
+        self.customInteractor = SpringImageInteractor(attachTo: toVC)
         return SpringImageTransition(duration: 0.5, isPushing: true, originFrame: originFrame, moviePosterView: imageView)
       default:
         return SpringImageTransition(duration: 0.5, isPushing: false, originFrame: originFrame, moviePosterView: imageView)

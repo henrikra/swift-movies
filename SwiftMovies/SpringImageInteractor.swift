@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomInteractor: UIPercentDrivenInteractiveTransition {
+class SpringImageInteractor: UIPercentDrivenInteractiveTransition {
   let navigationController: UINavigationController
   var shouldCompleteTransition = false
   var transitionInProgress = false
