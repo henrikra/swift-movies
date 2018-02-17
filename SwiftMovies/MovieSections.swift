@@ -34,7 +34,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchUpcomingMovies() {
-    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)").responseJSON { response in
+    MovieApi.shared.upcoming().responseJSON { response in
       do {
         guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
@@ -47,7 +47,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchTopRatedMovies() {
-    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)").responseJSON { (response) in
+    MovieApi.shared.topRated().responseJSON { (response) in
       guard let data = response.data else { return }
       do {
         let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
@@ -60,7 +60,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchPopularMovies() {
-    HttpAgent.request(url: "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)").responseJSON { (response) in
+    MovieApi.shared.popular().responseJSON { (response) in
       guard let data = response.data else { return }
       do {
         let popularMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)

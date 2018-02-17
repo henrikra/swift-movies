@@ -85,7 +85,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   lazy var searchDebounced = Debouncer(delay: 0.4) {
     guard let searchTextFieldValue = self.searchTextFieldValue else { return }
-    HttpAgent.request(url: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(searchTextFieldValue)").responseJSON(onReady: { (response) in
+    MovieApi.shared.searchMovies(query: searchTextFieldValue).responseJSON(onReady: { (response) in
       guard let data = response.data else { return }
       do {
         let searchResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)

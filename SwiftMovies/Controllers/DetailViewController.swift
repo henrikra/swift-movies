@@ -59,7 +59,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       }
       
       if let id = movie?.id {
-        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+        MovieApi.shared.details(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
@@ -80,7 +80,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
           }
         })
         
-        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)/credits?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+        MovieApi.shared.movieCredits(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
           
           do {
@@ -94,7 +94,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
           }
         })
         
-        HttpAgent.request(url: "https://api.themoviedb.org/3/movie/\(id)/videos?api_key=\(apiKey)").responseJSON(onReady: { (response) in
+        MovieApi.shared.movieVideos(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
           do {
             let videoResponse = try JSONDecoder().decode(VideosResponse.self, from: data)
