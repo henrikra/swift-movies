@@ -146,7 +146,6 @@
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
 				7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */,
 				7EEBA82B201A3C9F0086BC90 /* MovieSectionItem.swift */,
-				7EF4A7782020D9650004C590 /* Extensions.swift */,
 			);
 			path = SwiftMovies;
 			sourceTree = "<group>";
@@ -173,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				7EDC4A40202CE7AB00B550B5 /* Debouncer.swift */,
+				7EF4A7782020D9650004C590 /* Extensions.swift */,
 				7E3089F32019208B006D65FD /* Constants.swift */,
 				7EC7DBA920153638000F5D13 /* HttpAgent.swift */,
 			);
