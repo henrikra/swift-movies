@@ -140,7 +140,6 @@
 				7EA32143200E76540025BC9B /* LaunchScreen.storyboard */,
 				7EA32146200E76540025BC9B /* Info.plist */,
 				7EE8A167200FD96600A688F0 /* MovieSections.swift */,
-				7EDC4A3C202CAD0400B550B5 /* SpringImageInteractor.swift */,
 				7EE8A169200FDFDF00A688F0 /* MovieSection.swift */,
 				7EC7DBA7201502B1000F5D13 /* config.swift */,
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
@@ -175,6 +174,7 @@
 				7EF4A7782020D9650004C590 /* Extensions.swift */,
 				7E3089F32019208B006D65FD /* Constants.swift */,
 				7EC7DBA920153638000F5D13 /* HttpAgent.swift */,
+				7EDC4A3C202CAD0400B550B5 /* SpringImageInteractor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
