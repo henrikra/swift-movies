@@ -89,7 +89,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
       guard let data = response.data else { return }
       do {
         let searchResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
-        self.movieSearchResults = searchResponse.results
+        self.movieSearchResults = searchResponse.results?.filter({ $0.poster_path != nil })
         self.searchResultTableView.reloadData()
       } catch {
         print(error)
