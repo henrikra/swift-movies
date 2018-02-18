@@ -29,17 +29,21 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     return movies?.index(where: { $0.id == currentViewController.movie?.id })
   }
   
+  private func createFeaturedMovieController(currentViewController: FeaturedMovieController, nextIndex: Int) -> FeaturedMovieController {
+    let featuredMovieController = FeaturedMovieController()
+    featuredMovieController.genres = genres
+    featuredMovieController.movie = movies?[nextIndex]
+    featuredMovieController.onPress = currentViewController.onPress
+    return featuredMovieController
+  }
+  
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     let currentViewController = viewController as! FeaturedMovieController
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
     pageControl.currentPage = currentMovieIndex ?? 0
     
     let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
-    let featuredMovieController = FeaturedMovieController()
-    featuredMovieController.genres = genres
-    featuredMovieController.movie = movies?[nextIndex]
-    featuredMovieController.onPress = currentViewController.onPress
-    return featuredMovieController
+    return createFeaturedMovieController(currentViewController: currentViewController, nextIndex: nextIndex)
   }
   
   private func isFirstMovie(_ index: Int) -> Bool {
@@ -56,11 +60,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     pageControl.currentPage = currentMovieIndex ?? 0
     
     let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
-    let featuredMovieController = FeaturedMovieController()
-    featuredMovieController.genres = genres
-    featuredMovieController.movie = movies?[nextIndex]
-    featuredMovieController.onPress = currentViewController.onPress
-    return featuredMovieController
+    return createFeaturedMovieController(currentViewController: currentViewController, nextIndex: nextIndex)
   }
   
   override func viewDidLoad() {
