@@ -33,7 +33,7 @@ class FeaturedMovieController: UIViewController {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
-      subtitleLabel.text = movie?.genre_ids?.map({ (genreId) -> String? in
+      subtitleLabel.text = movie?.genre_ids?.map({ genreId in
         return genres?.first(where: { $0.id == genreId })?.name
       }).flatMap({ $0 }).joined(separator: ", ")
       
