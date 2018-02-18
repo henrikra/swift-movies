@@ -14,6 +14,10 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   var popularMovies: [Movie]?
   var onMoviePress: ((Movie, CGRect, UIImageView) -> Void)?
   var genres: [Genre]?
+  var hideLoader: (() -> Void)?
+  var isUpcomingMoviesLoaded = false
+  var isTopRatedMoviesLoaded = false
+  var isPopularMoviesLoaded = false
   
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
@@ -53,6 +57,8 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.upcomingMovies = upcomingMoviesResponse.results?.filter {$0.poster_path != nil}
         self.reloadData()
+        self.isUpcomingMoviesLoaded = true
+        self.hideLoaderIfAllLoaded()
       } catch let jsonError {
         print(jsonError)
       }
@@ -66,6 +72,8 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
         let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.topRatedMovies = topRatedMoviesResponse.results
         self.reloadData()
+        self.isTopRatedMoviesLoaded = true
+        self.hideLoaderIfAllLoaded()
       } catch let jsonError {
         print(jsonError)
       }
@@ -79,9 +87,17 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
         let popularMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
         self.popularMovies = popularMoviesResponse.results
         self.reloadData()
+        self.isPopularMoviesLoaded = true
+        self.hideLoaderIfAllLoaded()
       } catch let jsonError {
         print(jsonError)
       }
+    }
+  }
+  
+  func hideLoaderIfAllLoaded() {
+    if isPopularMoviesLoaded && isTopRatedMoviesLoaded && isUpcomingMoviesLoaded {
+      hideLoader?()
     }
   }
   
