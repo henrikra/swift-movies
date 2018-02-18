@@ -68,8 +68,9 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     dataSource = self
     
     view.addSubview(pageControl)
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pageControl]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(30)]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": pageControl]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": pageControl]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(30)]", options: [], metrics: metrics, views: ["v0": pageControl]))
+    pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 5).isActive = true
   }
   
   override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
