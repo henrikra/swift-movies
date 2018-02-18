@@ -35,7 +35,7 @@ class FeaturedMovieController: UIViewController {
       titleLabel.text = movie?.title
       subtitleLabel.text = movie?.genre_ids?.map({ genreId in
         genres?.first(where: { $0.id == genreId })?.name
-      }).flatMap({ $0 }).joined(separator: ", ")
+      }).flatMap({ $0 }).prefix(3).joined(separator: ", ")
       
       backdropImageView.image = nil
       posterImageView.image = nil
