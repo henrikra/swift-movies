@@ -18,7 +18,8 @@ struct Response {
 struct Request {
   let url: String
   func responseJSON(onReady: @escaping (Response) -> ()) {
-    guard let uri = URL(string: url) else { return }
+    guard let escapedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+    guard let uri = URL(string: escapedUrl) else { return }
     let request = URLRequest(url: uri)
     var isFromCache = false
     if URLCache.shared.cachedResponse(for: request) != nil {
