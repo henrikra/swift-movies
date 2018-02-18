@@ -29,10 +29,15 @@ class FeaturedMovies: UICollectionViewCell {
 
 class FeaturedMovieController: UIViewController {
   var onPress: ((Movie, CGRect, UIImageView) -> Void)?
+  var genres: [Genre]?
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
-      subtitleLabel.text = movie?.release_date
+      subtitleLabel.text = movie?.genre_ids?.map({ (genreId) -> String? in
+        return genres?.first(where: { (genre) -> Bool in
+          return genre.id == genreId
+        })?.name
+      }).flatMap({ $0 }).joined(separator: ", ")
       
       backdropImageView.image = nil
       posterImageView.image = nil
@@ -65,7 +70,6 @@ class FeaturedMovieController: UIViewController {
           }
         }
       }
-      
     }
   }
   

@@ -20,12 +20,14 @@ struct Movie: Decodable {
   let release_date: String
   let overview: String
   let genres: [Genre]?
+  let genre_ids: [Int]?
   let runtime: Int?
   let videos: VideosResponse?
   let credits: Credits?
 }
 
 struct Genre: Decodable {
+  let id: Int
   let name: String
 }
 
@@ -49,4 +51,8 @@ struct VideosResponse: Decodable {
 
 struct MovieVideo: Decodable {
   let key: String
+}
+
+struct MovieGenresResponse: Decodable {
+  let genres: [Genre]
 }

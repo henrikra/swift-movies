@@ -13,6 +13,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   var topRatedMovies: [Movie]?
   var popularMovies: [Movie]?
   var onMoviePress: ((Movie, CGRect, UIImageView) -> Void)?
+  var genres: [Genre]?
   
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
@@ -24,13 +25,25 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     register(MovieSection.self, forCellWithReuseIdentifier: "cellId")
     register(FeaturedMovies.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "featuredMoviesId")
     
-    fetchUpcomingMovies()
-    fetchTopRatedMovies()
-    fetchPopularMovies()
+    fetchMovieGenres()
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  func fetchMovieGenres() {
+    MovieApi.shared.movieGenres().responseJSON { (response) in
+      guard let data = response.data else { return }
+      do {
+        self.genres = try JSONDecoder().decode(MovieGenresResponse.self, from: data).genres
+        self.fetchUpcomingMovies()
+        self.fetchTopRatedMovies()
+        self.fetchPopularMovies()
+      } catch {
+        print(error)
+      }
+    }
   }
   
   func fetchUpcomingMovies() {
@@ -80,9 +93,11 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "featuredMoviesId", for: indexPath) as! FeaturedMovies
     let featuredMovieController = FeaturedMovieController()
     featuredMovieController.onPress = onMoviePress
+    featuredMovieController.genres = genres
     featuredMovieController.movie = self.upcomingMovies?.first
     if let movies = self.upcomingMovies {
       header.featuredMoviesController.movies = Array(movies[..<5])
+      header.featuredMoviesController.genres = genres
     }
     header.featuredMoviesController.setViewControllers([featuredMovieController], direction: .forward, animated: false, completion: nil)
     return header

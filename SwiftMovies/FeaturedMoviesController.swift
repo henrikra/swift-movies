@@ -9,6 +9,7 @@
 import UIKit
 
 class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource {
+  var genres: [Genre]?
   var movies: [Movie]? {
     didSet {
       pageControl.numberOfPages = movies?.count ?? 0
@@ -35,6 +36,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     
     let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
     let featuredMovieController = FeaturedMovieController()
+    featuredMovieController.genres = genres
     featuredMovieController.movie = movies?[nextIndex]
     featuredMovieController.onPress = currentViewController.onPress
     return featuredMovieController
@@ -55,6 +57,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     
     let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
     let featuredMovieController = FeaturedMovieController()
+    featuredMovieController.genres = genres
     featuredMovieController.movie = movies?[nextIndex]
     featuredMovieController.onPress = currentViewController.onPress
     return featuredMovieController
