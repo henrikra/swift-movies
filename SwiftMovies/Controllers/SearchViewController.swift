@@ -140,7 +140,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     searchResultTableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
     searchResultTableView.separatorStyle = .none
     
-    view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     view.addSubview(searchInputContainerView)
     view.addSubview(searchResultTableView)
     searchInputContainerView.addSubview(searchTextField)
