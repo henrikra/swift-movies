@@ -188,7 +188,9 @@ class SearchResultCell: UITableViewCell {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
-      releaseDateLabel.text = movie?.release_date
+      if let releaseYear = movie?.release_date.split(separator: "-").first {
+        releaseDateLabel.text = String(releaseYear)
+      }
       
       posterImageView.image = nil
       posterImageView.alpha = 0
