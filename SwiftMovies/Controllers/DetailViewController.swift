@@ -76,18 +76,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
               }
             }
             self.trailerYoutubeId = movie.videos?.results.first?.key
-          } catch let jsonError {
-            print(jsonError)
-          }
-        })
-        
-        MovieApi.shared.movieCredits(id: id).responseJSON(onReady: { (response) in
-          guard let data = response.data else { return }
-          
-          do {
-            let credits = try JSONDecoder().decode(Credits.self, from: data)
-            self.directorNameLabel.text = credits.crew.first(where: { $0.job == "Director" })?.name
-            self.cast = credits.cast.filter({ $0.profile_path != nil })
+            self.directorNameLabel.text = movie.credits?.crew.first(where: { $0.job == "Director" })?.name
+            self.cast = movie.credits?.cast.filter({ $0.profile_path != nil })
             self.castCollectionViewDelegate.cast = self.cast
             self.castCollectionView.reloadData()
           } catch let jsonError {
