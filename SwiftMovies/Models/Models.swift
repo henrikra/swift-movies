@@ -21,6 +21,7 @@ struct Movie: Decodable {
   let overview: String
   let genres: [Genre]?
   let runtime: Int?
+  let videos: VideosResponse?
 }
 
 struct Genre: Decodable {

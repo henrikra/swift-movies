@@ -30,14 +30,10 @@ class MovieApi {
   }
   
   func details(id: Int) -> Request {
-    return HttpAgent.request(url: "\(baseUrl)movie/\(id)?api_key=\(apiKey)")
+    return HttpAgent.request(url: "\(baseUrl)movie/\(id)?api_key=\(apiKey)&append_to_response=videos")
   }
   
   func movieCredits(id: Int) -> Request {
     return HttpAgent.request(url: "\(baseUrl)movie/\(id)/credits?api_key=\(apiKey)")
-  }
-  
-  func movieVideos(id: Int) -> Request {
-    return HttpAgent.request(url: "\(baseUrl)movie/\(id)/videos?api_key=\(apiKey)")
   }
 }

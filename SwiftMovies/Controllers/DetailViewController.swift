@@ -75,6 +75,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
                 self.runtimeLabel.text = "0 min"
               }
             }
+            self.trailerYoutubeId = movie.videos?.results.first?.key
           } catch let jsonError {
             print(jsonError)
           }
@@ -91,16 +92,6 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
             self.castCollectionView.reloadData()
           } catch let jsonError {
             print(jsonError)
-          }
-        })
-        
-        MovieApi.shared.movieVideos(id: id).responseJSON(onReady: { (response) in
-          guard let data = response.data else { return }
-          do {
-            let videoResponse = try JSONDecoder().decode(VideosResponse.self, from: data)
-            self.trailerYoutubeId = videoResponse.results.first?.key
-          } catch {
-            print(error)
           }
         })
       }
