@@ -80,8 +80,8 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
             self.cast = movie.credits?.cast.filter({ $0.profile_path != nil })
             self.castCollectionViewDelegate.cast = self.cast
             self.castCollectionView.reloadData()
-          } catch let jsonError {
-            print(jsonError)
+          } catch {
+            print(error)
           }
         })
       }
