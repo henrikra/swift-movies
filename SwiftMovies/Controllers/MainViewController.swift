@@ -76,12 +76,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     loaderView.addSubview(activityIndicatorView)
     
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": movieSections]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[v0(60)]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": searchButton]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(60)]-padding500-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": searchButton]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": loaderView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["v0": loaderView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": movieSections]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": movieSections]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[v0(60)]-padding500-|", options: [], metrics: metrics, views: ["v0": searchButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(60)]-padding500-|", options: [], metrics: metrics, views: ["v0": searchButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": loaderView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": loaderView]))
     activityIndicatorView.centerXAnchor.constraint(equalTo: loaderView.centerXAnchor).isActive = true
     activityIndicatorView.centerYAnchor.constraint(equalTo: loaderView.centerYAnchor).isActive = true
   }
