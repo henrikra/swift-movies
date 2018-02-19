@@ -15,7 +15,6 @@
 		7EA32145200E76540025BC9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA32143200E76540025BC9B /* LaunchScreen.storyboard */; };
 		7EA32150200E76540025BC9B /* SwiftMoviesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3214F200E76540025BC9B /* SwiftMoviesTests.swift */; };
 		7EA3215B200E76540025BC9B /* SwiftMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3215A200E76540025BC9B /* SwiftMoviesUITests.swift */; };
-		7EC7DBA8201502B1000F5D13 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7DBA7201502B1000F5D13 /* config.swift */; };
 		7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7DBA920153638000F5D13 /* HttpAgent.swift */; };
 		7ED86E28201CB6C8002E2913 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E27201CB6C8002E2913 /* Models.swift */; };
 		7ED86E2B201CB6FC002E2913 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */; };
@@ -64,7 +63,6 @@
 		7EA32156200E76540025BC9B /* SwiftMoviesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMoviesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA3215A200E76540025BC9B /* SwiftMoviesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMoviesUITests.swift; sourceTree = "<group>"; };
 		7EA3215C200E76540025BC9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7EC7DBA7201502B1000F5D13 /* config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 		7EC7DBA920153638000F5D13 /* HttpAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpAgent.swift; sourceTree = "<group>"; };
 		7ED86E27201CB6C8002E2913 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 				7EA32146200E76540025BC9B /* Info.plist */,
 				7EE8A167200FD96600A688F0 /* MovieSections.swift */,
 				7EE8A169200FDFDF00A688F0 /* MovieSection.swift */,
-				7EC7DBA7201502B1000F5D13 /* config.swift */,
 				7EFC98B320154D5900BF599F /* FeaturedMovies.swift */,
 				7EEDE7102017932700CD3418 /* FeaturedMoviesController.swift */,
 				7EEBA82B201A3C9F0086BC90 /* MovieSectionItem.swift */,
@@ -340,7 +337,6 @@
 				7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */,
 				7EE8A168200FD96600A688F0 /* MovieSections.swift in Sources */,
 				7EDC4A3D202CAD0400B550B5 /* SpringImageInteractor.swift in Sources */,
-				7EC7DBA8201502B1000F5D13 /* config.swift in Sources */,
 				7EE3BCCB202A05CF006CBBCF /* SpringImageTransition.swift in Sources */,
 				7EDC4A41202CE7AB00B550B5 /* Debouncer.swift in Sources */,
 				7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */,
