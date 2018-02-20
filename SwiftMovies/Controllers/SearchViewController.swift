@@ -188,7 +188,7 @@ class SearchResultCell: UITableViewCell {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
-      if let releaseYear = movie?.release_date.split(separator: "-").first {
+      if let releaseYear = movie?.release_date?.split(separator: "-").first {
         releaseDateLabel.text = String(releaseYear)
       }
       

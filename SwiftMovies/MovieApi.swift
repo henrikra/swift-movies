@@ -47,4 +47,8 @@ class MovieApi {
   func movieGenres() -> Request {
     return HttpAgent.request(url: "\(baseUrl)genre/movie/list?api_key=\(apiKey)")
   }
+  
+  func personDetails(id: Int) -> Request {
+    return HttpAgent.request(url: "\(baseUrl)person/\(id)?api_key=\(apiKey)&append_to_response=movie_credits")
+  }
 }

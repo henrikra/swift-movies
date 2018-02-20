@@ -17,7 +17,7 @@ struct Movie: Decodable {
   let title: String
   let poster_path: String?
   let backdrop_path: String?
-  let release_date: String
+  let release_date: String?
   let overview: String
   let genres: [Genre]?
   let genre_ids: [Int]?
@@ -36,9 +36,15 @@ struct Credits: Decodable {
   let crew: [CrewMember]
 }
 
+struct PersonCredits: Decodable {
+  let cast: [Movie]
+}
+
 struct Actor: Decodable {
+  let id: Int
   let name: String
   let profile_path: String?
+  let movie_credits: PersonCredits?
 }
 
 struct CrewMember: Decodable {

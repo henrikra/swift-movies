@@ -13,6 +13,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   private let minHeaderHeight: CGFloat = 64
   var previousScrollOffset: CGFloat = 0
   var headerHeightConstraint: NSLayoutConstraint!
+  var movies: [Movie]?
   
   let headerView: UIView = {
     let view = UIView()
@@ -36,6 +37,19 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   var actor: Actor? {
     didSet {
+      if let id = actor?.id {
+        MovieApi.shared.personDetails(id: id).responseJSON(onReady: { (response) in
+          guard let data = response.data else { return }
+          print(data)
+          do {
+            let actorDetails = try JSONDecoder().decode(Actor.self, from: data)
+            self.movies = actorDetails.movie_credits?.cast
+            self.tableView.reloadData()
+          } catch {
+            print(error)
+          }
+        })
+      }
       if let profilePath = actor?.profile_path {
         HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(profilePath)").responseJSON { (response) in
           guard let data = response.data else { return }
@@ -113,12 +127,12 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 40
+    return movies?.count ?? 0
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell()
-    cell.textLabel!.text = "Cell \(indexPath.row)"
+    cell.textLabel!.text = movies?[indexPath.row].title
     return cell
   }
 }
