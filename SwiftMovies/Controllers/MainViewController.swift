@@ -48,6 +48,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: true)
+    navigationController?.delegate = self
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -57,8 +58,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    navigationController?.delegate = self
     
     UIApplication.shared.statusBarStyle = .lightContent
     
@@ -109,6 +108,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    if toVC is ActorDetailViewController {
+      return nil
+    }
+    if fromVC is ActorDetailViewController && toVC is DetailViewController {
+      return nil
+    }
+    
     guard let originFrame = originFrame, let imageView = selectedMovieImageView else { return nil }
     
     switch operation {

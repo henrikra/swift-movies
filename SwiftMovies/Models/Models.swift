@@ -37,6 +37,7 @@ struct Credits: Decodable {
 }
 
 struct Actor: Decodable {
+  let name: String
   let profile_path: String?
 }
 

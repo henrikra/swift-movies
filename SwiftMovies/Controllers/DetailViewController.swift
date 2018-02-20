@@ -237,7 +237,13 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     return collectionView
   }()
   
-  lazy var castCollectionViewDelegate = CastCollectionViewDelegate(cellId: cellId)
+  func openActor(actor: Actor) {
+    let actorDetailViewController = ActorDetailViewController()
+    actorDetailViewController.actor = actor
+    navigationController?.pushViewController(actorDetailViewController, animated: true)
+  }
+  
+  lazy var castCollectionViewDelegate = CastCollectionViewDelegate(cellId: cellId, onActorPress: openActor)
   
   var movieInfoViewGradientLayer: CAGradientLayer?
   
@@ -361,9 +367,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
 class CastCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
   let cellId: String
   var cast: [Actor]?
+  let onActorPress: (Actor) -> Void
   
-  init(cellId: String) {
+  init(cellId: String, onActorPress: @escaping (Actor) -> Void) {
     self.cellId = cellId
+    self.onActorPress = onActorPress
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -382,6 +390,13 @@ class CastCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout, 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ActorCell
     cell.imagePath = cast?[indexPath.item].profile_path
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if let actor = cast?[indexPath.item] {
+      onActorPress(actor)
+    }
+    
   }
 }
 
