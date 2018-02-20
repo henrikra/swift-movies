@@ -17,7 +17,6 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   let headerView: UIView = {
     let view = UIView()
-    view.backgroundColor = .green
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -32,6 +31,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   let tableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.backgroundColor = Colors.primary500
     return tableView
   }()
   
@@ -100,7 +100,6 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    print(scrollView.contentOffset.y)
     let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
     let absoluteTop: CGFloat = 0;
     let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
@@ -132,7 +131,9 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell()
-    cell.textLabel!.text = movies?[indexPath.row].title
+    cell.backgroundColor = .clear
+    cell.textLabel?.text = movies?[indexPath.row].title
+    cell.textLabel?.textColor = Colors.lightTextPrimary
     return cell
   }
 }
