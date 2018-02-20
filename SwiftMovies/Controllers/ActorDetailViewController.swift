@@ -31,7 +31,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   let tableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.backgroundColor = Colors.primary500
+    tableView.backgroundColor = Colors.secondary500
     return tableView
   }()
   
@@ -61,9 +61,8 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .red
+    view.backgroundColor = Colors.secondary500
     navigationController?.delegate = self
-    tableView.alwaysBounceVertical = true
     
     view.addSubview(headerView)
     view.addSubview(tableView)
