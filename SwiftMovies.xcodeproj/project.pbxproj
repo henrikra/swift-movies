@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E3089F42019208B006D65FD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3089F32019208B006D65FD /* Constants.swift */; };
+		7E4E610B203C832900F56A0B /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E4E610A203C832900F56A0B /* keys.plist */; };
 		7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A8422027BF03004B4EA8 /* ActorCell.swift */; };
 		7E849C252038644100CD1800 /* MovieApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E849C242038644100CD1800 /* MovieApi.swift */; };
 		7EA3213B200E76540025BC9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3213A200E76540025BC9B /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		7E3089F32019208B006D65FD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7E4E610A203C832900F56A0B /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		7E72A8422027BF03004B4EA8 /* ActorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCell.swift; sourceTree = "<group>"; };
 		7E849C242038644100CD1800 /* MovieApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieApi.swift; sourceTree = "<group>"; };
 		7EA32137200E76540025BC9B /* SwiftMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 		7EA32139200E76540025BC9B /* SwiftMovies */ = {
 			isa = PBXGroup;
 			children = (
+				7E4E610A203C832900F56A0B /* keys.plist */,
 				7E849C242038644100CD1800 /* MovieApi.swift */,
 				7E72A8422027BF03004B4EA8 /* ActorCell.swift */,
 				7ED86E29201CB6F0002E2913 /* Controllers */,
@@ -303,6 +306,7 @@
 			files = (
 				7EA32145200E76540025BC9B /* LaunchScreen.storyboard in Resources */,
 				7EA32142200E76540025BC9B /* Assets.xcassets in Resources */,
+				7E4E610B203C832900F56A0B /* keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,3 +56,7 @@ struct MovieVideo: Decodable {
 struct MovieGenresResponse: Decodable {
   let genres: [Genre]
 }
+
+struct Keys: Decodable {
+  let ApiKey: String
+}
