@@ -11,15 +11,12 @@ import Foundation
 class MovieApi {
   private let baseUrl = "https://api.themoviedb.org/3/"
   private let apiKey: String = {
-    guard let url = Bundle.main.url(forResource: "keys", withExtension: "plist") else { fatalError("Missing api key") }
-    do {
-      let data = try Data(contentsOf: url)
-      let keys = try PropertyListDecoder().decode(Keys.self, from: data)
-      if (keys.ApiKey.count == 0) {
+    if let apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String {
+      if (apiKey.count == 0) {
         fatalError("Missing api key")
       }
-      return keys.ApiKey
-    } catch {
+      return apiKey
+    } else {
       fatalError("Missing api key")
     }
   }()

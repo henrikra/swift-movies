@@ -501,6 +501,7 @@
 		7EA32160200E76540025BC9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_KEY = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3GFPJM7K23;
@@ -516,6 +517,7 @@
 		7EA32161200E76540025BC9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				API_KEY = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3GFPJM7K23;
