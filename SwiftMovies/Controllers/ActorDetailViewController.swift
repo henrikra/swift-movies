@@ -9,6 +9,7 @@
 import UIKit
 
 class ActorDetailViewController: UIViewController, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+  private let cellId = "cellId"
   private let maxHeaderHeight: CGFloat = 300
   private let minHeaderHeight: CGFloat = 64
   var previousScrollOffset: CGFloat = 0
@@ -32,6 +33,8 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.backgroundColor = Colors.secondary500
+    tableView.tableFooterView = UIView()
+    tableView.separatorStyle = .none
     return tableView
   }()
   
@@ -63,6 +66,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     super.viewDidLoad()
     view.backgroundColor = Colors.secondary500
     navigationController?.delegate = self
+    tableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
     
     view.addSubview(headerView)
     view.addSubview(tableView)
@@ -129,10 +133,9 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell()
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchResultCell
+    cell.movie = movies?[indexPath.row]
     cell.backgroundColor = .clear
-    cell.textLabel?.text = movies?[indexPath.row].title
-    cell.textLabel?.textColor = Colors.lightTextPrimary
     return cell
   }
 }
