@@ -138,6 +138,12 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     return movies?.count ?? 0
   }
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let detailViewController = DetailViewController()
+    detailViewController.movie = movies?[indexPath.row]
+    navigationController?.pushViewController(detailViewController, animated: true)
+  }
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchResultCell
     cell.movie = movies?[indexPath.row]
