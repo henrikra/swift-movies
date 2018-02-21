@@ -46,7 +46,13 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
           print(data)
           do {
             let actorDetails = try JSONDecoder().decode(Actor.self, from: data)
-            self.movies = actorDetails.movie_credits?.cast
+            self.movies = actorDetails.movie_credits?.cast.filter({ (movie) -> Bool in
+              guard let releaseDate = movie.release_date else { return false }
+              return releaseDate.count > 0
+            }).sorted(by: { (movie1, movie2) -> Bool in
+              guard let releaseDate1 = movie1.release_date, let releaseDate2 = movie2.release_date else { return false }
+              return releaseDate1 > releaseDate2
+            })
             self.tableView.reloadData()
           } catch {
             print(error)
