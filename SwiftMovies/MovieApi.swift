@@ -24,10 +24,12 @@ class MovieApi {
   static let shared = MovieApi()
   
   private func generateMovieUrl(path: String, queryParams: [String: String] = [:]) -> String {
-    var baseQueryParams: [String: String] = ["api_key": apiKey]
-    baseQueryParams.merge(queryParams, uniquingKeysWith: { $1 })
-    let finalValue = baseQueryParams.map { "\($0)=\($1)" }.joined(separator: "&")
-    return "\(baseUrl)\(path)?\(finalValue)"
+    let baseQueryParams: [String: String] = ["api_key": apiKey]
+    let allQueryParams = baseQueryParams
+      .merging(queryParams, uniquingKeysWith: { $1 })
+      .map { "\($0)=\($1)" }
+      .joined(separator: "&")
+    return "\(baseUrl)\(path)?\(allQueryParams)"
   }
   
   func upcoming() -> Request {
