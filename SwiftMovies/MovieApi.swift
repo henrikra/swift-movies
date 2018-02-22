@@ -21,8 +21,6 @@ class MovieApi {
     }
   }()
   
-  static let shared = MovieApi()
-  
   private func generateMovieUrl(path: String, queryParams: [String: String] = [:]) -> String {
     let baseQueryParams: [String: String] = ["api_key": apiKey]
     let allQueryParams = baseQueryParams

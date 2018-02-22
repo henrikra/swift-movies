@@ -15,7 +15,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   var customInteractor: SpringImageInteractor?
   
   let movieSections: MovieSections = {
-    let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let scrollView = MovieSections(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout(), movieApi: MovieApi())
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     return scrollView
   }()
@@ -98,13 +98,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     self.originFrame = originFrame
     self.selectedMovie = movie
     self.selectedMovieImageView = imageView
-    let detailViewController = DetailViewController()
+    let detailViewController = DetailViewController(movieApi: MovieApi())
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
   }
   
   @objc func openSearch() {
-    navigationController?.present(UINavigationController(rootViewController: SearchViewController()), animated: true, completion: nil)
+    navigationController?.present(UINavigationController(rootViewController: SearchViewController(movieApi: MovieApi())), animated: true, completion: nil)
   }
   
   func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

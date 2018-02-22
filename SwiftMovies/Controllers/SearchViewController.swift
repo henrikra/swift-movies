@@ -13,6 +13,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   var searchTextFieldValue: String?
   var movieSearchResults: [Movie]?
   
+  var movieApi: MovieApi!
+  
+  init(movieApi: MovieApi) {
+    super.init(nibName: nil, bundle: nil)
+    self.movieApi = movieApi
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   let searchInputContainerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +96,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   lazy var searchDebounced = Debouncer(delay: 0.4) {
     guard let searchTextFieldValue = self.searchTextFieldValue else { return }
-    MovieApi.shared.searchMovies(query: searchTextFieldValue).responseJSON(onReady: { (response) in
+    self.movieApi.searchMovies(query: searchTextFieldValue).responseJSON(onReady: { (response) in
       guard let data = response.data else { return }
       do {
         let searchResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
@@ -175,7 +186,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if let movie = movieSearchResults?[indexPath.row] {
-      let detailViewController = DetailViewController()
+      let detailViewController = DetailViewController(movieApi: MovieApi())
       detailViewController.movie = movie
       searchTextField.endEditing(true)
       navigationController?.pushViewController(detailViewController, animated: true)

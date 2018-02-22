@@ -16,6 +16,17 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   var headerHeightConstraint: NSLayoutConstraint!
   var movies: [Movie]?
   
+  var movieApi: MovieApi!
+  
+  init(movieApi: MovieApi) {
+    super.init(nibName: nil, bundle: nil)
+    self.movieApi = movieApi
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   let headerView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -41,9 +52,8 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   var actor: Actor? {
     didSet {
       if let id = actor?.id {
-        MovieApi.shared.personDetails(id: id).responseJSON(onReady: { (response) in
+        movieApi.personDetails(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
-          print(data)
           do {
             let actorDetails = try JSONDecoder().decode(Actor.self, from: data)
             self.movies = actorDetails.movie_credits?.cast.filter({ (movie) -> Bool in
@@ -136,7 +146,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let detailViewController = DetailViewController()
+    let detailViewController = DetailViewController(movieApi: MovieApi())
     detailViewController.movie = movies?[indexPath.row]
     navigationController?.pushViewController(detailViewController, animated: true)
   }

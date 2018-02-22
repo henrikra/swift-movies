@@ -18,9 +18,11 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   var isUpcomingMoviesLoaded = false
   var isTopRatedMoviesLoaded = false
   var isPopularMoviesLoaded = false
+  var movieApi: MovieApi!
   
-  override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+  init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout, movieApi: MovieApi) {
     super.init(frame: frame, collectionViewLayout: layout)
+    self.movieApi = movieApi
     delegate = self
     dataSource = self
     backgroundColor = .clear
@@ -37,7 +39,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchMovieGenres() {
-    MovieApi.shared.movieGenres().responseJSON { (response) in
+    movieApi.movieGenres().responseJSON { (response) in
       guard let data = response.data else { return }
       do {
         self.genres = try JSONDecoder().decode(MovieGenresResponse.self, from: data).genres
@@ -51,7 +53,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchUpcomingMovies() {
-    MovieApi.shared.upcoming().responseJSON { response in
+    movieApi.upcoming().responseJSON { response in
       do {
         guard let data = response.data else { return }
         let upcomingMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
@@ -66,7 +68,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchTopRatedMovies() {
-    MovieApi.shared.topRated().responseJSON { (response) in
+    movieApi.topRated().responseJSON { (response) in
       guard let data = response.data else { return }
       do {
         let topRatedMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)
@@ -81,7 +83,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func fetchPopularMovies() {
-    MovieApi.shared.popular().responseJSON { (response) in
+    movieApi.popular().responseJSON { (response) in
       guard let data = response.data else { return }
       do {
         let popularMoviesResponse = try JSONDecoder().decode(MovieDatabaseResponse.self, from: data)

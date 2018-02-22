@@ -35,6 +35,16 @@ class PlayIconView : UIView {
 class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let cellId = "cellId"
   private let headerHeight: CGFloat = 200
+  var movieApi: MovieApi!
+  
+  init(movieApi: MovieApi) {
+    super.init(nibName: nil, bundle: nil)
+    self.movieApi = movieApi
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   var cast: [Actor]?
   var trailerYoutubeId: String?
@@ -53,7 +63,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       }
       
       if let id = movie?.id {
-        MovieApi.shared.details(id: id).responseJSON(onReady: { (response) in
+        movieApi.details(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
           do {
             let movie = try JSONDecoder().decode(Movie.self, from: data)
@@ -232,7 +242,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
   }()
   
   func openActor(actor: Actor) {
-    let actorDetailViewController = ActorDetailViewController()
+    let actorDetailViewController = ActorDetailViewController(movieApi: MovieApi())
     actorDetailViewController.actor = actor
     navigationController?.pushViewController(actorDetailViewController, animated: true)
   }
