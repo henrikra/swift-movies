@@ -49,7 +49,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       }
       
       if let posterPath = movie?.poster_path {
-        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
+        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)", animationEnabled: false)
       }
       
       if let id = movie?.id {
