@@ -192,21 +192,8 @@ class SearchResultCell: UITableViewCell {
         releaseDateLabel.text = String(releaseYear)
       }
       
-      posterImageView.image = nil
-      posterImageView.alpha = 0
-      
       if let posterPath = movie?.poster_path {
-        HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
-          guard let data = response.data else { return }
-          self.posterImageView.image = UIImage(data: data)
-          if response.isFromCache {
-            self.posterImageView.alpha = 1
-          } else {
-            UIView.animate(withDuration: 0.5, animations: {
-              self.posterImageView.alpha = 1
-            })
-          }
-        }
+        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
       }
     }
   }

@@ -60,10 +60,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
         })
       }
       if let profilePath = actor?.profile_path {
-        HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(profilePath)").responseJSON { (response) in
-          guard let data = response.data else { return }
-          self.mainImageView.image = UIImage(data: data)
-        }
+        mainImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(profilePath)")
       }
     }
   }

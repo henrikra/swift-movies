@@ -45,17 +45,11 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       overviewLabel.text = movie?.overview
       
       if let backdropPath = movie?.backdrop_path {
-        HttpAgent.request(url: "https://image.tmdb.org/t/p/w500\(backdropPath)").responseJSON { (response) in
-          guard let data = response.data else { return }
-          self.backdropImageView.image = UIImage(data: data)
-        }
+        backdropImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(backdropPath)")
       }
       
       if let posterPath = movie?.poster_path {
-        HttpAgent.request(url: "https://image.tmdb.org/t/p/w300\(posterPath)").responseJSON { (response) in
-          guard let data = response.data else { return }
-          self.posterImageView.image = UIImage(data: data)
-        }
+        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
       }
       
       if let id = movie?.id {

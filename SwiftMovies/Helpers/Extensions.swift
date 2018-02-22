@@ -19,3 +19,22 @@ extension UIView {
     return gradientLayer
   }
 }
+
+extension UIImageView {
+  func setImage(with url: String) {
+    image = nil
+    alpha = 0
+    
+    HttpAgent.request(url: url).responseJSON { (response) in
+      guard let data = response.data else { return }
+      self.image = UIImage(data: data)
+      if response.isFromCache {
+        self.alpha = 1
+      } else {
+        UIView.animate(withDuration: 0.5, animations: {
+          self.alpha = 1
+        })
+      }
+    }
+  }
+}
