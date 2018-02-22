@@ -23,35 +23,38 @@ class MovieApi {
   
   static let shared = MovieApi()
   
-  private func generateMovieUrl(path: String) -> String {
-    return "\(baseUrl)\(path)"
+  private func generateMovieUrl(path: String, queryParams: [String: String] = [:]) -> String {
+    var baseQueryParams: [String: String] = ["api_key": apiKey]
+    baseQueryParams.merge(queryParams, uniquingKeysWith: { $1 })
+    let finalValue = baseQueryParams.map { "\($0)=\($1)" }.joined(separator: "&")
+    return "\(baseUrl)\(path)?\(finalValue)"
   }
   
   func upcoming() -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "movie/upcoming?api_key=\(apiKey)"))
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/upcoming"))
   }
   
   func topRated() -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "movie/top_rated?api_key=\(apiKey)"))
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/top_rated"))
   }
   
   func popular() -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "movie/popular?api_key=\(apiKey)"))
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/popular"))
   }
   
   func searchMovies(query: String) -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "search/movie?api_key=\(apiKey)&query=\(query)"))
+    return HttpAgent.request(url: generateMovieUrl(path: "search/movie", queryParams: ["query": query]))
   }
   
   func details(id: Int) -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "movie/\(id)?api_key=\(apiKey)&append_to_response=videos,credits"))
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/\(id)", queryParams: ["append_to_response": "videos,credits"]))
   }
   
   func movieGenres() -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "genre/movie/list?api_key=\(apiKey)"))
+    return HttpAgent.request(url: generateMovieUrl(path: "genre/movie/list"))
   }
   
   func personDetails(id: Int) -> Request {
-    return HttpAgent.request(url: generateMovieUrl(path: "person/\(id)?api_key=\(apiKey)&append_to_response=movie_credits"))
+    return HttpAgent.request(url: generateMovieUrl(path: "person/\(id)", queryParams: ["append_to_response": "movie_credits"]))
   }
 }
