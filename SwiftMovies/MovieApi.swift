@@ -23,32 +23,35 @@ class MovieApi {
   
   static let shared = MovieApi()
   
+  private func generateMovieUrl(path: String) -> String {
+    return "\(baseUrl)\(path)"
+  }
+  
   func upcoming() -> Request {
-    
-    return HttpAgent.request(url: "\(baseUrl)movie/upcoming?api_key=\(apiKey)")
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/upcoming?api_key=\(apiKey)"))
   }
   
   func topRated() -> Request {
-    return HttpAgent.request(url: "\(baseUrl)movie/top_rated?api_key=\(apiKey)")
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/top_rated?api_key=\(apiKey)"))
   }
   
   func popular() -> Request {
-    return HttpAgent.request(url: "\(baseUrl)movie/popular?api_key=\(apiKey)")
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/popular?api_key=\(apiKey)"))
   }
   
   func searchMovies(query: String) -> Request {
-    return HttpAgent.request(url: "\(baseUrl)search/movie?api_key=\(apiKey)&query=\(query)")
+    return HttpAgent.request(url: generateMovieUrl(path: "search/movie?api_key=\(apiKey)&query=\(query)"))
   }
   
   func details(id: Int) -> Request {
-    return HttpAgent.request(url: "\(baseUrl)movie/\(id)?api_key=\(apiKey)&append_to_response=videos,credits")
+    return HttpAgent.request(url: generateMovieUrl(path: "movie/\(id)?api_key=\(apiKey)&append_to_response=videos,credits"))
   }
   
   func movieGenres() -> Request {
-    return HttpAgent.request(url: "\(baseUrl)genre/movie/list?api_key=\(apiKey)")
+    return HttpAgent.request(url: generateMovieUrl(path: "genre/movie/list?api_key=\(apiKey)"))
   }
   
   func personDetails(id: Int) -> Request {
-    return HttpAgent.request(url: "\(baseUrl)person/\(id)?api_key=\(apiKey)&append_to_response=movie_credits")
+    return HttpAgent.request(url: generateMovieUrl(path: "person/\(id)?api_key=\(apiKey)&append_to_response=movie_credits"))
   }
 }
