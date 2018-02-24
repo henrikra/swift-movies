@@ -59,7 +59,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
             self.movies = actorDetails.movie_credits?.cast.filter({ (movie) -> Bool in
               guard let releaseDate = movie.release_date else { return false }
               return releaseDate.count > 0
-            }).sorted(by: { (movie1, movie2) -> Bool in
+            }).filter({ $0.poster_path != nil }).sorted(by: { (movie1, movie2) -> Bool in
               guard let releaseDate1 = movie1.release_date, let releaseDate2 = movie2.release_date else { return false }
               return releaseDate1 > releaseDate2
             })
