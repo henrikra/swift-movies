@@ -132,12 +132,13 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
+    let gradientHeight: CGFloat = 250
     if headerGradientLayer?.frame.width == 0 {
-      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - 150, width: headerView.frame.width, height: 150)
+      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - gradientHeight, width: headerView.frame.width, height: gradientHeight)
     } else {
       CATransaction.begin()
       CATransaction.setDisableActions(true)
-      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - 150, width: headerView.frame.width, height: 150)
+      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - gradientHeight, width: headerView.frame.width, height: gradientHeight)
       CATransaction.commit()
     }
   }
