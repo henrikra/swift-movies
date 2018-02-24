@@ -26,18 +26,26 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     fatalError("init(coder:) has not been implemented")
   }
   
-  let headerView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
-  let mainImageView: UIImageView = {
+  let headerView: UIImageView = {
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFill
     imageView.layer.masksToBounds = true
     return imageView
+  }()
+  
+  let headerOverlay: UIView = {
+    let view = UIView()
+    return view
+  }()
+  
+  let headerTitle: UILabel = {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = Colors.lightTextPrimary
+    label.textAlignment = .center
+    label.font = UIFont.boldSystemFont(ofSize: 22)
+    return label
   }()
   
   let tableView: UITableView = {
@@ -52,6 +60,8 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   var actor: Actor? {
     didSet {
+      headerTitle.text = actor?.name
+      
       if let id = actor?.id {
         movieApi.personDetails(id: id).responseJSON(onReady: { (response) in
           guard let data = response.data else { return }
@@ -71,14 +81,16 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
         })
       }
       if let profilePath = actor?.profile_path {
-        mainImageView.setImage(with: movieApi.generateImageUrl(path: profilePath, size: .w500))
+        headerView.setImage(with: movieApi.generateImageUrl(path: profilePath, size: .w500))
       }
     }
   }
   
+  var headerGradientLayer: CAGradientLayer?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500, startPoint: CGPoint(x: 1, y: 0.5))
     navigationController?.delegate = self
     tableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
     tableView.delegate = self
@@ -86,14 +98,16 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     tableView.contentInset = UIEdgeInsets(top: headerReferenceHeight - 64, left: 0, bottom: 0, right: 0)
     
     view.addSubview(headerView)
+    headerView.addSubview(headerOverlay)
+    headerGradientLayer = headerOverlay.addGradientBackground(fromColor: .clear, toColor: Colors.primary500, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
+    headerView.addSubview(headerTitle)
     view.addSubview(tableView)
-    headerView.addSubview(mainImageView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerTitle]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-padding400-|", options: [], metrics: metrics, views: ["v0": headerTitle]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": mainImageView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": mainImageView]))
     headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerReferenceHeight)
     if let headerHeightConstraint = headerHeightConstraint {
       NSLayoutConstraint.activate([
@@ -101,7 +115,18 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
         headerHeightConstraint,
       ])
     }
-    
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if headerGradientLayer?.frame.width == 0 {
+      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - 150, width: headerView.frame.width, height: 150)
+    } else {
+      CATransaction.begin()
+      CATransaction.setDisableActions(true)
+      headerGradientLayer?.frame = CGRect(x: headerView.frame.minX, y: headerView.frame.maxY - 150, width: headerView.frame.width, height: 150)
+      CATransaction.commit()
+    }
   }
   
   func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
