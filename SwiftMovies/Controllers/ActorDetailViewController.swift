@@ -11,7 +11,10 @@ import UIKit
 class ActorDetailViewController: UIViewController, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
   private let cellId = "cellId"
   private let headerReferenceHeight: CGFloat = 300
-  private let minHeaderHeight: CGFloat = 64
+  private lazy var minHeaderHeight: CGFloat = {
+    return (navigationController?.navigationBar.frame.height ?? 0) + UIApplication.shared.statusBarFrame.size.height
+  }()
+  
   var headerHeightConstraint: NSLayoutConstraint!
   var movies: [Movie]?
   
