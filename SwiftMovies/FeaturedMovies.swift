@@ -39,7 +39,7 @@ class FeaturedMovieController: UIViewController {
       }).flatMap({ $0 }).prefix(3).joined(separator: ", ")
       
       if let backdropPath = movie?.backdrop_path {
-        backdropImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(backdropPath)")
+        backdropImageView.setImage(with: movieApi.generateImageUrl(path: backdropPath, size: .w500))
       }
       if let posterPath = movie?.poster_path {
         posterImageView.setImage(with: movieApi.generateImageUrl(path: posterPath))

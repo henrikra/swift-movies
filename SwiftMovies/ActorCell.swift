@@ -11,11 +11,12 @@ import UIKit
 class ActorCell: UICollectionViewCell {
   var imagePath: String? {
     didSet {
-      if let imagePath = imagePath {
-        imageView.setImage(with: "https://image.tmdb.org/t/p/w300\(imagePath)")
+      if let imagePath = imagePath, let imageUrl = movieApi?.generateImageUrl(path: imagePath, size: .w92) {
+        imageView.setImage(with: imageUrl)
       }
     }
   }
+  var movieApi: MovieApi?
   
   let imageView: UIImageView = {
     let imageView = UIImageView()

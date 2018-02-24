@@ -16,11 +16,11 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   var headerHeightConstraint: NSLayoutConstraint!
   var movies: [Movie]?
   
-  var movieApi: MovieApi!
+  let movieApi: MovieApi
   
   init(movieApi: MovieApi) {
-    super.init(nibName: nil, bundle: nil)
     self.movieApi = movieApi
+    super.init(nibName: nil, bundle: nil)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -70,7 +70,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
         })
       }
       if let profilePath = actor?.profile_path {
-        mainImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(profilePath)")
+        mainImageView.setImage(with: movieApi.generateImageUrl(path: profilePath, size: .w500))
       }
     }
   }

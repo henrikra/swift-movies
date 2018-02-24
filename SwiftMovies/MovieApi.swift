@@ -36,6 +36,7 @@ class MovieApi {
     case w154 = "w154"
     case w185 = "w185"
     case w342 = "w342"
+    case w500 = "w500"
   }
   
   func generateImageUrl(path: String, size: posterImageSizes = .w154) -> String {

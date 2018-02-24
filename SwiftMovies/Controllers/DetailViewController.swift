@@ -55,7 +55,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       overviewLabel.text = movie?.overview
       
       if let backdropPath = movie?.backdrop_path {
-        backdropImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(backdropPath)")
+        backdropImageView.setImage(with: movieApi.generateImageUrl(path: backdropPath, size: .w500))
       }
       
       if let posterPath = movie?.poster_path {
@@ -392,6 +392,7 @@ class CastCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout, 
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? ActorCell else { return UICollectionViewCell() }
+    cell.movieApi = MovieApi()
     cell.imagePath = cast?[indexPath.item].profile_path
     return cell
   }
