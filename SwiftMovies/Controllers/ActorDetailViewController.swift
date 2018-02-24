@@ -152,7 +152,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SearchResultCell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? SearchResultCell else { return UITableViewCell() }
     cell.movie = movies?[indexPath.row]
     cell.backgroundColor = .clear
     return cell

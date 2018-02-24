@@ -47,7 +47,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSectionCell
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? MovieSectionCell else { return UICollectionViewCell() }
     cell.movie = movies?[indexPath.item]
     return cell
   }
@@ -81,7 +81,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let selectedCell = collectionView.cellForItem(at: indexPath) as! MovieSectionCell
+    guard let selectedCell = collectionView.cellForItem(at: indexPath) as? MovieSectionCell else { return }
     let selectedFrame = selectedCell.posterImageView.convert(selectedCell.posterImageView.bounds, to: nil)
     if let movie = movies?[indexPath.item] {
       onPress?(movie, selectedFrame, selectedCell.posterImageView)

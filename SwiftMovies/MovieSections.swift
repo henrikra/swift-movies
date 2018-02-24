@@ -130,7 +130,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MovieSection
+    guard let cell = dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? MovieSection else { return UICollectionViewCell() }
     if indexPath.item == 0 {
       cell.categoryTitleLabel.text = "Popular"
       cell.movies = popularMovies

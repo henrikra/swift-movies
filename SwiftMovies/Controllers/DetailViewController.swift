@@ -391,7 +391,7 @@ class CastCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout, 
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ActorCell
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? ActorCell else { return UICollectionViewCell() }
     cell.imagePath = cast?[indexPath.item].profile_path
     return cell
   }
