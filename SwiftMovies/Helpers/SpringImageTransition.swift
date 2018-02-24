@@ -38,7 +38,7 @@ class SpringImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
     let targetView = isPushing ? toView : fromView
     let targetViewController = isPushing ? toViewController : fromViewController
     
-    guard let posterImageView = (targetViewController as? DetailViewController)?.posterImageView else { return }
+    guard let posterImageView = (targetViewController as? MovieDetailViewController)?.posterImageView else { return }
     posterImageView.image = moviePosterView.image
     posterImageView.alpha = 0
     moviePosterView.alpha = 0

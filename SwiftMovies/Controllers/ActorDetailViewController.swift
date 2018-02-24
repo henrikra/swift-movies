@@ -146,7 +146,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let detailViewController = DetailViewController(movieApi: MovieApi())
+    let detailViewController = MovieDetailViewController(movieApi: MovieApi())
     detailViewController.movie = movies?[indexPath.row]
     navigationController?.pushViewController(detailViewController, animated: true)
   }

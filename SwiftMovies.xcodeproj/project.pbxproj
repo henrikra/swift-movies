@@ -18,7 +18,7 @@
 		7EC41055203C9903001DF4DF /* ActorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC41054203C9903001DF4DF /* ActorDetailViewController.swift */; };
 		7EC7DBAA20153638000F5D13 /* HttpAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7DBA920153638000F5D13 /* HttpAgent.swift */; };
 		7ED86E28201CB6C8002E2913 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E27201CB6C8002E2913 /* Models.swift */; };
-		7ED86E2B201CB6FC002E2913 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */; };
+		7ED86E2B201CB6FC002E2913 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED86E2A201CB6FC002E2913 /* MovieDetailViewController.swift */; };
 		7EDC4A3D202CAD0400B550B5 /* SpringImageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDC4A3C202CAD0400B550B5 /* SpringImageInteractor.swift */; };
 		7EDC4A3F202CCA6700B550B5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDC4A3E202CCA6700B550B5 /* SearchViewController.swift */; };
 		7EDC4A41202CE7AB00B550B5 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDC4A40202CE7AB00B550B5 /* Debouncer.swift */; };
@@ -67,7 +67,7 @@
 		7EC41054203C9903001DF4DF /* ActorDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorDetailViewController.swift; sourceTree = "<group>"; };
 		7EC7DBA920153638000F5D13 /* HttpAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpAgent.swift; sourceTree = "<group>"; };
 		7ED86E27201CB6C8002E2913 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		7ED86E2A201CB6FC002E2913 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		7EDC4A3C202CAD0400B550B5 /* SpringImageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringImageInteractor.swift; sourceTree = "<group>"; };
 		7EDC4A3E202CCA6700B550B5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7EDC4A40202CE7AB00B550B5 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 				7EC41054203C9903001DF4DF /* ActorDetailViewController.swift */,
 				7EDC4A3E202CCA6700B550B5 /* SearchViewController.swift */,
 				7EE8A16B200FF52F00A688F0 /* MainViewController.swift */,
-				7ED86E2A201CB6FC002E2913 /* DetailViewController.swift */,
+				7ED86E2A201CB6FC002E2913 /* MovieDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -334,7 +334,7 @@
 				7EEDE7112017932700CD3418 /* FeaturedMoviesController.swift in Sources */,
 				7EE8A16C200FF52F00A688F0 /* MainViewController.swift in Sources */,
 				7EDC4A3F202CCA6700B550B5 /* SearchViewController.swift in Sources */,
-				7ED86E2B201CB6FC002E2913 /* DetailViewController.swift in Sources */,
+				7ED86E2B201CB6FC002E2913 /* MovieDetailViewController.swift in Sources */,
 				7E849C252038644100CD1800 /* MovieApi.swift in Sources */,
 				7EFC98B420154D5900BF599F /* FeaturedMovies.swift in Sources */,
 				7E72A8432027BF03004B4EA8 /* ActorCell.swift in Sources */,

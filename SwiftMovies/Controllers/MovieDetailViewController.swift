@@ -32,7 +32,7 @@ class PlayIconView : UIView {
   }
 }
 
-class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+class MovieDetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let cellId = "cellId"
   private let headerHeight: CGFloat = 200
   let movieApi: MovieApi

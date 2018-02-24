@@ -103,7 +103,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     self.originFrame = originFrame
     self.selectedMovie = movie
     self.selectedMovieImageView = imageView
-    let detailViewController = DetailViewController(movieApi: MovieApi())
+    let detailViewController = MovieDetailViewController(movieApi: MovieApi())
     detailViewController.movie = movie
     navigationController?.pushViewController(detailViewController, animated: true)
   }
@@ -116,7 +116,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     if toVC is ActorDetailViewController {
       return nil
     }
-    if fromVC is ActorDetailViewController && toVC is DetailViewController {
+    if fromVC is ActorDetailViewController && toVC is MovieDetailViewController {
       return nil
     }
     

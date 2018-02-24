@@ -189,7 +189,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if let movie = movieSearchResults?[indexPath.row] {
-      let detailViewController = DetailViewController(movieApi: MovieApi())
+      let detailViewController = MovieDetailViewController(movieApi: MovieApi())
       detailViewController.movie = movie
       searchTextField.endEditing(true)
       navigationController?.pushViewController(detailViewController, animated: true)
