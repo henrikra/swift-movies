@@ -140,6 +140,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationItem.title = ""
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.tintColor = Colors.lightTextPrimary
