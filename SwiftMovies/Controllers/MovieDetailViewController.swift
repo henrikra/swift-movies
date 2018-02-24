@@ -254,7 +254,7 @@ class MovieDetailViewController: UIViewController, UICollectionViewDelegateFlowL
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Colors.primary500
-    navigationItem.title = ""
+    title = ""
     scrollView.delegate = self
     
     view.addSubview(scrollView)

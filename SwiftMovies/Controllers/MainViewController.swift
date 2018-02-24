@@ -60,7 +60,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     super.viewDidLoad()
     
     UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.clear], for: .normal)
-    navigationItem.title = ""
+    title = ""
     navigationController?.navigationBar.backIndicatorImage = #imageLiteral(resourceName: "arrow left")
     navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
     

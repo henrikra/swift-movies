@@ -101,7 +101,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.title = ""
+    title = ""
     _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500, startPoint: CGPoint(x: 1, y: 0.5))
     navigationController?.delegate = self
     tableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
