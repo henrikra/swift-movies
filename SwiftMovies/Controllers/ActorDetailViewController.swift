@@ -10,9 +10,8 @@ import UIKit
 
 class ActorDetailViewController: UIViewController, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
   private let cellId = "cellId"
-  private let maxHeaderHeight: CGFloat = 300
+  private let headerReferenceHeight: CGFloat = 300
   private let minHeaderHeight: CGFloat = 64
-  var previousScrollOffset: CGFloat = 0
   var headerHeightConstraint: NSLayoutConstraint!
   var movies: [Movie]?
   
@@ -37,15 +36,17 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     let imageView = UIImageView()
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFill
+    imageView.layer.masksToBounds = true
     return imageView
   }()
   
   let tableView: UITableView = {
     let tableView = UITableView()
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.backgroundColor = Colors.secondary500
+    tableView.backgroundColor = .clear
     tableView.tableFooterView = UIView()
     tableView.separatorStyle = .none
+    tableView.showsVerticalScrollIndicator = false
     return tableView
   }()
   
@@ -77,9 +78,12 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = Colors.secondary500
+    _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     navigationController?.delegate = self
     tableView.register(SearchResultCell.self, forCellReuseIdentifier: cellId)
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.contentInset = UIEdgeInsets(top: headerReferenceHeight - 64, left: 0, bottom: 0, right: 0)
     
     view.addSubview(headerView)
     view.addSubview(tableView)
@@ -87,15 +91,14 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": mainImageView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": mainImageView]))
-    headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: maxHeaderHeight)
+    headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerReferenceHeight)
     if let headerHeightConstraint = headerHeightConstraint {
       NSLayoutConstraint.activate([
         headerView.topAnchor.constraint(equalTo: view.topAnchor),
         headerHeightConstraint,
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       ])
     }
     
@@ -105,36 +108,14 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     return nil
   }
   
-  override func viewDidLayoutSubviews() {
-    tableView.delegate = self
-    tableView.dataSource = self
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.headerHeightConstraint.constant = self.maxHeaderHeight
-  }
-  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
-    let absoluteTop: CGFloat = 0;
-    let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
-    let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-    let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
-    
-    var newHeight = self.headerHeightConstraint.constant
-    if isScrollingDown {
-      newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-    } else if isScrollingUp && scrollView.contentOffset.y <= 0 {
-      newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
+    let newHeaderHeight = headerReferenceHeight - (scrollView.contentOffset.y + headerReferenceHeight)
+    headerHeightConstraint.constant = max(minHeaderHeight, newHeaderHeight)
+    if newHeaderHeight <= minHeaderHeight {
+      view.bringSubview(toFront: headerView)
+    } else {
+      view.bringSubview(toFront: tableView)
     }
-    
-    if newHeight != self.headerHeightConstraint.constant {
-      self.headerHeightConstraint.constant = newHeight
-      self.setScrollPosition(position: self.previousScrollOffset)
-    }
-    
-    self.previousScrollOffset = scrollView.contentOffset.y
   }
   
   func setScrollPosition(position: CGFloat) {
