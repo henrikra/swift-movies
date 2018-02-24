@@ -34,6 +34,14 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     return imageView
   }()
   
+  let headerBorder: UIView = {
+    let view = UIView()
+    view.backgroundColor = Colors.lightTextDivider
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.alpha = 0
+    return view
+  }()
+  
   let headerOverlay: UIView = {
     let view = UIView()
     return view
@@ -101,11 +109,13 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     headerView.addSubview(headerOverlay)
     headerGradientLayer = headerOverlay.addGradientBackground(fromColor: .clear, toColor: Colors.primary500, startPoint: CGPoint(x: 0.5, y: 0), endPoint: CGPoint(x: 0.5, y: 1))
     headerView.addSubview(headerTitle)
+    headerView.addSubview(headerBorder)
     view.addSubview(tableView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerTitle]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-padding400-|", options: [], metrics: metrics, views: ["v0": headerTitle]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerBorder]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-padding400-[v1(1)]|", options: [], metrics: metrics, views: ["v0": headerTitle, "v1": headerBorder]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
     headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerReferenceHeight)
@@ -138,8 +148,14 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     headerHeightConstraint.constant = max(minHeaderHeight, newHeaderHeight)
     if newHeaderHeight <= minHeaderHeight {
       view.bringSubview(toFront: headerView)
+      UIView.animate(withDuration: 0.2, animations: {
+        self.headerBorder.alpha = 1
+      })
     } else {
       view.bringSubview(toFront: tableView)
+      UIView.animate(withDuration: 0.2, animations: {
+        self.headerBorder.alpha = 0
+      })
     }
   }
   
