@@ -30,7 +30,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   private func createFeaturedMovieController(currentViewController: FeaturedMovieController, nextIndex: Int) -> FeaturedMovieController {
-    let featuredMovieController = FeaturedMovieController()
+    let featuredMovieController = FeaturedMovieController(movieApi: MovieApi())
     featuredMovieController.genres = genres
     featuredMovieController.movie = movies?[nextIndex]
     featuredMovieController.onPress = currentViewController.onPress

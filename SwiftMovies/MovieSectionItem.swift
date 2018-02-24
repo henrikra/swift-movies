@@ -12,10 +12,13 @@ class MovieSectionCell: UICollectionViewCell {
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
-      guard let posterPath = movie?.poster_path else { return }
-      posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
+      guard
+        let posterPath = movie?.poster_path,
+        let imageUrl = movieApi?.generateImageUrl(path: posterPath) else { return }
+      posterImageView.setImage(with: imageUrl)
     }
   }
+  var movieApi: MovieApi?
   
   let posterImageView: UIImageView = {
     let imageView = UIImageView()

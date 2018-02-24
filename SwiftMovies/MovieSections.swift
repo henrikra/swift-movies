@@ -109,7 +109,7 @@ class MovieSections: UICollectionView, UICollectionViewDelegateFlowLayout, UICol
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "featuredMoviesId", for: indexPath) as! FeaturedMovies
-    let featuredMovieController = FeaturedMovieController()
+    let featuredMovieController = FeaturedMovieController(movieApi: MovieApi())
     featuredMovieController.onPress = onMoviePress
     featuredMovieController.genres = genres
     featuredMovieController.movie = self.upcomingMovies?.first

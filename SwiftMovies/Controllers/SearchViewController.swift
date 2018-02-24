@@ -177,6 +177,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? SearchResultCell else { return UITableViewCell() }
+    cell.movieApi = MovieApi()
     cell.movie = movieSearchResults?[indexPath.row]
     cell.backgroundColor = .clear
     return cell
@@ -205,11 +206,12 @@ class SearchResultCell: UITableViewCell {
         releaseDateLabel.text = String(releaseYear)
       }
       
-      if let posterPath = movie?.poster_path {
-        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
+      if let posterPath = movie?.poster_path, let imageUrl = movieApi?.generateImageUrl(path: posterPath, size: .w92) {
+        posterImageView.setImage(with: imageUrl)
       }
     }
   }
+  var movieApi: MovieApi?
   
   let titleLabel: UILabel = {
     let label = UILabel()

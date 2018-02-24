@@ -35,11 +35,11 @@ class PlayIconView : UIView {
 class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let cellId = "cellId"
   private let headerHeight: CGFloat = 200
-  var movieApi: MovieApi!
+  let movieApi: MovieApi
   
   init(movieApi: MovieApi) {
-    super.init(nibName: nil, bundle: nil)
     self.movieApi = movieApi
+    super.init(nibName: nil, bundle: nil)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,7 +59,7 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
       }
       
       if let posterPath = movie?.poster_path {
-        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)", animationEnabled: false)
+        posterImageView.setImage(with: movieApi.generateImageUrl(path: posterPath), animationEnabled: false)
       }
       
       if let id = movie?.id {

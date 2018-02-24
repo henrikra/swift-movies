@@ -10,6 +10,7 @@ import Foundation
 
 class MovieApi {
   private let baseUrl = "https://api.themoviedb.org/3/"
+  private let imageBaseUrl = "https://image.tmdb.org/t/p/"
   private let apiKey: String = {
     if let apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String {
       if (apiKey.count == 0) {
@@ -28,6 +29,17 @@ class MovieApi {
       .map { "\($0)=\($1)" }
       .joined(separator: "&")
     return "\(baseUrl)\(path)?\(allQueryParams)"
+  }
+  
+  enum posterImageSizes: String {
+    case w92 = "w92"
+    case w154 = "w154"
+    case w185 = "w185"
+    case w342 = "w342"
+  }
+  
+  func generateImageUrl(path: String, size: posterImageSizes = .w154) -> String {
+    return "\(imageBaseUrl)\(size)\(path)"
   }
   
   func upcoming() -> Request {

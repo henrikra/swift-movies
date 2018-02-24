@@ -30,6 +30,7 @@ class FeaturedMovies: UICollectionViewCell {
 class FeaturedMovieController: UIViewController {
   var onPress: ((Movie, CGRect, UIImageView) -> Void)?
   var genres: [Genre]?
+  let movieApi: MovieApi
   var movie: Movie? {
     didSet {
       titleLabel.text = movie?.title
@@ -41,7 +42,7 @@ class FeaturedMovieController: UIViewController {
         backdropImageView.setImage(with: "https://image.tmdb.org/t/p/w500\(backdropPath)")
       }
       if let posterPath = movie?.poster_path {
-        posterImageView.setImage(with: "https://image.tmdb.org/t/p/w300\(posterPath)")
+        posterImageView.setImage(with: movieApi.generateImageUrl(path: posterPath))
       }
     }
   }
@@ -95,6 +96,15 @@ class FeaturedMovieController: UIViewController {
     if let movie = movie {
       onPress?(movie, posterImageView.convert(posterImageView.bounds, to: nil), posterImageView)
     }
+  }
+  
+  init(movieApi: MovieApi) {
+    self.movieApi = movieApi
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   override func viewDidLoad() {

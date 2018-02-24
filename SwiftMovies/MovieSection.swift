@@ -48,6 +48,7 @@ class MovieSection: UICollectionViewCell, UICollectionViewDataSource, UICollecti
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? MovieSectionCell else { return UICollectionViewCell() }
+    cell.movieApi = MovieApi()
     cell.movie = movies?[indexPath.item]
     return cell
   }
