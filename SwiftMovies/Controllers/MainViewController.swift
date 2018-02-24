@@ -59,13 +59,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.clear], for: .normal)
+    navigationItem.title = ""
+    navigationController?.navigationBar.backIndicatorImage = #imageLiteral(resourceName: "arrow left")
+    navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+    
     UIApplication.shared.statusBarStyle = .lightContent
     
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.tintColor = .white
     
-    view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
+    _ = view.addGradientBackground(fromColor: Colors.primary500, toColor: Colors.secondary500)
     
     movieSections.onMoviePress = goToDetailView
     movieSections.hideLoader = hideLoader

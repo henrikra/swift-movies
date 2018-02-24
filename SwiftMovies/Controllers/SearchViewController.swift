@@ -143,6 +143,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.tintColor = Colors.lightTextPrimary
+    navigationController?.navigationBar.backIndicatorImage = #imageLiteral(resourceName: "arrow left")
+    navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
     
     searchTextField.becomeFirstResponder()
     
