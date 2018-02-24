@@ -38,7 +38,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-    let currentViewController = viewController as! FeaturedMovieController
+    guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
     pageControl.currentPage = currentMovieIndex ?? 0
     
@@ -55,7 +55,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-    let currentViewController = viewController as! FeaturedMovieController
+    guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
     pageControl.currentPage = currentMovieIndex ?? 0
     
