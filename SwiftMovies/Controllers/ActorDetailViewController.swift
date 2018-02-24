@@ -116,7 +116,7 @@ class ActorDetailViewController: UIViewController, UINavigationControllerDelegat
     view.addSubview(tableView)
     
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerTitle]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-45-[v0]-45-|", options: [], metrics: metrics, views: ["v0": headerTitle]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": headerBorder]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0]-padding400-[v1(1)]|", options: [], metrics: metrics, views: ["v0": headerTitle, "v1": headerBorder]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": tableView]))
