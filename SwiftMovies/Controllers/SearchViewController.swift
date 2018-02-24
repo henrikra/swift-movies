@@ -164,7 +164,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[v0(0.5)]|", options: [], metrics: metrics, views: ["v0": separatorView]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": searchResultTableView]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0][v1]|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|-padding500-[v0][v1(70)]|", options: [], metrics: metrics, views: ["v0": searchTextField, "v1": closeButton]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": searchTextField]))
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-40-[v0]-padding500-|", options: [], metrics: metrics, views: ["v0": closeButton]))
   }
