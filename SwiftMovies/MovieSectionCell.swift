@@ -15,7 +15,7 @@ class MovieSectionCell: UICollectionViewCell {
       guard
         let posterPath = movie?.poster_path,
         let imageUrl = movieApi?.generateImageUrl(path: posterPath) else { return }
-      posterImageView.setImage(with: imageUrl)
+      posterImageView.setImage(with: imageUrl, tag: movie?.id)
     }
   }
   var movieApi: MovieApi?

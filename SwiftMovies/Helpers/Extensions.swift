@@ -21,7 +21,10 @@ extension UIView {
 }
 
 extension UIImageView {
-  func setImage(with url: String, animationEnabled: Bool = true) {
+  func setImage(with url: String, tag: Int? = nil, animationEnabled: Bool = true) {
+    if let tag = tag {
+      self.tag = tag
+    }
     image = nil
     if animationEnabled {
       alpha = 0
@@ -29,14 +32,16 @@ extension UIImageView {
     
     HttpAgent.request(url: url).responseJSON { (response) in
       guard let data = response.data else { return }
-      self.image = UIImage(data: data)
-      if animationEnabled {
-        if response.isFromCache {
-          self.alpha = 1
-        } else {
-          UIView.animate(withDuration: 0.5, animations: {
+      if tag == nil || self.tag == tag {
+        self.image = UIImage(data: data)
+        if animationEnabled {
+          if response.isFromCache {
             self.alpha = 1
-          })
+          } else {
+            UIView.animate(withDuration: 0.5, animations: {
+              self.alpha = 1
+            })
+          }
         }
       }
     }

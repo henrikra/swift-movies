@@ -208,7 +208,7 @@ class SearchResultCell: UITableViewCell {
       }
       
       if let posterPath = movie?.poster_path, let imageUrl = movieApi?.generateImageUrl(path: posterPath, size: .w92) {
-        posterImageView.setImage(with: imageUrl)
+        posterImageView.setImage(with: imageUrl, tag: movie?.id)
       }
     }
   }

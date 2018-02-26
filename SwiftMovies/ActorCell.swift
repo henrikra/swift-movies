@@ -9,10 +9,11 @@
 import UIKit
 
 class ActorCell: UICollectionViewCell {
+  var actorId: Int?
   var imagePath: String? {
     didSet {
       if let imagePath = imagePath, let imageUrl = movieApi?.generateImageUrl(path: imagePath, size: .w92) {
-        imageView.setImage(with: imageUrl)
+        imageView.setImage(with: imageUrl, tag: actorId)
       }
     }
   }
