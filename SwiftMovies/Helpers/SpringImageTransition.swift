@@ -49,6 +49,7 @@ class SpringImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
     transitionImageView.layer.shadowOpacity = isPushing ? 0 : 0.2
     transitionImageView.layer.shadowOffset = CGSize(width: 10, height: 10)
     transitionImageView.layer.shadowRadius = 0
+    transitionImageView.contentMode = .scaleAspectFit
 
     let playIconSize: CGFloat = isPushing ? moviePosterView.frame.width / 3.5 : posterImageView.frame.width / 3.5
     let playIcon = PlayIconView()
