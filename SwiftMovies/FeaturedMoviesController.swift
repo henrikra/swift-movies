@@ -14,7 +14,6 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
       pageControl.numberOfPages = movies?.count ?? 0
     }
   }
-  var currentIndex = 0
   
   let pageControl: UIPageControl = {
     let pageControl = UIPageControl()
@@ -27,22 +26,12 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   
   func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
     if completed {
-      pageControl.currentPage = currentIndex
-    } else {
       guard
-        let previousFeaturedMovieController = previousViewControllers.first as? FeaturedMovieController,
-        let newIndex = getCurrentMovieIndex(currentViewController: previousFeaturedMovieController)
-      else { return }
-      currentIndex = newIndex
+        let nextFeaturedMovieController = pageViewController.viewControllers?.first as? FeaturedMovieController,
+        let newIndex = getCurrentMovieIndex(currentViewController: nextFeaturedMovieController)
+        else { return }
+      pageControl.currentPage = newIndex
     }
-  }
-  
-  func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-    guard
-      let pendingFeaturedMovieController = pendingViewControllers.first as? FeaturedMovieController,
-      let newIndex = getCurrentMovieIndex(currentViewController: pendingFeaturedMovieController)
-    else { return }
-    currentIndex = newIndex
   }
   
   func getCurrentMovieIndex(currentViewController: FeaturedMovieController) -> Int? {
