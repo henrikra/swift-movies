@@ -8,13 +8,14 @@
 
 import UIKit
 
-class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource {
+class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
   var genres: [Genre]?
   var movies: [Movie]? {
     didSet {
       pageControl.numberOfPages = movies?.count ?? 0
     }
   }
+  var currentIndex = 0
   
   let pageControl: UIPageControl = {
     let pageControl = UIPageControl()
@@ -24,6 +25,26 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
     pageControl.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     return pageControl
   }()
+  
+  func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    if completed {
+      pageControl.currentPage = currentIndex
+    } else {
+      guard
+        let previousFeaturedMovieController = previousViewControllers.first as? FeaturedMovieController,
+        let newIndex = getCurrentMovieIndex(currentViewController: previousFeaturedMovieController)
+      else { return }
+      currentIndex = newIndex
+    }
+  }
+  
+  func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+    guard
+      let pendingFeaturedMovieController = pendingViewControllers.first as? FeaturedMovieController,
+      let newIndex = getCurrentMovieIndex(currentViewController: pendingFeaturedMovieController)
+    else { return }
+    currentIndex = newIndex
+  }
   
   func getCurrentMovieIndex(currentViewController: FeaturedMovieController) -> Int? {
     return movies?.index(where: { $0.id == currentViewController.movie?.id })
@@ -40,7 +61,6 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
-    pageControl.currentPage = currentMovieIndex ?? 0
     
     let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
     return createFeaturedMovieController(currentViewController: currentViewController, nextIndex: nextIndex)
@@ -57,7 +77,6 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
     guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
-    pageControl.currentPage = currentMovieIndex ?? 0
     
     let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
     return createFeaturedMovieController(currentViewController: currentViewController, nextIndex: nextIndex)
@@ -66,6 +85,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   override func viewDidLoad() {
     super.viewDidLoad()
     dataSource = self
+    delegate = self
     
     view.addSubview(pageControl)
     view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[v0]|", options: [], metrics: metrics, views: ["v0": pageControl]))
