@@ -58,7 +58,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-    guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
+    guard let currentViewController = viewController as? FeaturedMovieController else { return nil }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
     
     let nextIndex = isFirstMovie(currentMovieIndex ?? 0) ? (movies?.count ?? 0) - 1 : (currentMovieIndex ?? 0) - 1
@@ -74,7 +74,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   }
   
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-    guard let currentViewController = viewController as? FeaturedMovieController else { return UIViewController() }
+    guard let currentViewController = viewController as? FeaturedMovieController else { return nil }
     let currentMovieIndex = getCurrentMovieIndex(currentViewController: currentViewController)
     
     let nextIndex = isLastMovie(currentMovieIndex ?? 0) ? 0 : (currentMovieIndex ?? 0) + 1
