@@ -9,7 +9,6 @@
 import UIKit
 
 class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-  var genres: [Genre]?
   var movies: [Movie]? {
     didSet {
       pageControl.numberOfPages = movies?.count ?? 0
@@ -52,7 +51,7 @@ class FeaturedMoviesController: UIPageViewController, UIPageViewControllerDataSo
   
   private func createFeaturedMovieController(currentViewController: FeaturedMovieController, nextIndex: Int) -> FeaturedMovieController {
     let featuredMovieController = FeaturedMovieController(movieApi: MovieApi())
-    featuredMovieController.genres = genres
+    featuredMovieController.genres = currentViewController.genres
     featuredMovieController.movie = movies?[nextIndex]
     featuredMovieController.onPress = currentViewController.onPress
     return featuredMovieController
