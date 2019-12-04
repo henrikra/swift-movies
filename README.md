@@ -16,3 +16,10 @@ Things I am going to learn with this project:
 1. Clone repository
 2. (Optional) Add your [The Movie Database API key](https://developers.themoviedb.org/3/getting-started/introduction) as value for User-Defined setting `API_KEY`
 3. Build & Run from Xcode
+
+## Screenshots
+
+![Home view](docs/1_home_view.png)
+![Single movie view](docs/2_single_movie_view.png)
+![Single actor view](docs/3_single_actor_view.png)
+![Search view](docs/4_search_view.png)
