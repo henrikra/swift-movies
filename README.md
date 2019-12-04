@@ -1,7 +1,9 @@
 # Swift movies
+
 Purpose of this reposity is to dive into Swift by building [this application](https://framer.cloud/yrDqW) without any dependencies.
 
 Things I am going to learn with this project:
+
 - layout with code only
 - http requests
 - handling JSON
@@ -10,5 +12,7 @@ Things I am going to learn with this project:
 - some animations
 
 ## Running the app
+
 1. Clone repository
-2. Add your [The Movie Database API key](https://developers.themoviedb.org/3/getting-started/introduction) as value for User-Defined setting `API_KEY`
+2. (Optional) Add your [The Movie Database API key](https://developers.themoviedb.org/3/getting-started/introduction) as value for User-Defined setting `API_KEY`
+3. Build & Run from Xcode
