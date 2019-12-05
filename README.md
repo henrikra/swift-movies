@@ -1,6 +1,6 @@
 # Swift movies
 
-![Thumbnail](docs/0_thumbnail.png)
+![Animations](docs/animations.gif)
 
 Purpose of this reposity is to dive into Swift by building [this application](https://framer.cloud/yrDqW) without any dependencies.
 
